@@ -1,6 +1,7 @@
 package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -49,8 +50,15 @@ public abstract class GObject {
 	}
 
 	public WorldConfig getWorldConfig() {
+		if(getParent() == null) return null;
 		return getParent().getWorldConfig();
 	}
+
+	public OrthographicCamera getCamera() {
+		if(getParent() == null) return null;
+		return getParent().getCamera();
+	}
+
 	/**
 	 * Returns the world of its parent or if its parent is null (because it isn't set to an parent or it is the root object) it will return null.
 	 * @return the world
@@ -65,6 +73,8 @@ public abstract class GObject {
 	 * @return
 	 */
 	public SpriteBatch getBatch() {
+		if(getParent() == null) return null;
 		return getParent().getBatch();
 	}
+
 }

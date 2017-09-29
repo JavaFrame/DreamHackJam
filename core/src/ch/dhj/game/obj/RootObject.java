@@ -2,11 +2,13 @@ package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static ch.dhj.game.obj.WorldConfig.scale;
 
 /**
  * Created by Sebastian on 29.09.2017.
@@ -22,8 +24,16 @@ public class RootObject extends ParentObject {
 
 	private SpriteBatch batch;
 
+	private OrthographicCamera camera;
+
+	public RootObject(WorldConfig worldConfig) {
+		this.worldConfig = worldConfig;
+	}
+
 	@Override
 	public void init() {
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_HEIGHT));
 		world = new World(getWorldConfig().getGravity(), true);
 		batch = new SpriteBatch();
 
@@ -35,9 +45,12 @@ public class RootObject extends ParentObject {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 		super.render(delta);
 
 		physicsCalculations(delta);
+
 	}
 
 	@Override
@@ -65,5 +78,30 @@ public class RootObject extends ParentObject {
 			getWorld().step(TIME_STEPS, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 			accumulator -= TIME_STEPS;
 		}
+	}
+
+	@Override
+	public ParentObject getParent() {
+		return this;
+	}
+
+	@Override
+	public WorldConfig getWorldConfig() {
+		return worldConfig;
+	}
+
+	@Override
+	public OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
+	}
+
+	@Override
+	public SpriteBatch getBatch() {
+		return batch;
 	}
 }

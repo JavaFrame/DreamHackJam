@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Sebastian on 29.09.2017.
  */
 public class ParentObject extends GObject {
-	public static final float TIME_STEPS = 1/45;
+	public static final float TIME_STEPS = (float) 1/45;
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
 
