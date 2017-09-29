@@ -3,6 +3,7 @@ package ch.dhj.game.obj;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -77,4 +78,8 @@ public abstract class GObject {
 		return getParent().getBatch();
 	}
 
+	public TiledMap getMap() {
+		if(getParent() == null) return null;
+		return getParent().getMap();
+	}
 }

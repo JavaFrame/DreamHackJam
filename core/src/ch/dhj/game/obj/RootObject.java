@@ -1,9 +1,12 @@
 package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.logging.Logger;
@@ -26,8 +29,11 @@ public class RootObject extends ParentObject {
 
 	private OrthographicCamera camera;
 
-	public RootObject(WorldConfig worldConfig) {
+	private TiledMap map;
+
+	public RootObject(WorldConfig worldConfig, FileHandle map) {
 		this.worldConfig = worldConfig;
+
 	}
 
 	@Override
@@ -103,5 +109,10 @@ public class RootObject extends ParentObject {
 	@Override
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	@Override
+	public TiledMap getMap() {
+		return map;
 	}
 }
