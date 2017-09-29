@@ -1,6 +1,7 @@
 package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -52,4 +53,11 @@ public abstract class GObject {
 		return getParent().getWorld();
 	}
 
+	/**
+	 * Returns the batch of the parent
+	 * @return
+	 */
+	public SpriteBatch getBatch() {
+		return getParent().getBatch();
+	}
 }

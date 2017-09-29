@@ -22,7 +22,9 @@ public abstract class Box2dObject extends GObject {
 	}
 
 	@Override
-	public abstract void render(float delta);
+	public void render(float delta) {
+		position.set(body.getPosition());
+	}
 
 	public Vector2 getPosition() {
 		return position;
