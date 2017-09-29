@@ -1,6 +1,8 @@
 package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,9 +33,11 @@ public class RootObject extends ParentObject {
 
 	private TiledMap map;
 
-	public RootObject(WorldConfig worldConfig, FileHandle map) {
+	public RootObject(AssetManager assetManager, WorldConfig worldConfig, String mappath) {
 		this.worldConfig = worldConfig;
 
+		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+		//assetManager.load("");
 	}
 
 	@Override
