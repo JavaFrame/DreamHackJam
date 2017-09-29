@@ -3,6 +3,7 @@ package ch.dhj.game.screens;
 import ch.dhj.game.obj.RootObject;
 import ch.dhj.game.obj.WorldConfig;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -11,8 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 public class OverworldScreen implements Screen {
 	private RootObject rootObject;
 
-	public OverworldScreen() {
-		rootObject = new RootObject(new WorldConfig(new Vector2(0, 0)));
+	public OverworldScreen(AssetManager assetManager) {
+		rootObject = new RootObject(assetManager, new WorldConfig(new Vector2(0, 0)), "map/Test.tmx");
 		rootObject.init();
 	}
 

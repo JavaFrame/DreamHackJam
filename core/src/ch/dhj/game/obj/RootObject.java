@@ -33,11 +33,13 @@ public class RootObject extends ParentObject {
 
 	private TiledMap map;
 
-	public RootObject(AssetManager assetManager, WorldConfig worldConfig, String mappath) {
+	public RootObject(AssetManager assetManager, WorldConfig worldConfig, String mapPath) {
 		this.worldConfig = worldConfig;
 
 		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		//assetManager.load("");
+		assetManager.load(mapPath, TiledMap.class);
+		assetManager.finishLoading();
+		map = assetManager.get(mapPath);
 	}
 
 	@Override
