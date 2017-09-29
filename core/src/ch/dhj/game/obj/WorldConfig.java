@@ -1,5 +1,6 @@
 package ch.dhj.game.obj;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -21,5 +22,15 @@ public class WorldConfig {
 	 */
 	public static float scale(float f) {
 		return f / PPM;
+	}
+
+	private Vector2 gravity;
+
+	public WorldConfig(Vector2 gravity) {
+		this.gravity = gravity;
+	}
+
+	public Vector2 getGravity() {
+		return gravity;
 	}
 }
