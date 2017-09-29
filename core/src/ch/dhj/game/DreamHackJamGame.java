@@ -23,10 +23,11 @@ public class DreamHackJamGame extends Game {
 	@Override
 	public void render () {
 		super.render();
+		assetManager.update();
 	}
 	
 	@Override
 	public void dispose () {
-
+		assetManager.dispose();
 	}
 }

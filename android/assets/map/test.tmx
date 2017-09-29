@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="1">
- <tileset firstgid="1" source="Grafiken/Assets/Unbenannt.tsx"/>
- <tileset firstgid="5" source="Grafiken/Assets/Unbenannt.tsx"/>
- <tileset firstgid="25" source="Grafiken/Assets/GLEICH LÖSCHEN.tsx"/>
- <tileset firstgid="29" source="Grafiken/Assets/Löschen.tsx"/>
  <layer name="Kachelebene 1" width="100" height="100" offsetx="468.333" offsety="-827.667">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

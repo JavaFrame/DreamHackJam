@@ -13,7 +13,7 @@ public class OverworldScreen implements Screen {
 	private RootObject rootObject;
 
 	public OverworldScreen(AssetManager assetManager) {
-		rootObject = new RootObject(assetManager, new WorldConfig(new Vector2(0, 0)), "map/Test.tmx");
+		rootObject = new RootObject(assetManager, new WorldConfig(new Vector2(0, 0)), "map/test.tmx");
 		rootObject.init();
 	}
 
