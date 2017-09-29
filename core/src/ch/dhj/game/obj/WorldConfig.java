@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class WorldConfig {
 	public static final int VIEWPORT_WIDTH = 1920;
 	public static final int VIEWPORT_HEIGHT = 1080;
+
 	/**
 	 * pixels per meters
 	 */

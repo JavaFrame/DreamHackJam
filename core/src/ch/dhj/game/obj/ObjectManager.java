@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Sebastian on 29.09.2017.
  */
-public class ObjectManager {
+public class ObjectManager extends GObject {
 	public static final float TIME_STEPS = 1/45;
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
@@ -23,8 +23,7 @@ public class ObjectManager {
 
 	private SpriteBatch batch;
 
-	public ObjectManager(World world) {
-		this.world = world;
+	public ObjectManager() {
 	}
 
 	public void add(GObject obj) {
@@ -34,14 +33,16 @@ public class ObjectManager {
 			obj.init();
 	}
 
-
+	@Override
 	public void init() {
+
 		for(GObject obj : objects) {
 			obj.init();
 		}
 		alreadyStarted = true;
 	}
 
+	@Override
 	public void render(float delta) {
 		for(GObject obj : objects) {
 			obj.render(delta);
@@ -50,6 +51,7 @@ public class ObjectManager {
 		physicsCalculations(delta);
 	}
 
+	@Override
 	public void dispose() {
 		for(GObject obj : objects) {
 			obj.dispose();
@@ -58,15 +60,21 @@ public class ObjectManager {
 	}
 
 	/**
-	 * Returns the world of this  object manager
+	 * Returns either {@link ObjectManager#world} if super.get
 	 * @return
 	 */
+	@Override
 	public World getWorld() {
-		return world;
+		if(super.getWorld() == null)
+			return world;
+		return super.getWorld();
 	}
 
+	@Override
 	public SpriteBatch getBatch() {
-		return batch;
+		if(super.getBatch() == null)
+			return batch;
+		return super.getBatch();
 	}
 
 	/**
