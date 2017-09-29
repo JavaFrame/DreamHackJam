@@ -17,6 +17,7 @@ public class DreamHackJamGame extends Game {
 
 	@Override
 	public void render () {
+		super.render();
 	}
 	
 	@Override

@@ -92,6 +92,7 @@ public class MainMenu implements Screen {
 
         stage.act();
         stage.draw();
+        camera.update();
     }
 
     @Override
