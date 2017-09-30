@@ -36,7 +36,7 @@ public class DreamHackJamGame extends Game {
 		p.getSpells().add(weapons.get(2));
 		p.setCurrentWeapon(null);
 
-		this.setScreen(new MainMenu(assetManager, batch));
+		this.setScreen(new MainMenu(assetManager, batch, p));
 		/*this.setScreen(
 				new EncounterScreen(new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx", new Enemy[]{}),
 						assetManager,
