@@ -21,8 +21,8 @@ public class DreamHackJamGame extends Game {
 	public void create () {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
+		//this.setScreen(new EncounterScreen(0, assetManager, batch));
 		this.setScreen(new MainMenu(assetManager, batch));
-		//this.setScreen(new EncounterScreen(assetManager, batch));
 	}
 
 	@Override
