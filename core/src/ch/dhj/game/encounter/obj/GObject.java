@@ -1,10 +1,12 @@
-package ch.dhj.game.obj;
+package ch.dhj.game.encounter.obj;
 
-import ch.dhj.game.utils.WorldConfig;
+import ch.dhj.game.encounter.TurnManager;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -13,6 +15,15 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public abstract class GObject {
 	private ParentObject parent;
+	private Sprite sprite;
+
+	private Vector2 position;
+
+
+	public GObject(Vector2 position) {
+		this.position = position;
+		this.sprite = new Sprite();
+	}
 
 	/**
 	 * called from {@link ParentObject#init()} which gets called from the {@link Screen}
@@ -24,6 +35,8 @@ public abstract class GObject {
 	 * @param delta
 	 */
 	public abstract void render(float delta);
+
+	public void resize(int width, int height) {}
 
 	/**
 	 * called from {@link ParentObject#dispose()} which gets called from {@link Screen#dispose()}
@@ -51,23 +64,17 @@ public abstract class GObject {
 		return getParent() != null;
 	}
 
-	public WorldConfig getWorldConfig() {
-		if(getParent() == null) return null;
-		return getParent().getWorldConfig();
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	public OrthographicCamera getCamera() {
 		if(getParent() == null) return null;
 		return getParent().getCamera();
-	}
-
-	/**
-	 * Returns the world of its parent or if its parent is null (because it isn't set to an parent or it is the root object) it will return null.
-	 * @return the world
-	 */
-	public World getWorld() {
-		if(getParent() == null) return null;
-		return getParent().getWorld();
 	}
 
 	/**
@@ -82,5 +89,10 @@ public abstract class GObject {
 	public TiledMap getMap() {
 		if(getParent() == null) return null;
 		return getParent().getMap();
+	}
+
+	public TurnManager getTurnManager() {
+		if(getParent() == null) return null;
+		return getParent().getTurnManager();
 	}
 }

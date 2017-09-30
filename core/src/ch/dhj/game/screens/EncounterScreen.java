@@ -4,6 +4,7 @@ import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.Turn;
 import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.encounter.actions.WeaponAction;
+import ch.dhj.game.encounter.obj.ParentObject;
 import ch.dhj.game.utils.WorldConfig;
 import ch.dhj.game.player.Enemy;
 import ch.dhj.game.player.Player;
@@ -27,13 +28,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import javafx.scene.Parent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
-import static ch.dhj.game.utils.WorldConfig.PPM;
-import static ch.dhj.game.utils.WorldConfig.scale;
 
 /**
  * Created by Sebastian on 30.09.2017.
@@ -42,7 +42,6 @@ public class EncounterScreen implements Screen {
 	private AssetManager assetManager;
 	private SpriteBatch batch;
 
-	private Viewport viewport;
 	private OrthographicCamera camera;
 
 	private TiledMap map;
@@ -51,32 +50,18 @@ public class EncounterScreen implements Screen {
 	private Sprite background;
 
 	private EncounterConfig config;
-	private Player player;
 
-	private Skin skin;
-	private TextureAtlas atlasButtons;
-	private Stage stage;
-	private Table table;
-	private Label actionsL;
+	private ParentObject parentObject;
 
-	private int currentActionCount = 0;
-	private Turn playerTurn;
-
-	private TurnManager turnManager = new TurnManager();
-
-	private EncounterState state = EncounterState.PLAYER_TURN;
-
-	public EncounterScreen(Player p, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
-		this.player = p;
+	public EncounterScreen(EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
 		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = batch;
 
-		viewport = new StretchViewport(scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_WIDTH));
+		Viewport viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_WIDTH));
-		//camera.position.set(new Vector3(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2, 0));
+		camera.setToOrtho(false, WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
 		//asset loading
 		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -86,68 +71,24 @@ public class EncounterScreen implements Screen {
 
 		//map loading
 		map = assetManager.get(config.map);
-		mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
+		mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
 
 		//background loading
 		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
 		background.setPosition(0, 0);
-		background.setSize(scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_WIDTH));
+		background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
-		//ui stuff
-		atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
-		skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
-
-		stage = new Stage(new StretchViewport(1920/2, 1080/2));
-		Gdx.input.setInputProcessor(stage);
-
-		table = new Table();
-		table.setFillParent(true);
-		stage.addActor(table);
-
-		//table.setDebug(true);
-
-		actionsL = new Label(String.format("%d/%d Actions", currentActionCount, p.getMaxActionCount()), skin);
-		final TextButton attackB = new TextButton("Attack", skin);
-		attackB.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				addPlayerAction(new WeaponAction(player.getCurrentWeapon()));
-			}
-		});
-		TextButton spellB = new TextButton("Spell", skin);
-		TextButton defendB = new TextButton("Defend", skin);
-		TextButton fleeB = new TextButton("Flee", skin);
-
-		table.left();
-		table.add(actionsL);
-		table.row();
-		table.add(attackB).width(100);
-		table.row();
-		table.add(spellB).width(100);
-		table.row();
-		table.add(defendB).width(100);
-		table.row();
-		table.add(fleeB).width(100);
+		parentObject = new ParentObject(assetManager, map, camera, batch);
+		parentObject.init();
 	}
 
-	private void addPlayerAction(Action a) {
-		playerTurn.addAction(a);
-		currentActionCount++;
-		actionsL.setText(String.format("%d/%d Actions", currentActionCount, player.getMaxActionCount()));
-		if(currentActionCount >= player.getMaxActionCount()) {
-			turnManager.getTurns().add(playerTurn);
-			playerTurn = new Turn();
-		}
-	}
+
 
 	@Override
-	public void show() {
-
-	}
+	public void show() {}
 
 	@Override
 	public void render(float delta) {
-		turnManager.update();
 		//render stuff
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -160,38 +101,27 @@ public class EncounterScreen implements Screen {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 
-		stage.act();
-		stage.draw();
+		parentObject.render(delta);
+
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		parentObject.resize(width, height);
 	}
 
 	@Override
-	public void pause() {
-
-	}
+	public void pause() {}
 
 	@Override
-	public void resume() {
-
-	}
+	public void resume() {}
 
 	@Override
-	public void hide() {
-
-	}
+	public void hide() {}
 
 	@Override
 	public void dispose() {
-		stage.dispose();
-	}
-
-	private enum EncounterState {
-		ENEMY_TURN,
-		PLAYER_TURN
+		parentObject.dispose();
 	}
 
 	public static class EncounterConfig {

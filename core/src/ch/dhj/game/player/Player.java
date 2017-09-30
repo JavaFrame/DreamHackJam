@@ -24,7 +24,7 @@ public class Player {
 	private List<Weapon> weapons;
 	private Weapon currentWeapon;
 	private List<Weapon> spells = new ArrayList<Weapon>(3);
-	//private List<Player> allies;
+	//private List<Figure> allies;
 	private List<String> changes = new ArrayList<String>();
 	private AnimationSet animationSet;
 
