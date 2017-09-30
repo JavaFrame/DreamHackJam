@@ -1,5 +1,6 @@
 package ch.dhj.game;
 
+import ch.dhj.game.screens.MainMenu;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -12,7 +13,7 @@ public class DreamHackJamGame extends Game {
 	
 	@Override
 	public void create () {
-		this.setScreen(new OverworldScreen());
+		this.setScreen(new MainMenu());
 	}
 
 	@Override
