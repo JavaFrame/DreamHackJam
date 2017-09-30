@@ -1,15 +1,20 @@
 package ch.dhj.game.encounter.obj.objects;
 
+import ch.dhj.game.encounter.Action;
+import ch.dhj.game.encounter.Turn;
+import ch.dhj.game.encounter.TurnManager;
+import ch.dhj.game.encounter.actions.MeleeWeaponAction;
 import ch.dhj.game.player.AnimationSet;
+import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
@@ -27,11 +32,35 @@ public class Player extends Figure{
 	private Skin skin;
 	private TextureAtlas atlasButtons;
 	private Stage stage;
-	private Table table;
+	private Table turnActionTable;
 	private Label actionsL;
+
+	private int actions;
+
+	private Turn currentTurn = new Turn();
 
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
+
+	}
+
+	public Player(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
+		super(texture, position, name, animationSet);
+	}
+
+	@Override
+	public void init() {
+		super.init();
+		constructUi();
+
+		getTurnManager().addRoundDoneListener(new TurnManager.TurnManagerListener() {
+			@Override
+			public void triggered(TurnManager manager) {
+				currentTurn = new Turn();
+				actions = 0;
+				turnActionTable.setVisible(true);
+			}
+		});
 	}
 
 	/**
@@ -44,34 +73,67 @@ public class Player extends Figure{
 		stage = new Stage(new StretchViewport(1920/2, 1080/2));
 		Gdx.input.setInputProcessor(stage);
 
-		table = new Table();
-		table.setFillParent(true);
-		stage.addActor(table);
+		final Stack stackPane = new Stack();
+		stage.addActor(stackPane);
 
-		//table.setDebug(true);
+		final List<Enemy> enemies = new List<Enemy>(skin);
+		enemies.setItems(getEncounterConfig().enemies.toArray(new Enemy[]{}));
+		enemies.setVisible(false);
+
+		turnActionTable = new Table();
+		turnActionTable.setFillParent(false);
+		stackPane.add(turnActionTable);
+
+		stackPane.add(enemies);
+
+		//turnActionTable.setDebug(true);
 
 		//actionsL = new Label(String.format("%d/%d Actions", currentActionCount, player.getMaxActionCount()), skin);
+
 		final TextButton attackB = new TextButton("Attack", skin);
+		if(getCurrentWeapon() == null) {
+			attackB.setTouchable(Touchable.disabled);
+			attackB.setText(attackB.getText() + " (unavailbe)");
+		}
 		attackB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//	addPlayerAction(new WeaponAction(player.getCurrentWeapon()));
+				//
+				Weapon w = Player.this.getCurrentWeapon();
+				if(w.isMultipleTargets()) {
+					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray(new Enemy[]{})));
+				}
+				turnActionTable.setVisible(false);
 			}
 		});
 		TextButton spellB = new TextButton("Spell", skin);
 		TextButton defendB = new TextButton("Defend", skin);
 		TextButton fleeB = new TextButton("Flee", skin);
 
-		table.left();
-		table.add(actionsL);
-		table.row();
-		table.add(attackB).width(100);
-		table.row();
-		table.add(spellB).width(100);
-		table.row();
-		table.add(defendB).width(100);
-		table.row();
-		table.add(fleeB).width(100);
+		turnActionTable.left();
+		turnActionTable.add(actionsL);
+		turnActionTable.row();
+		turnActionTable.add(enemies);
+		turnActionTable.row();
+		turnActionTable.add(attackB).width(200);
+		turnActionTable.row();
+		turnActionTable.add(spellB).width(200);
+		turnActionTable.row();
+		turnActionTable.add(defendB).width(200);
+		turnActionTable.row();
+		turnActionTable.add(fleeB).width(200);
+	}
+
+	private void addActionToTurn(Action a) {
+		currentTurn.addAction(a);
+		actions++;
+		if(actions >= getMaxActionCount()) {
+			getTurnManager().getTurns().add(currentTurn);
+			currentTurn = new Turn();
+			getTurnManager().start();
+
+			turnActionTable.setVisible(false);
+		}
 	}
 
 	public void addExp(int exp) {
@@ -97,8 +159,8 @@ public class Player extends Figure{
 	}
 
 	@Override
-	public void render(float delta) {
-		super.render(delta);
+	public void render(float delta, SpriteBatch batch) {
+		super.render(delta, batch);
 		stage.act();
 		stage.draw();
 	}

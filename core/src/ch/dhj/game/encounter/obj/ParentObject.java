@@ -1,18 +1,13 @@
 package ch.dhj.game.encounter.obj;
 
 import ch.dhj.game.encounter.TurnManager;
-import ch.dhj.game.utils.WorldConfig;
-import com.badlogic.gdx.Gdx;
+import ch.dhj.game.screens.EncounterScreen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -33,19 +28,22 @@ public class ParentObject {
 
 	private float accumulator = 0;
 
-	private SpriteBatch batch;
-
 	private OrthographicCamera camera;
 
 	private TiledMap map;
 
 	private TurnManager turnManager;
+	private EncounterScreen.EncounterConfig encounterConfig;
+	private AssetManager assetManager;
+	private Viewport viewport;
 
-	public ParentObject(AssetManager assetManager, TiledMap map, OrthographicCamera camera, SpriteBatch batch) {
+	public ParentObject(TiledMap map, OrthographicCamera camera, SpriteBatch batch, EncounterScreen.EncounterConfig encounterConfig, AssetManager assetManager, Viewport viewport) {
 		this.map = map;
+		this.encounterConfig = encounterConfig;
+		this.assetManager = assetManager;
+		this.viewport = viewport;
 		this.turnManager = new TurnManager();
 		this.camera = camera;
-		this.batch = batch;
 	}
 
 	public void add(GObject obj) {
@@ -73,12 +71,9 @@ public class ParentObject {
 			obj.init();
 	}
 
-	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+	public void render(float delta, SpriteBatch batch) {
 		for(GObject obj :  objects)
-			obj.render(delta);
+			obj.render(delta, batch);
 
 	}
 
@@ -100,15 +95,19 @@ public class ParentObject {
 		return camera;
 	}
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
-
 	public TiledMap getMap() {
 		return map;
 	}
 
 	public TurnManager getTurnManager() {
 		return turnManager;
+	}
+
+	public EncounterScreen.EncounterConfig getEncounterConfig() {
+		return encounterConfig;
+	}
+
+	public Viewport getViewport() {
+		return viewport;
 	}
 }

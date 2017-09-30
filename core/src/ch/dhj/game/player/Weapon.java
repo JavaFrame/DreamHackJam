@@ -1,5 +1,7 @@
 package ch.dhj.game.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+
 /**
  * Created by Sebastian on 30.09.2017.
  */
@@ -10,12 +12,15 @@ public class Weapon {
 	private boolean multipleTargets;
 	private boolean spell;
 
-	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean spell) {
+	private Animation animation;
+
+	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean spell, Animation animation) {
 		this.name = name;
 		this.actionCost = actionCost;
 		this.damge = damge;
 		this.multipleTargets = multipleTargets;
 		this.spell = spell;
+		this.animation = animation;
 	}
 
 	public String getName() {
@@ -56,5 +61,9 @@ public class Weapon {
 
 	public void setSpell(boolean spell) {
 		this.spell = spell;
+	}
+
+	public Animation getAnimation() {
+		return animation;
 	}
 }
