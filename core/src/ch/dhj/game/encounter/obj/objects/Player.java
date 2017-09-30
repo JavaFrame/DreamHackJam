@@ -6,8 +6,10 @@ import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.encounter.actions.MeleeWeaponAction;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
+import ch.dhj.game.screens.OverworldScreen;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+
+import java.util.Random;
 
 /**
  * Created by Sebastian on 30.09.2017.
@@ -32,6 +38,8 @@ public class Player extends Figure{
 	private Skin skin;
 	private TextureAtlas atlasButtons;
 	private Stage stage;
+	private Table rootTable;
+	private Table chooseEnemyTable;
 	private Table turnActionTable;
 	private Label actionsL;
 
@@ -46,7 +54,7 @@ public class Player extends Figure{
 
 	}
 
-	public Player(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
+	public Player(Sprite texture, Vector2 position, String name, AnimationSet animationSet) {
 		super(texture, position, name, animationSet);
 	}
 
@@ -60,7 +68,7 @@ public class Player extends Figure{
 			public void triggered(TurnManager manager) {
 				currentTurn = new Turn();
 				actions = 0;
-				turnActionTable.setVisible(true);
+				rootTable.setVisible(true);
 			}
 		});
 	}
@@ -75,18 +83,18 @@ public class Player extends Figure{
 		stage = new Stage(new StretchViewport(1920/2, 1080/2));
 		Gdx.input.setInputProcessor(stage);
 
-		final Table tablePane = new Table();
-		stage.addActor(tablePane);
+		rootTable = new Table();
+		stage.addActor(rootTable);
 
 		turnActionTable = new Table();
 		turnActionTable.setFillParent(false);
-		tablePane.add(new Container<Table>(turnActionTable)).left();
+		rootTable.add(new Container<Table>(turnActionTable)).left();
 
-		final Table chooseEnemyTable = new Table(skin);
+		chooseEnemyTable = new Table(skin);
 		chooseEnemyTable.setVisible(false);
 
 		final List<Enemy> enemies = new List<Enemy>(skin);
-		enemies.setItems(getEncounterConfig().enemies.toArray(new Enemy[]{}));
+		enemies.setItems(getEncounterConfig().enemies.toArray());
 		chooseEnemyTable.add(enemies);
 
 		chooseEnemyTable.row();
@@ -120,16 +128,82 @@ public class Player extends Figure{
 				//
 				Weapon w = Player.this.getCurrentWeapon();
 				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray(new Enemy[]{})));
+					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
 					return;
 				}
 				selectedWeapon = w;
-				chooseEnemyTable.setVisible(true);
+				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());
 			}
 		});
 		TextButton spellB = new TextButton("Spell", skin);
+		spellB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+
+				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());
+			}
+		});
 		TextButton defendB = new TextButton("Defend", skin);
-		TextButton fleeB = new TextButton("Flee", skin);
+		defendB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+
+			}
+		});
+		TextButton runB = new TextButton("Run", skin);
+		runB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				float random = new Random(System.currentTimeMillis()).nextFloat();
+				Array<Enemy> enemies = getEncounterConfig().enemies;
+				Enemy highestLvlEnemy = enemies.first();
+				for(Enemy e : enemies) {
+					if(e.getLevel() > highestLvlEnemy.getLevel()) {
+						highestLvlEnemy = e;
+					}
+				}
+				int level = highestLvlEnemy.getLevel();
+				float chances = 0f;
+				if(level > getLevel()) {
+					chances = 0.4f;
+				} else if(level == getLevel()) {
+					chances = 0.3f;
+				} else if(level < getLevel()) {
+					chances = 0.2f;
+				}
+				if(random <= chances) {
+					Dialog dialog = null;
+					dialog = new Dialog("Running successful!", skin);
+					dialog.text("You got away with a black eye!");
+					TextButton closeB = new TextButton("close", skin);
+					final Dialog finalDialog = dialog;
+					closeB.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							finalDialog.hide();
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch()));
+						}
+					});
+					dialog.button("close", closeB);
+					dialog.show(stage);
+				} else {
+					Dialog dialog = null;
+					dialog = new Dialog("Running failed!", skin);
+					dialog.text("You couldn't run away! \nYour turn ends!");
+					TextButton closeB = new TextButton("close", skin);
+					final Dialog finalDialog = dialog;
+					closeB.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							finalDialog.hide();
+							endTurn();
+						}
+					});
+					dialog.button("close", closeB);
+					dialog.show(stage);
+				}
+			}
+		});
 
 		turnActionTable.left();
 		turnActionTable.add(actionsL);
@@ -140,25 +214,34 @@ public class Player extends Figure{
 		turnActionTable.row();
 		turnActionTable.add(defendB).width(200);
 		turnActionTable.row();
-		turnActionTable.add(fleeB).width(200);
+		turnActionTable.add(runB).width(200);
 
-		tablePane.add(chooseEnemyTable).pad(5);
+		rootTable.add(chooseEnemyTable).pad(5);
 
-		tablePane.pack();
-		tablePane.setX(tablePane.getWidth()/2);
-		tablePane.setY(tablePane.getHeight()/2);
+		rootTable.pack();
+		rootTable.setX(1920/2 - (rootTable.getWidth() + 5));
+		//rootTable.setY(rootTable.getHeight()/2);
 	}
 
 	private void addActionToTurn(Action a) {
 		currentTurn.addAction(a);
 		actions++;
+		actionsL.setText(String.format("%d/%d Actions", actions, getMaxActionCount()));
+		chooseEnemyTable.setVisible(false);
 		if(actions >= getMaxActionCount()) {
-			getTurnManager().getTurns().add(currentTurn);
-			currentTurn = new Turn();
-			getTurnManager().start();
-
-			turnActionTable.setVisible(false);
+			endTurn();
 		}
+	}
+
+	private void endTurn() {
+		getTurnManager().getTurns().add(currentTurn);
+		currentTurn = new Turn();
+		getTurnManager().start();
+
+		chooseEnemyTable.setVisible(false);
+		rootTable.setVisible(false);
+		turnActionTable.setVisible(true);
+		actions = 0;
 	}
 
 	public void addExp(int exp) {
@@ -186,10 +269,13 @@ public class Player extends Figure{
 	@Override
 	public void render(float delta, SpriteBatch batch) {
 		super.render(delta, batch);
+	}
+
+	@Override
+	public void renderUi(float delta, SpriteBatch batch) {
 		stage.act();
-		batch.end();
 		stage.draw();
-		batch.begin();
+
 	}
 
 	@Override

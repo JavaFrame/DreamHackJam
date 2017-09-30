@@ -5,13 +5,9 @@ import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import javafx.animation.Animation;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sebastian on 30.09.2017.
@@ -34,10 +30,10 @@ public class Figure extends GObject {
 		super(position);
 		this.name = name;
 		this.animationSet = animationSet;
-		setTexture(new Texture(Gdx.files.internal("textures/Johhny.png")));
+		setSprite(new Sprite(new Texture(Gdx.files.internal("textures/Johhny.png"))));
 	}
 
-	public Figure(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
+	public Figure(Sprite texture, Vector2 position, String name, AnimationSet animationSet) {
 		super(texture, position);
 		this.name = name;
 		this.animationSet = animationSet;

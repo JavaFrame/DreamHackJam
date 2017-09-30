@@ -8,7 +8,6 @@ import java.util.LinkedList;
 public class Turn {
 	private LinkedList<Action> actions = new LinkedList();
 	private int index = 0;
-	private boolean started = false;
 
 	/**
 	 * Adds an Action to this turn.
@@ -18,26 +17,16 @@ public class Turn {
 		actions.add(a);
 	}
 
-	public void startTurn() {
-		started = true;
-	}
 
 	/**
 	 * Calls {@link Action#action()} of the current {@link Action} and returns true if the turn is done.
 	 * @return true if the turn is done else false. (It also returns false if the turn hasn't started yet)
 	 */
 	public boolean update() {
-		if(!started) return false;
 		Action a = actions.get(index);
 		if(a.action())
 			index++;
-		return actions.size() == index+1; //+1 because index start at 0 and actions.size() at 1
+		return actions.size() == index;
 	}
 
-	/**
-	 * Returns if the Turn already started or not.
-	 */
-	public boolean isStarted() {
-		return started;
-	}
 }

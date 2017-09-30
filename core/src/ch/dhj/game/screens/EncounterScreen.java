@@ -1,5 +1,6 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.encounter.obj.ParentObject;
 import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -42,13 +44,14 @@ public class EncounterScreen implements Screen {
 	private EncounterConfig config;
 
 	private ParentObject parentObject;
+	private Viewport viewport;
 
 	public EncounterScreen(Player player, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
 		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = batch;
 
-		Viewport viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
+		viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
@@ -68,8 +71,10 @@ public class EncounterScreen implements Screen {
 		background.setPosition(0, 0);
 		background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
-		parentObject = new ParentObject(map, camera, this.batch, config, assetManager, viewport);
+		parentObject = new ParentObject(this);
 		parentObject.add(player);
+		for(Enemy e : config.enemies)
+			parentObject.add(e);
 		parentObject.init();
 	}
 
@@ -96,7 +101,7 @@ public class EncounterScreen implements Screen {
 			parentObject.render(delta, batch);
 			//batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
 		batch.end();
-
+		parentObject.renderUi(delta, batch);
 
 
 
@@ -122,17 +127,54 @@ public class EncounterScreen implements Screen {
 		parentObject.dispose();
 	}
 
+
+	public Viewport getViewport() {
+		return viewport;
+	}
+
 	public static class EncounterConfig {
 		public int id;
 		public String background;
 		public String map;
-		public ArrayList<Enemy> enemies;
+		public Array<Enemy> enemies;
 
 		public EncounterConfig(int id, String background, String map, Enemy[] enemies) {
 			this.id = id;
 			this.background = background;
 			this.map = map;
-			this.enemies = new ArrayList(Arrays.asList(enemies));
+			this.enemies = new Array(enemies);
 		}
+	}
+
+	public AssetManager getAssetManager() {
+		return assetManager;
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	public TiledMap getMap() {
+		return map;
+	}
+
+	public MapRenderer getMapRenderer() {
+		return mapRenderer;
+	}
+
+	public Sprite getBackground() {
+		return background;
+	}
+
+	public EncounterConfig getConfig() {
+		return config;
+	}
+
+	public ParentObject getParentObject() {
+		return parentObject;
 	}
 }

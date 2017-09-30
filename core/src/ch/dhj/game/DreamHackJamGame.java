@@ -14,6 +14,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -33,7 +34,7 @@ public class DreamHackJamGame extends Game {
 
 
 		List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
-		Player p = new Player(new Texture(Gdx.files.internal("textures/Johhny.png")), new Vector2(30, 30), "Joshua", new AnimationSet());
+		Player p = new Player(new Sprite(new Texture(Gdx.files.internal("textures/Johhny.png"))), new Vector2(1800, 30), "Joshua", new AnimationSet());
 		p.setMaxActionCount(2);
 		p.setCurrentWeapon(weapons.get(0));
 		p.getSpells().add(weapons.get(1));
@@ -43,7 +44,7 @@ public class DreamHackJamGame extends Game {
 		this.setScreen(
 				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
 						new Enemy[]{new Enemy(
-								new Vector2(100, 100),
+								new Vector2(30, 100),
 								"BadBoy",
 								new AnimationSet()) {
 					@Override
@@ -51,7 +52,7 @@ public class DreamHackJamGame extends Game {
 						return new Action[0];
 					}
 				}, new Enemy(
-								new Vector2(100, 100),
+								new Vector2(300, 100),
 								"BadBoy2",
 								new AnimationSet()) {
 							@Override

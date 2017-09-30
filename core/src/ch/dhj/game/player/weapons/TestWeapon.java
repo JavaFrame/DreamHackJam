@@ -2,6 +2,7 @@ package ch.dhj.game.player.weapons;
 
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
@@ -9,6 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 public class TestWeapon extends Weapon {
 	public TestWeapon() {
-		super("Test Weapon", 2, 5, false, true, false, new Animation(1, Gdx.files.internal("Johhny.png")));
+		super("Test Weapon", 2, 5, false, true, false, new Animation(1, new Texture(Gdx.files.internal("textures/Johhny.png"))));
 	}
 }

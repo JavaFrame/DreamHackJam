@@ -1,5 +1,6 @@
 package ch.dhj.game.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
@@ -69,7 +70,13 @@ public class Weapon {
 		this.spell = spell;
 	}
 
-	public Animation getAnimation() {
+	public Animation<Texture> getAnimation() {
 		return animation;
+	}
+
+	public static enum WeaponTypes {
+		Gun,
+		Shotgun,
+		
 	}
 }

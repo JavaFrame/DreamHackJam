@@ -2,6 +2,7 @@ package ch.dhj.game.player.spells;
 
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
@@ -9,6 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 public class TestSpell extends Weapon {
 	public TestSpell() {
-		super("Test Spell", 1, 2, false, false, true, new Animation(1, Gdx.files.internal("Johhny.png")));
+		super("Test Spell",
+				1,
+				2,
+				false,
+				false,
+				true,
+				new Animation(1, new Texture(Gdx.files.internal("textures/Johhny.png"))));
 	}
 }

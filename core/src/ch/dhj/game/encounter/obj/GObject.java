@@ -4,12 +4,10 @@ import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.screens.EncounterScreen;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -18,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public abstract class GObject {
 	private ParentObject parent;
-	private Texture texture;
+	private Sprite texture;
 
 	private Vector2 position;
 
@@ -28,7 +26,7 @@ public abstract class GObject {
 		this.texture = null;
 	}
 
-	public GObject(Texture texture, Vector2 position) {
+	public GObject(Sprite texture, Vector2 position) {
 		this.texture = texture;
 		this.position = position;
 	}
@@ -39,22 +37,18 @@ public abstract class GObject {
 	public abstract void init();
 
 	/**
-	 * called from {@link ParentObject#render(float)} which gets called from {@link Screen#render(float)}
+	 * called from {@link ParentObject#render(float, SpriteBatch)} which gets called from {@link Screen#render(float)}
 	 * @param delta
 	 */
 	public void render(float delta, SpriteBatch batch) {
-		if(getTexture() != null) {
-			boolean currentlyDrawing = batch.isDrawing();
-			if (!currentlyDrawing)
-				batch.begin();
-
-			batch.draw(getTexture(), getPosition().x, getPosition().y, 1000, 1000);
-
-//			batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
-			if (!currentlyDrawing)
-				batch.end();
+		if(getSprite() != null) {
+			//batch.draw(getSprite(), getPosition().x, getPosition().y);
+			getSprite().setPosition(getPosition().x, getPosition().y);
+			getSprite().draw(batch);
 		}
 	}
+
+	public void renderUi(float delta, SpriteBatch batch) {}
 
 	public void resize(int width, int height) {}
 
@@ -88,11 +82,11 @@ public abstract class GObject {
 		return position;
 	}
 
-	public Texture getTexture() {
+	public Sprite getSprite() {
 		return texture;
 	}
 
-	public void setTexture(Texture texture) {
+	public void setSprite(Sprite texture) {
 		this.texture = texture;
 	}
 
@@ -120,5 +114,10 @@ public abstract class GObject {
 	public Viewport getViewport() {
 		if(getParent() == null) return null;
 		return getParent().getViewport();
+	}
+
+	public EncounterScreen getEncounterScreen() {
+		if(getParent() == null) return null;
+		return getParent().getEncounterScreen();
 	}
 }

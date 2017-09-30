@@ -36,14 +36,16 @@ public class ParentObject {
 	private EncounterScreen.EncounterConfig encounterConfig;
 	private AssetManager assetManager;
 	private Viewport viewport;
+	private EncounterScreen encounterScreen;
 
-	public ParentObject(TiledMap map, OrthographicCamera camera, SpriteBatch batch, EncounterScreen.EncounterConfig encounterConfig, AssetManager assetManager, Viewport viewport) {
-		this.map = map;
-		this.encounterConfig = encounterConfig;
-		this.assetManager = assetManager;
-		this.viewport = viewport;
+	public ParentObject(EncounterScreen encounterScreen) {
+		this.encounterScreen = encounterScreen;
+		this.map = encounterScreen.getMap();
+		this.encounterConfig = encounterScreen.getConfig();
+		this.assetManager = encounterScreen.getAssetManager();
+		this.viewport = encounterScreen.getViewport();
 		this.turnManager = new TurnManager();
-		this.camera = camera;
+		this.camera = encounterScreen.getCamera();
 	}
 
 	public void add(GObject obj) {
@@ -74,6 +76,10 @@ public class ParentObject {
 	public void render(float delta, SpriteBatch batch) {
 		for(GObject obj :  objects)
 			obj.render(delta, batch);
+	}
+	public void renderUi(float delta, SpriteBatch batch) {
+		for(GObject obj :  objects)
+			obj.renderUi(delta, batch);
 	}
 
 	public void resize(int width, int height) {
@@ -108,5 +114,9 @@ public class ParentObject {
 
 	public Viewport getViewport() {
 		return viewport;
+	}
+
+	public EncounterScreen getEncounterScreen() {
+		return encounterScreen;
 	}
 }
