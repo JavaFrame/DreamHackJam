@@ -14,8 +14,6 @@ import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -34,7 +32,7 @@ public class EncounterScreen implements Screen{
 	private OrthographicCamera camera;
 
 	private TiledMap map;
-	private MapRenderer renderer;
+	private MapRenderer mapRenderer;
 
 	private Sprite background;
 
@@ -54,7 +52,8 @@ public class EncounterScreen implements Screen{
 		assetManager.finishLoading();
 
 		map = assetManager.get("map/test.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
+		mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
+
 
 		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
 		background.setPosition(0, 0);
@@ -78,8 +77,8 @@ public class EncounterScreen implements Screen{
 		batch.begin();
 		background.draw(batch);
 		batch.end();
-		renderer.setView(camera);
-		renderer.render();
+		mapRenderer.setView(camera);
+		mapRenderer.render();
 	}
 
 	@Override
