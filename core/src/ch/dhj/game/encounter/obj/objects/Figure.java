@@ -3,6 +3,9 @@ package ch.dhj.game.encounter.obj.objects;
 import ch.dhj.game.encounter.obj.GObject;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import javafx.animation.Animation;
@@ -26,8 +29,16 @@ public class Figure extends GObject {
 	private Array<Weapon> spells = new Array<>(3);
 	private AnimationSet animationSet;
 
+
 	public Figure(Vector2 position, String name, AnimationSet animationSet) {
 		super(position);
+		this.name = name;
+		this.animationSet = animationSet;
+		setTexture(new Texture(Gdx.files.internal("textures/Johhny.png")));
+	}
+
+	public Figure(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
+		super(texture, position);
 		this.name = name;
 		this.animationSet = animationSet;
 	}
@@ -35,11 +46,6 @@ public class Figure extends GObject {
 	@Override
 	public void init() {
 
-	}
-
-	@Override
-	public void render(float delta) {
-		getSprite().draw(getBatch());
 	}
 
 	@Override
@@ -117,5 +123,10 @@ public class Figure extends GObject {
 
 	public void setCurrentWeapon(Weapon currentWeapon) {
 		this.currentWeapon = currentWeapon;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

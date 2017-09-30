@@ -2,6 +2,7 @@ package ch.dhj.game.screens;
 
 import ch.dhj.game.encounter.obj.ParentObject;
 import ch.dhj.game.encounter.obj.objects.Enemy;
+import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -42,7 +43,7 @@ public class EncounterScreen implements Screen {
 
 	private ParentObject parentObject;
 
-	public EncounterScreen(EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
+	public EncounterScreen(Player player, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
 		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = batch;
@@ -60,17 +61,17 @@ public class EncounterScreen implements Screen {
 
 		//map loading
 		map = assetManager.get(config.map);
-		mapRenderer = new OrthogonalTiledMapRenderer(map, 1);
+		mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
 
 		//background loading
-		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
+		background = new Sprite((Texture) assetManager.get(config.background, Texture.class));
 		background.setPosition(0, 0);
 		background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
-		parentObject = new ParentObject(assetManager, map, camera, batch);
+		parentObject = new ParentObject(map, camera, this.batch, config, assetManager, viewport);
+		parentObject.add(player);
 		parentObject.init();
 	}
-
 
 
 	@Override
@@ -85,13 +86,21 @@ public class EncounterScreen implements Screen {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		background.draw(batch);
+			background.draw(batch);
 		batch.end();
+
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 
-		parentObject.render(delta);
+		batch.begin();
+			parentObject.render(delta, batch);
+			//batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
+		batch.end();
 
+
+
+
+		parentObject.getTurnManager().update();
 	}
 
 	@Override

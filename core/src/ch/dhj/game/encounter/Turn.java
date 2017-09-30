@@ -29,8 +29,8 @@ public class Turn {
 	public boolean update() {
 		if(!started) return false;
 		Action a = actions.get(index);
-//		if(a.action())
-//			index++;
+		if(a.action())
+			index++;
 		return actions.size() == index+1; //+1 because index start at 0 and actions.size() at 1
 	}
 
