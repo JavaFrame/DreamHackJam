@@ -1,5 +1,6 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -30,11 +31,12 @@ public class MainMenu implements Screen {
     protected Skin skin;
     private Sprite background;
     private AssetManager assetManager;
+    private Player player;
 
-    public MainMenu(AssetManager assetManager, SpriteBatch batch) {
+    public MainMenu(AssetManager assetManager, SpriteBatch batch, Player p) {
         this.assetManager = assetManager;
         this.batch = batch;
-
+        player = p;
 
         this.assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
         this.assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
@@ -77,7 +79,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player));
             }
         });
         exitButton.addListener(new ClickListener(){

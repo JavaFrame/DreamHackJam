@@ -1,20 +1,38 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.maps.MapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.awt.*;
+import java.util.Comparator;
+
+import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
+import static ch.dhj.game.utils.WorldConfig.*;
+import static java.awt.Color.*;
 
 /**
  * Created by Sebastian on 29.09.2017.
@@ -29,17 +47,41 @@ public class OverworldScreen implements Screen {
 	private OrthographicCamera camera;
 	private AssetManager assetManager;
 	private TextureAtlas atlasPlayerImage;
-	private Sprite spritePlayerImage;
+    private float jonnyWaveDuration;
+    private Animation jonnyWaveAnimation;
+    private float jonnyWaveAnimationTime;
+    private Image playerImage;
+    private TiledMap map;
+    private MapRenderer mapRenderer;
+    private Player player;
 
-	public OverworldScreen(AssetManager assetManager, SpriteBatch batch) {
+
+    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p) {
 		this.assetManager = assetManager;
 		this.batch = batch;
+        player = p;
 
-        this.assetManager.load("textures/playerImage.pack", TextureAtlas.class);
+        this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
+        this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        this.assetManager.load("map/test.tmx", TiledMap.class);
         assetManager.finishLoading();
 
-        atlasPlayerImage = assetManager.get("textures/playerImage.pack");
-        spritePlayerImage = new Sprite(atlasPlayerImage.findRegion("square-rounded-512"));
+        map = assetManager.get("map/test.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
+
+
+        atlasPlayerImage = assetManager.get("textures/jonnySprite.pack");
+
+        jonnyWaveDuration = 1.0f / 1.5f;
+        Array<TextureAtlas.AtlasRegion> jonnyWaveRegions = new Array<TextureAtlas.AtlasRegion>(atlasPlayerImage.getRegions());
+        jonnyWaveRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
+            @Override
+            public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        });
+        jonnyWaveAnimation = new Animation(jonnyWaveDuration, jonnyWaveRegions, Animation.PlayMode.LOOP);
+        jonnyWaveAnimationTime = Gdx.graphics.getDeltaTime();
 
 		atlasButtons = assetManager.get("textures/defaultSkin.pack");
 		skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
@@ -102,10 +144,12 @@ public class OverworldScreen implements Screen {
         player.setFillParent(true);
         player.bottom().left();
 
+        playerImage = new Image((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime));
+
         Table playerProfile = new Table();
         playerProfile.setFillParent(true);
         playerProfile.bottom().left();
-        playerProfile.add(new Image(spritePlayerImage)).width(150).height(150);
+        playerProfile.add(playerImage).width(150).height(150);
 
         Table playerStats = new Table();
         playerStats.setFillParent(true);
@@ -113,6 +157,11 @@ public class OverworldScreen implements Screen {
 
         Label hp = new Label("Hp: ",skin);
         Label level = new Label("Level: ",skin);
+        Label exp = new Label("EXP: ",skin);
+        Label hpPlayer = new Label(this.player.getLifes() + "/" + this.player.getMaxLifes(),skin);
+        Label levelPlayer = new Label(String.valueOf(this.player.getLevel()),skin);
+        Label expPlayer = new Label(this.player.getExp() + "/" + this.player.getTotalExpToNextLevel(),skin);
+
         TextButton inventory = new TextButton("Inventory", skin);
 
         inventory.pad(5,20,5,20);
@@ -122,15 +171,26 @@ public class OverworldScreen implements Screen {
                 // Open Inventory
             }
         });
+        playerStats.add(hp).left();
+        playerStats.add(hpPlayer).left();
+        playerStats.row();
+        playerStats.add(level).left();
+        playerStats.add(levelPlayer).left();
+        playerStats.row();
+        playerStats.add(exp).left();
+        playerStats.add(expPlayer).left();
 
-        playerStats.add(hp);
-        playerStats.row();
-        playerStats.add(level);
-        playerStats.row();
-        playerStats.add(inventory).width(150);
+        Table playerInv = new Table();
+        playerInv.setFillParent(true);
+        playerInv.bottom().left();
+
+        playerInv.add(playerStats);
+        playerInv.row();
+        playerInv.add(inventory).width(150);
 
         player.add(playerProfile);
-        player.add(playerStats);
+        player.add(playerInv);
+
         stage.addActor(player);
 	}
 
@@ -139,10 +199,14 @@ public class OverworldScreen implements Screen {
 		Gdx.gl.glClearColor(1.0f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.begin();
+        jonnyWaveAnimationTime += Gdx.graphics.getDeltaTime();
+        playerImage.setDrawable(new TextureRegionDrawable((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime)));
+
+        batch.begin();
 		batch.setProjectionMatrix(camera.combined);
-		// DRAW
-		batch.end();
+        batch.end();
+        mapRenderer.setView(camera);
+        mapRenderer.render();
 
 		stage.act();
 		stage.draw();
@@ -178,5 +242,6 @@ public class OverworldScreen implements Screen {
 		skin.dispose();
 		stage.dispose();
 		atlasPlayerImage.dispose();
+		map.dispose();
 	}
 }
