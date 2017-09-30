@@ -4,7 +4,7 @@ import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.Turn;
 import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.encounter.actions.WeaponAction;
-import ch.dhj.game.obj.WorldConfig;
+import ch.dhj.game.utils.WorldConfig;
 import ch.dhj.game.player.Enemy;
 import ch.dhj.game.player.Player;
 import com.badlogic.gdx.Gdx;
@@ -21,8 +21,6 @@ import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -34,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
-import static ch.dhj.game.obj.WorldConfig.PPM;
-import static ch.dhj.game.obj.WorldConfig.scale;
+import static ch.dhj.game.utils.WorldConfig.PPM;
+import static ch.dhj.game.utils.WorldConfig.scale;
 
 /**
  * Created by Sebastian on 30.09.2017.

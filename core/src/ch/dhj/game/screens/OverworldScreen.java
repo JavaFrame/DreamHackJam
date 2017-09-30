@@ -1,6 +1,6 @@
 package ch.dhj.game.screens;
 
-import ch.dhj.game.obj.WorldConfig;
+import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;

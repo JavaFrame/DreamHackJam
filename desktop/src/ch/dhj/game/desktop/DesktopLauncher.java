@@ -1,6 +1,6 @@
 package ch.dhj.game.desktop;
 
-import ch.dhj.game.obj.WorldConfig;
+import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import ch.dhj.game.DreamHackJamGame;

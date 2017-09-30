@@ -1,9 +1,9 @@
 package ch.dhj.game.obj;
 
+import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.logging.Logger;
 
-import static ch.dhj.game.obj.WorldConfig.scale;
+import static ch.dhj.game.utils.WorldConfig.scale;
 
 /**
  * Created by Sebastian on 29.09.2017.
