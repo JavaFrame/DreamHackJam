@@ -7,7 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -25,19 +26,21 @@ public class MainMenu implements Screen {
     protected Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
-    private static Color BACKGROUND_COLOR = new Color();
-    private TextureAtlas atlas;
+    private TextureAtlas atlasButtons;
+    private TextureAtlas atlasBackground;
     protected Skin skin;
+    private Sprite background;
 
     public MainMenu() {
-        BACKGROUND_COLOR.set(Color.CYAN);
+        atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
+        skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
+        atlasBackground = new TextureAtlas("textures/atlasMainMenu.pack");
 
-        atlas = new TextureAtlas("textures/atlasMainMenu.pack");
-        skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlas);
+        background = new Sprite(atlasBackground.findRegion("Placeholder_titel"));
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT, camera);
+        viewport = new FillViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
@@ -55,18 +58,19 @@ public class MainMenu implements Screen {
         Table mainTable = new Table();
         //Set table to fill stage
         mainTable.setFillParent(true);
-        //Set alignment of contents in the table.
-        mainTable.top();
 
         //Create buttons
         TextButton playButton = new TextButton("Play", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
+        playButton.pad(10,100,10,100);
+        exitButton.pad(10,100,10,100);
+
         //Add listeners to buttons
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                ((Game)Gdx.app.getApplicationListener()).setScreen(new PlayScreen());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen());
             }
         });
         exitButton.addListener(new ClickListener(){
@@ -78,17 +82,21 @@ public class MainMenu implements Screen {
 
         //Add buttons to table
         mainTable.add(playButton);
-        mainTable.row();
+        mainTable.row().pad(10,100,10,100);
         mainTable.add(exitButton);
-
         //Add table to stage
         stage.addActor(mainTable);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+        Gdx.gl.glClearColor(1.0f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.setProjectionMatrix(camera.combined);
+        background.draw(batch);
+        batch.end();
 
         stage.act();
         stage.draw();
@@ -119,4 +127,9 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
+        atlasBackground.dispose();
+        atlasButtons.dispose();
+        batch.dispose();
+        skin.dispose();
+        stage.dispose();
     }}
