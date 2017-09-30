@@ -1,5 +1,7 @@
 package ch.dhj.game.player;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +18,30 @@ public class Player {
 	private int level;
 	private int exp;
 	private int totalExpToNextLevel;
-	private int actionCount;
+	private int maxActionCount;
 	private int lifes;
 	private int maxLifes;
 	private List<Weapon> weapons;
+	private Weapon currentWeapon;
+	private List<Weapon> spells = new ArrayList<Weapon>(3);
 	//private List<Player> allies;
 	private List<String> changes = new ArrayList<String>();
+	private AnimationSet animationSet;
 
+	private Vector2 position;
 
-	public Player(String name, int level, int exp, int totalExpToNextLevel, int actionCount, int lifes, int maxLifes, List<Weapon> weapons) {
+	public Player(String name, int level, int exp, int totalExpToNextLevel, int actionCount, int lifes, int maxLifes, List<Weapon> weapons, AnimationSet animationSet) {
 		this.name = name;
 		this.level = level;
 		this.exp = exp;
 		this.totalExpToNextLevel = totalExpToNextLevel;
-		this.actionCount = actionCount;
+		this.maxActionCount = actionCount;
 		this.lifes = lifes;
 		this.maxLifes = maxLifes;
 		this.weapons = weapons;
+		this.animationSet = animationSet;
+
+		this.position = new Vector2(0, 0);
 	}
 
 	public String getName() {
@@ -59,6 +68,19 @@ public class Player {
 		this.exp = exp;
 	}
 
+	public Weapon getCurrentWeapon() {
+		return currentWeapon;
+	}
+
+	public void setCurrentWeapon(Weapon currentWeapon) {
+		this.currentWeapon = currentWeapon;
+	}
+
+	public List<Weapon> getSpells() {
+		return spells;
+	}
+
+
 	public void addExp(int exp) {
 		setExp(getExp() + exp);
 		if(getExp() >= getTotalExpToNextLevel()) {
@@ -73,11 +95,11 @@ public class Player {
 			setLifes(getMaxLifes());
 			changes.add(String.format("%i lifes -> %i lifes", oldMaxLife, getMaxLifes()));
 
-			int oldActionCount = getActionCount();
-			setActionCount((int) (getActionCount() * ACTIONS_FACTOR));
-			if(getActionCount() > MAX_ACTIONS)
-				setActionCount(MAX_ACTIONS);
-			changes.add(String.format("%i ap -> %i ap", oldActionCount, getActionCount()));
+			int oldActionCount = getMaxActionCount();
+			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));
+			if(getMaxActionCount() > MAX_ACTIONS)
+				setMaxActionCount(MAX_ACTIONS);
+			changes.add(String.format("%i ap -> %i ap", oldActionCount, getMaxActionCount()));
 		}
 	}
 
@@ -89,12 +111,12 @@ public class Player {
 		this.totalExpToNextLevel = totalExpToNextLevel;
 	}
 
-	public int getActionCount() {
-		return actionCount;
+	public int getMaxActionCount() {
+		return maxActionCount;
 	}
 
-	public void setActionCount(int actionCount) {
-		this.actionCount = actionCount;
+	public void setMaxActionCount(int maxActionCount) {
+		this.maxActionCount = maxActionCount;
 	}
 
 	public int getLifes() {
@@ -119,5 +141,21 @@ public class Player {
 
 	public void setMaxLifes(int maxLifes) {
 		this.maxLifes = maxLifes;
+	}
+
+	public boolean isDead() {
+		return getLifes() <= 0;
+	}
+
+	public AnimationSet getAnimationSet() {
+		return animationSet;
+	}
+
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
 	}
 }

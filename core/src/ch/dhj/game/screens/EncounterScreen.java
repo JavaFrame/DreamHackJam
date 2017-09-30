@@ -1,6 +1,12 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.encounter.Action;
+import ch.dhj.game.encounter.Turn;
+import ch.dhj.game.encounter.TurnManager;
+import ch.dhj.game.encounter.actions.WeaponAction;
 import ch.dhj.game.obj.WorldConfig;
+import ch.dhj.game.player.Enemy;
+import ch.dhj.game.player.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,11 +21,17 @@ import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
 import static ch.dhj.game.obj.WorldConfig.PPM;
@@ -40,14 +52,25 @@ public class EncounterScreen implements Screen {
 
 	private Sprite background;
 
-	private EncounterState state = EncounterState.PLAYER_TURN;
+	private EncounterConfig config;
+	private Player player;
 
 	private Skin skin;
 	private TextureAtlas atlasButtons;
 	private Stage stage;
 	private Table table;
+	private Label actionsL;
 
-	public EncounterScreen(int encounter_id, AssetManager assetManager, SpriteBatch batch) {
+	private int currentActionCount = 0;
+	private Turn playerTurn;
+
+	private TurnManager turnManager = new TurnManager();
+
+	private EncounterState state = EncounterState.PLAYER_TURN;
+
+	public EncounterScreen(Player p, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
+		this.player = p;
+		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = batch;
 
@@ -59,12 +82,12 @@ public class EncounterScreen implements Screen {
 
 		//asset loading
 		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		assetManager.load("map/test.tmx", TiledMap.class);
-		assetManager.load(ENCOUNTER_1_BG, Texture.class);
+		assetManager.load(config.map, TiledMap.class);
+		assetManager.load(config.background, Texture.class);
 		assetManager.finishLoading();
 
 		//map loading
-		map = assetManager.get("map/test.tmx");
+		map = assetManager.get(config.map);
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
 
 		//background loading
@@ -83,16 +106,22 @@ public class EncounterScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		table.setDebug(true);
+		//table.setDebug(true);
 
-		ProgressBar progressBar = new ProgressBar(0, 100, 1, false, skin);
-		TextButton attackB = new TextButton("Attack", skin);
+		actionsL = new Label(String.format("%d/%d Actions", currentActionCount, p.getMaxActionCount()), skin);
+		final TextButton attackB = new TextButton("Attack", skin);
+		attackB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				addPlayerAction(new WeaponAction(player.getCurrentWeapon()));
+			}
+		});
 		TextButton spellB = new TextButton("Spell", skin);
 		TextButton defendB = new TextButton("Defend", skin);
 		TextButton fleeB = new TextButton("Flee", skin);
 
 		table.left();
-		table.add(progressBar);
+		table.add(actionsL);
 		table.row();
 		table.add(attackB).width(100);
 		table.row();
@@ -103,6 +132,15 @@ public class EncounterScreen implements Screen {
 		table.add(fleeB).width(100);
 	}
 
+	private void addPlayerAction(Action a) {
+		playerTurn.addAction(a);
+		currentActionCount++;
+		actionsL.setText(String.format("%d/%d Actions", currentActionCount, player.getMaxActionCount()));
+		if(currentActionCount >= player.getMaxActionCount()) {
+			turnManager.getTurns().add(playerTurn);
+			playerTurn = new Turn();
+		}
+	}
 
 	@Override
 	public void show() {
@@ -111,6 +149,7 @@ public class EncounterScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		turnManager.update();
 		//render stuff
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -157,10 +196,17 @@ public class EncounterScreen implements Screen {
 		PLAYER_TURN
 	}
 
-	public class EncounterConfig {
+	public static class EncounterConfig {
 		public int id;
 		public String background;
 		public String map;
+		public ArrayList<Enemy> enemies;
 
+		public EncounterConfig(int id, String background, String map, Enemy[] enemies) {
+			this.id = id;
+			this.background = background;
+			this.map = map;
+			this.enemies = new ArrayList(Arrays.asList(enemies));
+		}
 	}
 }
