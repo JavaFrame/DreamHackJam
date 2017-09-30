@@ -39,8 +39,8 @@ public class DreamHackJamGame extends Game {
 		p.getSpells().add(weapons.get(1));
 		p.getSpells().add(weapons.get(2));
 
-		//this.setScreen(new MainMenu(assetManager, batch));
-		this.setScreen(
+		this.setScreen(new MainMenu(assetManager, batch, p));
+		/*this.setScreen(
 				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
 						new Enemy[]{new Enemy(
 								new Vector2(100, 100),
@@ -60,7 +60,7 @@ public class DreamHackJamGame extends Game {
 							}
 						}}),
 						assetManager,
-						batch));
+						batch));*/
 	}
 
 	@Override
