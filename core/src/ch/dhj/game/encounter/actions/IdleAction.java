@@ -10,12 +10,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class IdleAction implements Action {
 
 	@Override
+	public void init(Player you, Player enemy) {
+
+	}
+
+	@Override
 	public boolean action(Player you, Player enemy) {
 		return true;
 	}
 
 	@Override
-	public TextureRegion getFrame() {
+	public TextureRegion getFrame(Player you, Player enemy) {
 		return null;
 	}
 }
