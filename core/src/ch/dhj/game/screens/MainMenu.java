@@ -4,6 +4,7 @@ import ch.dhj.game.obj.WorldConfig;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,15 +31,23 @@ public class MainMenu implements Screen {
     private TextureAtlas atlasBackground;
     protected Skin skin;
     private Sprite background;
+    private AssetManager assetManager;
 
-    public MainMenu() {
-        atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
+    public MainMenu(AssetManager assetManager, SpriteBatch batch) {
+        this.assetManager = assetManager;
+        this.batch = batch;
+
+
+        this.assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
+        this.assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
+        this.assetManager.finishLoading();
+
+        atlasButtons = this.assetManager.get("textures/defaultSkin.pack");
         skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
-        atlasBackground = new TextureAtlas("textures/atlasMainMenu.pack");
+        atlasBackground = this.assetManager.get("textures/atlasMainMenu.pack");
 
         background = new Sprite(atlasBackground.findRegion("Placeholder_titel"));
 
-        batch = new SpriteBatch();
         camera = new OrthographicCamera();
         viewport = new FillViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
         viewport.apply();
@@ -46,7 +55,7 @@ public class MainMenu implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
-        stage = new Stage(viewport, batch);
+        stage = new Stage(viewport, this.batch);
     }
 
     @Override
@@ -70,7 +79,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch));
             }
         });
         exitButton.addListener(new ClickListener(){
@@ -81,9 +90,9 @@ public class MainMenu implements Screen {
         });
 
         //Add buttons to table
-        mainTable.add(playButton);
+        mainTable.add(playButton).width(250);
         mainTable.row().pad(10,100,10,100);
-        mainTable.add(exitButton);
+        mainTable.add(exitButton).width(250);
         //Add table to stage
         stage.addActor(mainTable);
     }

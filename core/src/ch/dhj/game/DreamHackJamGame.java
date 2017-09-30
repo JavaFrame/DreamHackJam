@@ -19,10 +19,10 @@ public class DreamHackJamGame extends Game {
 
 	@Override
 	public void create () {
-		this.setScreen(new MainMenu());
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
-		this.setScreen(new EncounterScreen(assetManager, batch));
+		this.setScreen(new MainMenu(assetManager, batch));
+		//this.setScreen(new EncounterScreen(assetManager, batch));
 	}
 
 	@Override

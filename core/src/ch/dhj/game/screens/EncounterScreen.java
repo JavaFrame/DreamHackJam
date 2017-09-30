@@ -56,7 +56,7 @@ public class EncounterScreen implements Screen{
 		map = assetManager.get("map/test.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
 
-		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
+		background = new Sprite(assetManager.get(ENCOUNTER_1_BG, Texture.class));
 		background.setPosition(0, 0);
 		background.setSize(scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_WIDTH));
 
