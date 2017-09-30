@@ -72,6 +72,8 @@ public class Player extends Figure{
 		table.add(defendB).width(100);
 		table.row();
 		table.add(fleeB).width(100);
+
+
 	}
 
 	public void addExp(int exp) {

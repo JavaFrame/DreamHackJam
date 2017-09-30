@@ -2,13 +2,12 @@ package ch.dhj.game.screens;
 
 import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -27,7 +26,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.awt.*;
 import java.util.Comparator;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
@@ -140,9 +138,8 @@ public class OverworldScreen implements Screen {
 		mainTable.add(saveAndQuit).width(150);
 		stage.addActor(mainTable);
 
-		Table player = new Table();
-        player.setFillParent(true);
-        player.bottom().left();
+		final Table playerGUI = new Table();
+        playerGUI.bottom().left();
 
         playerImage = new Image((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime));
 
@@ -151,8 +148,7 @@ public class OverworldScreen implements Screen {
         playerProfile.bottom().left();
         playerProfile.add(playerImage).width(150).height(150);
 
-        Table playerStats = new Table();
-        playerStats.setFillParent(true);
+        final Table playerStats = new Table();
         playerStats.bottom().left();
 
         Label hp = new Label("Hp: ",skin);
@@ -169,6 +165,8 @@ public class OverworldScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Open Inventory
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player));
+                pause();
             }
         });
         playerStats.add(hp).left();
@@ -181,17 +179,22 @@ public class OverworldScreen implements Screen {
         playerStats.add(expPlayer).left();
 
         Table playerInv = new Table();
-        playerInv.setFillParent(true);
         playerInv.bottom().left();
 
         playerInv.add(playerStats);
         playerInv.row();
         playerInv.add(inventory).width(150);
 
-        player.add(playerProfile);
-        player.add(playerInv);
+        playerGUI.add(playerProfile);
+        playerGUI.add(playerInv);
 
-        stage.addActor(player);
+        Pixmap lightGrayBackground = new Pixmap(1,1, Pixmap.Format.RGB565);
+        lightGrayBackground.setColor(Color.GRAY);
+        lightGrayBackground.fill();
+        playerGUI.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
+        playerGUI.padRight(20);
+        playerGUI.pack();
+        stage.addActor(playerGUI);
 	}
 
 	@Override
