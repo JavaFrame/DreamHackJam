@@ -22,7 +22,7 @@ public class DreamHackJamGame extends Game {
 		this.setScreen(new MainMenu());
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
-		this.setScreen(new EncounterScreen(assetManager, batch));
+		this.setScreen(new EncounterScreen(0, assetManager, batch));
 	}
 
 	@Override
