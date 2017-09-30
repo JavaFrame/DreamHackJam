@@ -36,6 +36,8 @@ public class EncounterScreen implements Screen{
 
 	private Sprite background;
 
+	private EncounterState state = EncounterState.PLAYER_TURN;
+
 	public EncounterScreen(AssetManager assetManager, SpriteBatch batch) {
 		this.assetManager = assetManager;
 		this.batch = batch;
@@ -54,7 +56,6 @@ public class EncounterScreen implements Screen{
 		map = assetManager.get("map/test.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
 
-
 		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
 		background.setPosition(0, 0);
 		background.setSize(scale(WorldConfig.VIEWPORT_WIDTH), scale(WorldConfig.VIEWPORT_WIDTH));
@@ -69,6 +70,14 @@ public class EncounterScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
+		//upadate stuf
+		if(state == EncounterState.PLAYER_TURN) {
+
+		} else if(state == EncounterState.ENEMY_TURN) {
+
+		}
+
+		//render stuff
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -104,5 +113,10 @@ public class EncounterScreen implements Screen{
 	@Override
 	public void dispose() {
 
+	}
+
+	private enum EncounterState {
+		ENEMY_TURN,
+		PLAYER_TURN
 	}
 }
