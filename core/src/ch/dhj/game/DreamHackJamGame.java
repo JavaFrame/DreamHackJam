@@ -1,5 +1,6 @@
 package ch.dhj.game;
 
+import ch.dhj.game.screens.EncounterScreen;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -13,11 +14,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class DreamHackJamGame extends Game {
 
 	private AssetManager assetManager;
+	private SpriteBatch batch;
 
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
-		this.setScreen(new OverworldScreen(assetManager));
+		batch = new SpriteBatch();
+		this.setScreen(new EncounterScreen(assetManager, batch));
 	}
 
 	@Override
