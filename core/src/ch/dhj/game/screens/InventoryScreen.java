@@ -130,6 +130,9 @@ public class InventoryScreen  implements Screen {
         navyBackground.fill();
 
         Table playerTable = new Table();
+        playerTable.setWidth(mainInvTable.getWidth() * .3f);
+        playerTable.setHeight(mainInvTable.getHeight() * .9f);
+
         Table playerImgTable = new Table();
 
         playerImage = new Image((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime));
@@ -175,31 +178,34 @@ public class InventoryScreen  implements Screen {
         Label spell4Equiped = new Label("Spell 3:", skin);
         Image spell4EquipedImg = new Image(/*TODO: Hier Bild von Equiped Spell 4*/);
 
+        Table equipedItems = new Table();
+
+        equipedItems.add(meeleEquiped).center().padRight(35);
+        equipedItems.add(rangedEquiped).center().padLeft(35);
+        equipedItems.row();
+        equipedItems.add(meeleEquipedImg).center().padRight(35).width(50).height(50);
+        equipedItems.add(rangedEquipedImg).center().padLeft(35).width(50).height(50);
+        equipedItems.row();
+        equipedItems.add(spell1Equiped).center().padRight(35);
+        equipedItems.add(spell2Equiped).center().padLeft(35);
+        equipedItems.row();
+        equipedItems.add(spell1EquipedImg).center().padRight(35).width(50).height(50);
+        equipedItems.add(spell2EquipedImg).center().padLeft(35).width(50).height(50);
+        equipedItems.row();
+        equipedItems.add(spell3Equiped).center().padRight(35);
+        equipedItems.add(spell4Equiped).center().padLeft(35);
+        equipedItems.row();
+        equipedItems.add(spell3EquipedImg).center().padRight(35).width(50).height(50);
+        equipedItems.add(spell4EquipedImg).center().padLeft(35).width(50).height(50);
+
+        playerTable.row().padTop(35);
         playerTable.add(playerImgTable);
-        playerTable.row();
+        playerTable.row().padTop(35);
         playerTable.add(statsTable);
-        playerTable.row();
-        playerTable.row();
-        playerTable.row();
+        playerTable.row().padTop(150);
         playerTable.add(equipedLabel);
         playerTable.row();
-        playerTable.add(meeleEquiped);
-        playerTable.add(rangedEquiped);
-        playerTable.row();
-        playerTable.add(meeleEquipedImg);
-        playerTable.add(rangedEquipedImg);
-        playerTable.row();
-        playerTable.add(spell1Equiped);
-        playerTable.add(spell2Equiped);
-        playerTable.row();
-        playerTable.add(spell1EquipedImg);
-        playerTable.add(spell2EquipedImg);
-        playerTable.row();
-        playerTable.add(spell3Equiped);
-        playerTable.add(spell4Equiped);
-        playerTable.row();
-        playerTable.add(spell3EquipedImg);
-        playerTable.add(spell4EquipedImg);
+        playerTable.add(equipedItems);
 
         Table inventoryTable = new Table();
 
@@ -207,7 +213,8 @@ public class InventoryScreen  implements Screen {
         inventoryTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGreenBackground))));
         mainInvTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(grayBackground))));
 
-        mainInvTable.add(playerTable);
+        mainInvTable.top().left();
+        mainInvTable.add(playerTable).padLeft(20).padTop(20);
         mainInvTable.add(inventoryTable);
 
         stage.addActor(mainInvTable);
