@@ -1,12 +1,20 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.obj.RootObject;
+import ch.dhj.game.obj.WorldConfig;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Sebastian on 29.09.2017.
  */
 public class OverworldScreen implements Screen {
+	private RootObject rootObject;
 
+	public OverworldScreen() {
+		rootObject = new RootObject(new WorldConfig(new Vector2(0, 0)));
+		rootObject.init();
+	}
 
 	@Override
 	public void show() {
@@ -15,7 +23,7 @@ public class OverworldScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
+		rootObject.render(delta);
 	}
 
 	@Override
@@ -40,6 +48,6 @@ public class OverworldScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
+		rootObject.dispose();
 	}
 }

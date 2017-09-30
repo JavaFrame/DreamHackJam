@@ -1,38 +1,40 @@
 package ch.dhj.game.obj;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Created by Sebastian on 29.09.2017.
- * Represents a general object. This object will be updated by the {@link ObjectManager}
+ * Represents a general object. This object will be updated by the {@link ParentObject}
  */
 public abstract class GObject {
-	private ObjectManager parent;
+	private ParentObject parent;
 
 	/**
-	 * called from {@link ObjectManager#init()} which gets called from the {@link Screen}
+	 * called from {@link ParentObject#init()} which gets called from the {@link Screen}
 	 */
 	public abstract void init();
 
 	/**
-	 * called from {@link ObjectManager#render(float)} which gets called from {@link Screen#render(float)}
+	 * called from {@link ParentObject#render(float)} which gets called from {@link Screen#render(float)}
 	 * @param delta
 	 */
 	public abstract void render(float delta);
 
 	/**
-	 * called from {@link ObjectManager#dispose()} which gets called from {@link Screen#dispose()}
+	 * called from {@link ParentObject#dispose()} which gets called from {@link Screen#dispose()}
 	 */
 	public abstract void dispose();
 
 
 	/**
-	 * Sets the parent of this GObject. This function is called from {@link ObjectManager#add(GObject)} when the object is added.
+	 * Sets the parent of this GObject. This function is called from {@link ParentObject#add(GObject)} when the object is added.
 	 * @param parent
 	 */
-	protected void setParent(ObjectManager parent) {
+	protected void setParent(ParentObject parent) {
 		this.parent = parent;
 	}
 
@@ -40,8 +42,22 @@ public abstract class GObject {
 	 * Returns the parent of this object or null if it either isn't added to a parent or
 	 * @return
 	 */
-	public ObjectManager getParent() {
+	public ParentObject getParent() {
 		return parent;
+	}
+
+	public boolean hasParent() {
+		return getParent() != null;
+	}
+
+	public WorldConfig getWorldConfig() {
+		if(getParent() == null) return null;
+		return getParent().getWorldConfig();
+	}
+
+	public OrthographicCamera getCamera() {
+		if(getParent() == null) return null;
+		return getParent().getCamera();
 	}
 
 	/**
@@ -58,6 +74,12 @@ public abstract class GObject {
 	 * @return
 	 */
 	public SpriteBatch getBatch() {
+		if(getParent() == null) return null;
 		return getParent().getBatch();
+	}
+
+	public TiledMap getMap() {
+		if(getParent() == null) return null;
+		return getParent().getMap();
 	}
 }
