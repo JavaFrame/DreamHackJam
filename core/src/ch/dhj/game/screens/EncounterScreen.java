@@ -1,13 +1,8 @@
 package ch.dhj.game.screens;
 
-import ch.dhj.game.encounter.Action;
-import ch.dhj.game.encounter.Turn;
-import ch.dhj.game.encounter.TurnManager;
-import ch.dhj.game.encounter.actions.WeaponAction;
 import ch.dhj.game.encounter.obj.ParentObject;
+import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.utils.WorldConfig;
-import ch.dhj.game.player.Enemy;
-import ch.dhj.game.player.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,18 +12,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import javafx.scene.Parent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
