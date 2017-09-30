@@ -1,5 +1,6 @@
 package ch.dhj.game.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
@@ -12,6 +13,7 @@ public class Weapon {
 	private boolean multipleTargets;
 	private boolean melee;
 	private boolean spell;
+	private Texture icon;
 
 	private Animation animation;
 
@@ -23,6 +25,7 @@ public class Weapon {
 		this.melee = melee;
 		this.spell = spell;
 		this.animation = animation;
+//		this.icon = icon;
 	}
 
 	public String getName() {
@@ -72,4 +75,9 @@ public class Weapon {
 	public Animation getAnimation() {
 		return animation;
 	}
+
+	public Texture getIcon() {return icon;}
+
+	public void setIcon(Texture icon) {this.icon = icon;}
+
 }

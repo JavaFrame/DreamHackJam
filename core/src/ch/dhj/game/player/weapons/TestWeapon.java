@@ -2,6 +2,7 @@ package ch.dhj.game.player.weapons;
 
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
