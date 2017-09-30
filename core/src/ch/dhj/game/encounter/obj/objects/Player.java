@@ -39,6 +39,8 @@ public class Player extends Figure{
 
 	private Turn currentTurn = new Turn();
 
+	private Weapon selectedWeapon;
+
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
 
@@ -73,22 +75,39 @@ public class Player extends Figure{
 		stage = new Stage(new StretchViewport(1920/2, 1080/2));
 		Gdx.input.setInputProcessor(stage);
 
-		final Stack stackPane = new Stack();
-		stage.addActor(stackPane);
-
-		final List<Enemy> enemies = new List<Enemy>(skin);
-		enemies.setItems(getEncounterConfig().enemies.toArray(new Enemy[]{}));
-		enemies.setVisible(false);
+		final Table tablePane = new Table();
+		stage.addActor(tablePane);
 
 		turnActionTable = new Table();
 		turnActionTable.setFillParent(false);
-		stackPane.add(turnActionTable);
+		tablePane.add(new Container<Table>(turnActionTable)).left();
 
-		stackPane.add(enemies);
+		final Table chooseEnemyTable = new Table(skin);
+		chooseEnemyTable.setVisible(false);
 
-		//turnActionTable.setDebug(true);
+		final List<Enemy> enemies = new List<Enemy>(skin);
+		enemies.setItems(getEncounterConfig().enemies.toArray(new Enemy[]{}));
+		chooseEnemyTable.add(enemies);
 
-		//actionsL = new Label(String.format("%d/%d Actions", currentActionCount, player.getMaxActionCount()), skin);
+		chooseEnemyTable.row();
+
+		TextButton doButton = new TextButton("Do", skin);
+		doButton.pad(10);
+		doButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(selectedWeapon.isSpell()) { //weapon is a spell
+
+				} else if(selectedWeapon.isMelee()) { //weapon is a mele attack
+					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}));
+				} else { //weapon is a range weapon
+
+				}
+			}
+		});
+		chooseEnemyTable.add(doButton);
+
+		actionsL = new Label(String.format("%d/%d Actions", actions, getMaxActionCount()), skin);
 
 		final TextButton attackB = new TextButton("Attack", skin);
 		if(getCurrentWeapon() == null) {
@@ -102,8 +121,10 @@ public class Player extends Figure{
 				Weapon w = Player.this.getCurrentWeapon();
 				if(w.isMultipleTargets()) {
 					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray(new Enemy[]{})));
+					return;
 				}
-				turnActionTable.setVisible(false);
+				selectedWeapon = w;
+				chooseEnemyTable.setVisible(true);
 			}
 		});
 		TextButton spellB = new TextButton("Spell", skin);
@@ -113,8 +134,6 @@ public class Player extends Figure{
 		turnActionTable.left();
 		turnActionTable.add(actionsL);
 		turnActionTable.row();
-		turnActionTable.add(enemies);
-		turnActionTable.row();
 		turnActionTable.add(attackB).width(200);
 		turnActionTable.row();
 		turnActionTable.add(spellB).width(200);
@@ -122,6 +141,12 @@ public class Player extends Figure{
 		turnActionTable.add(defendB).width(200);
 		turnActionTable.row();
 		turnActionTable.add(fleeB).width(200);
+
+		tablePane.add(chooseEnemyTable).pad(5);
+
+		tablePane.pack();
+		tablePane.setX(tablePane.getWidth()/2);
+		tablePane.setY(tablePane.getHeight()/2);
 	}
 
 	private void addActionToTurn(Action a) {
@@ -162,7 +187,9 @@ public class Player extends Figure{
 	public void render(float delta, SpriteBatch batch) {
 		super.render(delta, batch);
 		stage.act();
+		batch.end();
 		stage.draw();
+		batch.begin();
 	}
 
 	@Override

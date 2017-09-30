@@ -74,7 +74,6 @@ public class ParentObject {
 	public void render(float delta, SpriteBatch batch) {
 		for(GObject obj :  objects)
 			obj.render(delta, batch);
-
 	}
 
 	public void resize(int width, int height) {

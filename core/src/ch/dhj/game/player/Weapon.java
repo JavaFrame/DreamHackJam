@@ -10,15 +10,17 @@ public class Weapon {
 	private int actionCost;
 	private int damge;
 	private boolean multipleTargets;
+	private boolean melee;
 	private boolean spell;
 
 	private Animation animation;
 
-	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean spell, Animation animation) {
+	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean melee, boolean spell, Animation animation) {
 		this.name = name;
 		this.actionCost = actionCost;
 		this.damge = damge;
 		this.multipleTargets = multipleTargets;
+		this.melee = melee;
 		this.spell = spell;
 		this.animation = animation;
 	}
@@ -53,6 +55,10 @@ public class Weapon {
 
 	public void setMultipleTargets(boolean multipleTargets) {
 		this.multipleTargets = multipleTargets;
+	}
+
+	public boolean isMelee() {
+		return melee;
 	}
 
 	public boolean isSpell() {

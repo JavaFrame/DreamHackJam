@@ -64,7 +64,7 @@ public class EncounterScreen implements Screen {
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
 
 		//background loading
-		background = new Sprite((Texture) assetManager.get(ENCOUNTER_1_BG, Texture.class));
+		background = new Sprite((Texture) assetManager.get(config.background, Texture.class));
 		background.setPosition(0, 0);
 		background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
@@ -80,21 +80,21 @@ public class EncounterScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		//render stuff
-		Gdx.gl.glClearColor(0, 1, 1, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			//background.draw(batch);
+			background.draw(batch);
 		batch.end();
 
 		mapRenderer.setView(camera);
-		//mapRenderer.render();
+		mapRenderer.render();
 
 		batch.begin();
 			parentObject.render(delta, batch);
-			batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
+			//batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
 		batch.end();
 
 

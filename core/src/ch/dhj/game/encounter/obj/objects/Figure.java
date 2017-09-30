@@ -34,6 +34,7 @@ public class Figure extends GObject {
 		super(position);
 		this.name = name;
 		this.animationSet = animationSet;
+		setTexture(new Texture(Gdx.files.internal("textures/Johhny.png")));
 	}
 
 	public Figure(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
@@ -45,22 +46,6 @@ public class Figure extends GObject {
 	@Override
 	public void init() {
 
-	}
-
-	@Override
-	public void render(float delta, SpriteBatch batch) {
-		//getSprite().draw(getBatch());
-		if(getTexture() != null) {
-			boolean currentlyDrawing = batch.isDrawing();
-			if (!currentlyDrawing)
-				batch.begin();
-
-			//getBatch().draw(getTexture(), getPosition().x, getPosition().y, 10000, 10000);
-
-			batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
-			if (!currentlyDrawing)
-				batch.end();
-		}
 	}
 
 	@Override

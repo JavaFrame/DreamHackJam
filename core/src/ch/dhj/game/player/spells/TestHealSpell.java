@@ -9,6 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
  */
 public class TestHealSpell extends Weapon {
 	public TestHealSpell() {
-		super("Test Heal Spell", 1, -3, false, true, new Animation(1, Gdx.files.internal("Johhny.png")));
+		super("Test Heal Spell", 1, -3, false, false, true, new Animation(1, Gdx.files.internal("Johhny.png")));
 	}
 }

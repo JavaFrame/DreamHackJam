@@ -42,7 +42,19 @@ public abstract class GObject {
 	 * called from {@link ParentObject#render(float)} which gets called from {@link Screen#render(float)}
 	 * @param delta
 	 */
-	public abstract void render(float delta, SpriteBatch batch);
+	public void render(float delta, SpriteBatch batch) {
+		if(getTexture() != null) {
+			boolean currentlyDrawing = batch.isDrawing();
+			if (!currentlyDrawing)
+				batch.begin();
+
+			batch.draw(getTexture(), getPosition().x, getPosition().y, 1000, 1000);
+
+//			batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
+			if (!currentlyDrawing)
+				batch.end();
+		}
+	}
 
 	public void resize(int width, int height) {}
 
