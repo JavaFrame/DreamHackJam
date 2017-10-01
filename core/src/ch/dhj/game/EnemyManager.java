@@ -37,7 +37,7 @@ public class EnemyManager {
 
 		enemy.setLevel(level);
 		enemy.setMaxLifes(enemy.getMaxLifes()*level);
-		enemy.setLevel(enemy.getMaxLifes());
+		enemy.setLifes(enemy.getMaxLifes());
 		int actionCount = enemy.getMaxActionCount() * level;
 		enemy.setMaxLifes((actionCount<5?actionCount:4));
 		return enemy;
