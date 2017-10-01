@@ -413,6 +413,15 @@ public class Player extends Figure{
 	private void endTurn() {
 		getTurnManager().getTurns().add(currentTurn);
 		currentTurn = new Turn();
+
+		for(Enemy e : getEncounterConfig().enemies) {
+			Turn eTurn = new Turn();
+			for(Action a : e.getActions()) {
+				eTurn.addAction(a);
+			}
+			getTurnManager().getTurns().add(eTurn);
+		}
+
 		getTurnManager().start();
 
 		chooseEnemyTable.setVisible(false);
@@ -424,7 +433,7 @@ public class Player extends Figure{
 
 	public void addExp(int exp) {
 		gottenExp += exp;
-		setExp(getExp() + exp);
+		setExp(getExp() + getTotalExpToNextLevel());
 		if(getExp() >= getTotalExpToNextLevel()) {
 			levelChangeReport = new StringBuffer();
 			setExp(0);

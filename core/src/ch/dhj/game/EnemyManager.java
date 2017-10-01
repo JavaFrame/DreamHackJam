@@ -31,9 +31,11 @@ public class EnemyManager {
 	}
 
 	public Enemy modifyEnemy(Enemy enemy, int playerLevel) {
-		int level = playerLevel + (new Random().nextInt(3)-2);
+		int level = playerLevel + (new Random().nextInt(3)-1);
 		if(level < enemy.getMinPlayerLevel())
 			level = enemy.getMinPlayerLevel();
+		if(level < 1)
+			level = 1;
 
 		enemy.setLevel(level);
 		enemy.setMaxLifes(enemy.getMaxLifes()*level);

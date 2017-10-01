@@ -64,8 +64,9 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_damaged")));
 		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_attack")));
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
-		zombieEnemy.setMaxLifes(10);
-		zombieEnemy.setLifes(10);
+		zombieEnemy.setMaxLifes(5);
+		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
+		zombieEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(zombieEnemy);
 
 		AnimationSet zombieKingSet = new AnimationSet();
@@ -77,6 +78,8 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet, 5);
 		zombieKingEnemy.setMaxLifes(10);
 		zombieKingEnemy.setLifes(10);
+		zombieKingEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieKingAttack));
+		zombieKingEnemy.setMaxActionCount(3);
 		enemyManager.addEnemy(zombieKingEnemy);
 
 		AnimationSet alienSet = new AnimationSet();
@@ -90,6 +93,8 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy alienEnemy = new AlienEnemy(Vector2.Zero, Vector2.Zero, "Alien", alienSet,3);
 		alienEnemy.setMaxLifes(10);
 		alienEnemy.setLifes(10);
+		alienEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.AlienAttack));
+		alienEnemy.setMaxActionCount(4);
 		enemyManager.addEnemy(alienEnemy);
 
 		AnimationSet trumpSet = new AnimationSet();
@@ -100,6 +105,8 @@ public class LoadingScreen extends ScreenAdapter {
 		trumpSet.getWeaponMap().put(Weapon.WeaponType.TrumpAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("trump_attack")));
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
 		trumpEnemy.setMaxLifes(10);
+		trumpEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.TrumpAttack));
+		trumpEnemy.setMaxActionCount(4);
 		enemyManager.addEnemy(trumpEnemy);
 
 		/*AnimationSet zombieKingSet = new AnimationSet();

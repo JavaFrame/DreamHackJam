@@ -24,6 +24,7 @@ public class Turn {
 	 * @return true if the turn is done else false. (It also returns false if the turn hasn't started yet)
 	 */
 	public boolean update() {
+		if(actions.size() == 0) return true;
 		Action a = actions.get(index);
 		if(toInit) {
 			a.init();
