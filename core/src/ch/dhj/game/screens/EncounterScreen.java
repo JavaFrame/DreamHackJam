@@ -49,7 +49,7 @@ public class EncounterScreen implements Screen {
 	public EncounterScreen(Player player, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
 		this.config = config;
 		this.assetManager = assetManager;
-		this.batch = batch;
+		this.batch = new SpriteBatch();
 
 		viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
@@ -57,14 +57,15 @@ public class EncounterScreen implements Screen {
 		camera.setToOrtho(false, WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
 		//asset loading
-		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		assetManager.load(config.map, TiledMap.class);
+		//assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+		//assetManager.load(config.map, TiledMap.class);
 		assetManager.load(config.background, Texture.class);
+//		assetManager.load("textures/test.png", Texture.class);
 		assetManager.finishLoading();
 
 		//map loading
-		map = assetManager.get(config.map);
-		mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
+		//map = assetManager.get(config.map);
+		//mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
 
 		//background loading
 		background = new Sprite((Texture) assetManager.get(config.background, Texture.class));
@@ -94,8 +95,8 @@ public class EncounterScreen implements Screen {
 			background.draw(batch);
 		batch.end();
 
-		mapRenderer.setView(camera);
-		mapRenderer.render();
+		/*mapRenderer.setView(camera);
+		mapRenderer.render();*/
 
 		batch.begin();
 			parentObject.render(delta, batch);

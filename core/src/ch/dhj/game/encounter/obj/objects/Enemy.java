@@ -8,8 +8,11 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Sebastian on 30.09.2017.
  */
 public abstract class Enemy extends Figure{
-	public Enemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
+	private int minPlayerLevel;
+
+	public Enemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet, int minPlayerLevel) {
 		super(position, name, animationSet);
+		this.minPlayerLevel = minPlayerLevel;
 		setSize(scale);
 		setTextureRegion(animationSet.encounterIdleAnimation.getKeyFrame(0));
 		//getTextureRegion().setSize(-1, 1);
@@ -21,4 +24,12 @@ public abstract class Enemy extends Figure{
 	}
 
 	public abstract Action[] getActions();
+
+	public int getMinPlayerLevel() {
+		return minPlayerLevel;
+	}
+
+	public void setMinPlayerLevel(int minPlayerLevel) {
+		this.minPlayerLevel = minPlayerLevel;
+	}
 }
