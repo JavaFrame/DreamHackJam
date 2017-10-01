@@ -51,7 +51,7 @@ public class LoadingScreen extends ScreenAdapter {
 			buildPlayer(atlas);
 			buildingEnemies(atlas);
 			buildOverworldAnimations();
-			player.setEnemyManager(enemyManager);
+
 			game.setScreen(new MainMenu(assetManager, game.getBatch(), player, enemyManager));
 		}
 	}
@@ -115,6 +115,8 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_flamethrower")));
+
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -122,15 +124,14 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setMaxLifes(10);
 		player.setLifes(10);
 		player.setMaxActionCount(3);
-		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
 		player.setAnimation(playerSet.encounterIdleAnimation);
-		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/6, atlas.findRegion("johhny_hover")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_gun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_shotgun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_stab")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_flamethrower")));
-		player = new Player(null, new Vector2(100,1200), new Vector2(500, 500), "Johhny", playerSet);
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));
+		player.setEnemyManager(enemyManager);
+		player.setLevel(1);
 	}
 	@Override
 	public void show() {
