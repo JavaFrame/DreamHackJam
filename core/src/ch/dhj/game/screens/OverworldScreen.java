@@ -1,6 +1,7 @@
 package ch.dhj.game.screens;
 
 import ch.dhj.game.EnemyManager;
+import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
@@ -37,8 +38,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import java.awt.*;
 import java.awt.Dialog;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.*;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
 import static ch.dhj.game.utils.WorldConfig.*;
@@ -100,7 +100,12 @@ public class OverworldScreen implements Screen {
             "What the f*ck is this? Come one we need to find out.",
             "Trump?! Really?! I mean there are a lot of ways for an apocalypse to happen and the writer picked Trump?! Well, who am I to judge. Hope I see you again Johnny."};
 
+    public enum EnemyTypes {Zombie, Alien}
+    private static final int SIZE = EnemyTypes.values().length;
+    private static final Random RANDOM = new Random();
+
     public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em, boolean lastScreenInventory) {
+
 		this.assetManager = assetManager;
 		this.batch = batch;
         player = p;
@@ -395,9 +400,19 @@ public class OverworldScreen implements Screen {
                         encounterBackground = "textures/encounter_bg_crater.png";
                         break;
                 }
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
-                        enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),1)
-                }),assetManager,batch));
+
+                int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+                if(enemyLevel == 0){enemyLevel = 1;}
+
+                int enemyCount = RANDOM.nextInt(4);
+                if(enemyCount == 0){enemyCount =1;}
+
+                Enemy[] enemies = new Enemy[enemyCount];
+                for(int i = 0; i < enemyCount; i++){
+                    enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(EnemyTypes.values()[RANDOM.nextInt(SIZE)].toString()),enemyLevel);
+                }
+
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;
