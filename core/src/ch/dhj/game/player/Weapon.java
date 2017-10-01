@@ -106,9 +106,12 @@ public class Weapon {
 		Shotgun("Shotgun", 2, 4, true, false, false, null),
 		Stab("Stab", 1, 3, false, true, false, null),
 		Heal("Heal", 1, -3, false, false, true, null),
+		Flamethrower("Flamethrower", 2, 5, false, false, false, null),
 
 		ZombieAttack("Zombie Attack", 1, 3, false, true, false, null),
-		ZombieKingAttack("Zombie King Attack", 5, 10, false, false, false, null);
+		ZombieKingAttack("Zombie King Attack", 5, 10, false, false, false, null),
+		AlienAttack("Alien Attack", 2, 5, false, false, false, null),
+		TrumpAttack("Trump Attack", 10, 20, false, false, false, null);
 
 		private String name;
 		private int actionCost;

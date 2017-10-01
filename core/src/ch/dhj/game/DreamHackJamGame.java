@@ -43,98 +43,7 @@ public class DreamHackJamGame extends Game {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
 
-		setScreen(new LoadingScreen());
-
-		/*List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
-		Player p = new Player(null, new Vector2(1200, 100), new Vector2(500, 500), "Johhy", new AnimationSet());
-		p.setMaxActionCount(2);
-		p.setMeleeWeapon(weapons.get(0));
-		p.getSpells().add(weapons.get(1));
-		p.getSpells().add(weapons.get(2));
-
-		this.assetManager.load("textures/walkUp.pack", TextureAtlas.class);
-		this.assetManager.load("textures/walkDown.pack", TextureAtlas.class);
-		this.assetManager.load("textures/walkLeft.pack", TextureAtlas.class);
-		this.assetManager.load("textures/walkRight.pack", TextureAtlas.class);
-		assetManager.finishLoading();
-
-		walkUpAtlas = assetManager.get("textures/walkUp.pack");
-		walkDownAtlas = assetManager.get("textures/walkDown.pack");
-		walkLeftAtlas = assetManager.get("textures/walkLeft.pack");
-		walkRightAtlas = assetManager.get("textures/walkRight.pack");
-
-		jonnyWalkDuration = 1.0f / 2f;
-
-		Array<TextureAtlas.AtlasRegion> jonnyWalkUpRegions = new Array<TextureAtlas.AtlasRegion>(walkUpAtlas.getRegions());
-		jonnyWalkUpRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
-			@Override
-			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
-				return o1.name.compareTo(o2.name);
-			}
-		});
-		p.getAnimationSet().setWalkUpAnimation(new Animation(jonnyWalkDuration, jonnyWalkUpRegions, Animation.PlayMode.LOOP));
-		p.getAnimationSet().setJonnyWalkUpAnimationTime(Gdx.graphics.getDeltaTime());
-
-		Array<TextureAtlas.AtlasRegion> jonnyWalkDownRegions = new Array<TextureAtlas.AtlasRegion>(walkDownAtlas.getRegions());
-		jonnyWalkDownRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
-			@Override
-			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
-				return o1.name.compareTo(o2.name);
-			}
-		});
-		p.getAnimationSet().setWalkDownAnimation(new Animation(jonnyWalkDuration, jonnyWalkDownRegions, Animation.PlayMode.LOOP));
-		p.getAnimationSet().setJonnyWalkDownAnimationTime(Gdx.graphics.getDeltaTime());
-
-		Array<TextureAtlas.AtlasRegion> jonnyWalkLeftRegions = new Array<TextureAtlas.AtlasRegion>(walkLeftAtlas.getRegions());
-		jonnyWalkLeftRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
-			@Override
-			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
-				return o1.name.compareTo(o2.name);
-			}
-		});
-		p.getAnimationSet().setWalkLeftAnimation(new Animation(jonnyWalkDuration, jonnyWalkLeftRegions, Animation.PlayMode.LOOP));
-		p.getAnimationSet().setJonnyWalkLeftAnimationTime(Gdx.graphics.getDeltaTime());
-
-		Array<TextureAtlas.AtlasRegion> jonnyWalkRightRegions = new Array<TextureAtlas.AtlasRegion>(walkRightAtlas.getRegions());
-		jonnyWalkRightRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
-			@Override
-			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
-				return o1.name.compareTo(o2.name);
-			}
-		});
-		p.getAnimationSet().setWalkRightAnimation(new Animation(jonnyWalkDuration, jonnyWalkRightRegions, Animation.PlayMode.LOOP));
-		p.getAnimationSet().setJonnyWalkRightAnimationTime(Gdx.graphics.getDeltaTime());
-
-		this.setScreen(new EncounterScreen(p, new EncounterScreen.EncounterConfig(0,"textures/encounter_bg.png", "map/test.tmx", new Enemy[]{
-				new Enemy(new Vector2(200, 100), new Vector2(500, 500), "Bad Boy",
-						) {
-					@Override
-					public Action[] getActions() {
-						return new Action[0];
-					}
-				}
-		})));
-		/*this.setScreen(
-				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
-						new Enemy[]{new Enemy(
-								new Vector2(100, 100),
-								"BadBoy",
-								new AnimationSet()) {
-					@Override
-					public Action[] getActions() {
-						return new Action[0];
-					}
-				}, new Enemy(
-								new Vector2(100, 100),
-								"BadBoy2",
-								new AnimationSet()) {
-							@Override
-							public Action[] getActions() {
-								return new Action[0];
-							}
-						}}),
-						assetManager,
-						batch));*/
+		this.setScreen(new LoadingScreen());
 	}
 
 	@Override
@@ -152,7 +61,15 @@ public class DreamHackJamGame extends Game {
 		return assetManager;
 	}
 
+	public void setAssetManager(AssetManager assetManager) {
+		this.assetManager = assetManager;
+	}
+
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
 	}
 }
