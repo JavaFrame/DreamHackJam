@@ -388,18 +388,18 @@ public class Player extends Figure{
 			setExp(0);
 			setTotalExpToNextLevel((int) (getTotalExpToNextLevel() * EXP_FACTOR));
 			setLevel(getLevel() + 1);
-			levelChangeReport.append(String.format("%d lvl -> %d lvl", getLevel()-1, getLevel()));
+			levelChangeReport.append(String.format("%d lvl -> %d lvl\n", getLevel()-1, getLevel()));
 
 			int oldMaxLife = getMaxLifes();
 			setMaxLifes((int) (getMaxLifes() * LIFE_FACTOR));
 			setLifes(getMaxLifes());
-			levelChangeReport.append(String.format("%d lifes -> %d lifes", oldMaxLife, getMaxLifes()));
+			levelChangeReport.append(String.format("%d lifes -> %d lifes\n", oldMaxLife, getMaxLifes()));
 
 			int oldActionCount = getMaxActionCount();
 			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));
 			if(getMaxActionCount() > MAX_ACTIONS)
 				setMaxActionCount(MAX_ACTIONS);
-			levelChangeReport.append(String.format("%d ap -> %d ap", oldActionCount, getMaxActionCount()));
+			levelChangeReport.append(String.format("%d ap -> %d ap\n", oldActionCount, getMaxActionCount()));
 		}
 	}
 
