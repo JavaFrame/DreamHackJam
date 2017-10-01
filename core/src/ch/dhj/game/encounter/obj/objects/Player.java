@@ -80,6 +80,35 @@ public class Player extends Figure{
 		getTurnManager().addRoundDoneListener(new TurnManager.TurnManagerListener() {
 			@Override
 			public void triggered(TurnManager manager) {
+
+				if(isDead()) {
+					Dialog dialog = new Dialog("You died!",  skin);
+					dialog.text("You have no health left!");
+					TextButton restartGameButton = new TextButton("Back to Main Menu", skin);
+					final Dialog finalDialog = dialog;
+					restartGameButton.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							finalDialog.hide();
+							Player.this.setMaxLifes(10);
+							Player.this.setLifes(10);
+							Player.this.setMaxActionCount(3);
+							Player.this.setLevel(1);
+							setExp(0);
+							Player.this.setTotalExpToNextLevel(10);
+							Player.this.getWeapons().clear();
+							Player.this.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+							Player.this.setRangeWeapon(null);
+							setObjectPosIndex(1);
+							getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
+                            EncounterScreen.encounterMusic.stop();
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this , enemyManager));
+						}
+					});
+					dialog.button(restartGameButton);
+					dialog.show(stage);
+					return;
+				}
 				currentTurn = new Turn();
 				actions = 0;
 				turnActionTable.setVisible(true);
@@ -483,27 +512,7 @@ public class Player extends Figure{
 
 	@Override
 	public void died() {
-		Dialog dialog = new Dialog("You died!",  skin);
-		dialog.text("You have no health left!");
-		TextButton restartGameButton = new TextButton("Back to Main Menu", skin);
-		final Dialog finalDialog = dialog;
-		restartGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				finalDialog.hide();
-				Player.this.setMaxLifes(10);
-				Player.this.setLifes(10);
-				Player.this.setMaxActionCount(3);
-				Player.this.setLevel(1);
-				Player.this.setTotalExpToNextLevel(10);
-				Player.this.getWeapons().clear();
-				Player.this.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
-				EncounterScreen.encounterMusic.stop();
-				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this , enemyManager));
-			}
-		});
-		dialog.button("Back to Main Menu", restartGameButton);
-		dialog.show(stage);
+
 	}
 
 	public int getObjectPosIndex() {
