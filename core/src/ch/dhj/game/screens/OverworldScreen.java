@@ -76,6 +76,7 @@ public class OverworldScreen implements Screen {
     private final TextButton saveAndQuit;
     private EnemyManager enemyManager;
     private String encounterBackground;
+    private boolean lastScreenInv;
     private static String[] dialog = new String[]{"Johnny, wake up! You need to save the world.",
             "Ohh who I am? You don’t need to know Johnny, you don’t need to know.",
             "Well, well this land looks really f*cked up. What happened?",
@@ -99,11 +100,12 @@ public class OverworldScreen implements Screen {
             "What the f*ck is this? Come one we need to find out.",
             "Trump?! Really?! I mean there are a lot of ways for an apocalypse to happen and the writer picked Trump?! Well, who am I to judge. Hope I see you again Johnny."};
 
-    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
+    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em, boolean lastScreenInventory) {
 		this.assetManager = assetManager;
 		this.batch = batch;
         player = p;
         enemyManager = em;
+        lastScreenInv = lastScreenInventory;
 
         this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -289,6 +291,14 @@ public class OverworldScreen implements Screen {
         playerGUI.pack();
         stage.addActor(playerGUI);
 
+        if(!lastScreenInv) {
+            com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog = new com.badlogic.gdx.scenes.scene2d.ui.Dialog("Story", skin);
+            dialog.text(this.dialog[player.getObjectPosIndex() - 1]);
+            TextButton closeB = new TextButton("close", skin);
+            final com.badlogic.gdx.scenes.scene2d.ui.Dialog finalDialog = dialog;
+            dialog.button("close", closeB);
+            dialog.show(stage);
+        }
    }
 
 	@Override
@@ -385,13 +395,6 @@ public class OverworldScreen implements Screen {
                         encounterBackground = "textures/encounter_bg_crater.png";
                         break;
                 }
-
-                // TODO: Add encounter + Dialog
-
-                com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog = new com.badlogic.gdx.scenes.scene2d.ui.Dialog("Story",  skin);
-                dialog.text(this.dialog[player.getObjectPosIndex() - 1]);
-                dialog.show(stage);
-
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
                         enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),1)
                 }),assetManager,batch));

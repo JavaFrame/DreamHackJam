@@ -85,7 +85,7 @@ public class Player extends Figure{
 					closeB.addListener(new ClickListener() {
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 							finalDialog.hide();
 						}
 					});
@@ -264,7 +264,7 @@ public class Player extends Figure{
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalDialog.hide();
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
 					dialog.button("close", closeB);
