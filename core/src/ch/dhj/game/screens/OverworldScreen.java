@@ -417,7 +417,7 @@ public class OverworldScreen implements Screen {
                         if(enemyLevel == 0){enemyLevel = 1;}
 
                         String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
-                        enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Alien"),enemyLevel);
+                        enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName),enemyLevel);
                     }
 
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
