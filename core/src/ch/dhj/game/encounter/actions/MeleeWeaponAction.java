@@ -40,7 +40,7 @@ public class MeleeWeaponAction implements Action {
 	@Override
 	public boolean action() {
 		Figure e = enemies[index];
-		if(doAnimation(you, e)) {
+		if(doAnimation(you, e) || e.isDead()) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;
@@ -71,7 +71,7 @@ public class MeleeWeaponAction implements Action {
 				}
 				break;
 			case ATTACK:
-				/*Animation<TextureRegion> a = you.getCurrentWeapon().getAnimation(you.getAnimationSet());
+				/*Animation<TextureRegion> a = you.getMeleeWeapon().getAnimation(you.getAnimationSet());
 				if(a == null)  {
 					state = ActionState.GO_FROM;
 					timeElepsed = 0;

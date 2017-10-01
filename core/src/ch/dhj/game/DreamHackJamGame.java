@@ -31,6 +31,12 @@ public class DreamHackJamGame extends Game {
 
 	private AssetManager assetManager;
 	private SpriteBatch batch;
+	private float jonnyWalkDuration;
+	private TextureAtlas walkUpAtlas;
+	private TextureAtlas walkDownAtlas;
+	private TextureAtlas walkLeftAtlas;
+	private TextureAtlas walkRightAtlas;
+
 
 	@Override
 	public void create () {
