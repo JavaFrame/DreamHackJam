@@ -73,7 +73,7 @@ public class RangeWeaponAction implements Action {
 		//you.setTextureRegion(animation.getKeyFrame(timeElepsed));
 		boolean isFinished = you.isAnnimationFinished();
 
-		if(weapon.hashProjectile()) {
+		/*if(weapon.hashProjectile()) {
 			if(shootTimeElepsed >= weapon.getProjectileBluePrint().getFireTime() && shootedCount == 0) {
 				shootProjecitle(you.getPosition(), enemy.getPosition());
 				shootTimeElepsed = 0;
@@ -86,7 +86,7 @@ public class RangeWeaponAction implements Action {
 				enemy.applayDamage(weapon.getDamge(), you);
 				you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
 			}
-		}
+		}*/
 
 		for(Projectile p : projecitlPos) {
 			p.currentPos.set(p.currentPos.interpolate(p.targetPos, p.alpha, Interpolation.linear));
