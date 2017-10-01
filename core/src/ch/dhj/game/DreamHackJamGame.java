@@ -48,7 +48,7 @@ public class DreamHackJamGame extends Game {
 		/*List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
 		Player p = new Player(null, new Vector2(1200, 100), new Vector2(500, 500), "Johhy", new AnimationSet());
 		p.setMaxActionCount(2);
-		p.setCurrentWeapon(weapons.get(0));
+		p.setMeleeWeapon(weapons.get(0));
 		p.getSpells().add(weapons.get(1));
 		p.getSpells().add(weapons.get(2));
 

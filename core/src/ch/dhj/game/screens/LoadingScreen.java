@@ -12,7 +12,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -90,7 +89,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setMaxLifes(10);
 		player.setLifes(10);
 		player.setMaxActionCount(3);
-		player.setCurrentWeapon(new Weapon(Weapon.WeaponType.Stab));
+		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
 		player.setAnimation(playerSet.encounterIdleAnimation);
 	}
 	@Override

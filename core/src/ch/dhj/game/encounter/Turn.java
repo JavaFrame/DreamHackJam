@@ -8,6 +8,7 @@ import java.util.LinkedList;
 public class Turn {
 	private LinkedList<Action> actions = new LinkedList();
 	private int index = 0;
+	private boolean toInit = true;
 
 	/**
 	 * Adds an Action to this turn.
@@ -24,8 +25,14 @@ public class Turn {
 	 */
 	public boolean update() {
 		Action a = actions.get(index);
-		if(a.action())
+		if(toInit) {
+			a.init();
+			toInit = false;
+		}
+		if(a.action()) {
 			index++;
+			toInit = true;
+		}
 		return actions.size() == index;
 	}
 

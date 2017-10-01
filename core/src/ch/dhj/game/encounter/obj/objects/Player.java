@@ -10,8 +10,6 @@ import ch.dhj.game.player.Weapon;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import java.util.Random;
@@ -80,6 +77,35 @@ public class Player extends Figure{
 		});
 	}
 
+	@Override
+	public void createLifeInfos() {
+		TextureAtlas atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
+		Skin skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
+
+		infoTable = new Table(skin);
+
+		nameL = new Label(getName(), skin);
+		nameL.setFontScale(2.5f);
+		levelL = new Label(getLevel() + " lvl", skin);
+		levelL.setFontScale(2.5f);
+		lifesL = new Label(getLifes() + "/" + getMaxLifes() + " health", skin);
+		lifesL.setFontScale(2.5f);
+
+		infoTable.add(nameL);
+		infoTable.row();
+		infoTable.add(levelL);
+		infoTable.row();
+		infoTable.add(lifesL);
+		infoTable.pack();
+		infoTable.setPosition(1800, 1500);
+	}
+
+	@Override
+	public void drawLifeInfos(SpriteBatch batch) {
+		infoTable.setPosition(1920-infoTable.getWidth()-20, 1700);
+		infoTable.draw(batch, 1f);
+	}
+
 	/**
 	 * Does all the ui initialization
 	 */
@@ -133,7 +159,7 @@ public class Player extends Figure{
 			public void clicked(InputEvent event, float x, float y) {
 				Weapon w = weapons.getSelected();
 				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
+					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
 					return;
 				}
 				selectedWeapon = w;
@@ -149,7 +175,7 @@ public class Player extends Figure{
 		//actions menu
 		actionsL = new Label(String.format("%d/%d Actions", actions, getMaxActionCount()), skin);
 		final TextButton attackB = new TextButton("Attack", skin);
-		if(getCurrentWeapon() == null) {
+		if(getMeleeWeapon() == null) {
 			attackB.setTouchable(Touchable.disabled);
 			attackB.setText(attackB.getText() + " (unavailbe)");
 		}
@@ -157,14 +183,14 @@ public class Player extends Figure{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				//
-				/*Weapon w = Player.this.getCurrentWeapon();
+				/*Weapon w = Player.this.getMeleeWeapon();
 				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getCurrentWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
+					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
 					return;
 				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());*/
-				weapons.setItems(getCurrentWeapon());
+				weapons.setItems(getMeleeWeapon());
 				chooseSpellTable.setVisible(true);
 
 			}

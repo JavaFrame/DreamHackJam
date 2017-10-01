@@ -1,6 +1,5 @@
 package ch.dhj.game.encounter.obj.objects;
 
-import ch.dhj.game.customcomponents.LoadingBar;
 import ch.dhj.game.encounter.obj.GObject;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
@@ -24,14 +23,15 @@ public class Figure extends GObject {
 	private int lifes;
 	private int maxLifes;
 	private Array<Weapon> weapons = new Array<>();
-	private Weapon currentWeapon;
+	private Weapon meleeWeapon;
+	private Weapon rangeWeapon;
 	private Array<Weapon> spells = new Array<>(3);
 	private AnimationSet animationSet;
 
-	private Label nameL;
-	private Label levelL;
-	private Label lifesL;
-	private Table infoTable;
+	protected Label nameL;
+	protected Label levelL;
+	protected Label lifesL;
+	protected Table infoTable;
 
 	public Figure(Vector2 position, String name, AnimationSet animationSet) {
 		super(position);
@@ -48,17 +48,22 @@ public class Figure extends GObject {
 
 	@Override
 	public void init() {
+		createLifeInfos();
+	}
+
+
+	public void createLifeInfos() {
 		TextureAtlas atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
 		Skin skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
 
 		infoTable = new Table(skin);
 
 		nameL = new Label(getName(), skin);
-		nameL.setFontScale(3);
-		levelL = new Label(getLevel() + "lvl", skin);
-		levelL.setFontScale(3);
+		nameL.setFontScale(2);
+		levelL = new Label(getLevel() + " lvl", skin);
+		levelL.setFontScale(2);
 		lifesL = new Label(getLifes() + "/" + getMaxLifes() + " health", skin);
-		lifesL.setFontScale(3);
+		lifesL.setFontScale(2);
 
 		infoTable.add(nameL);
 		infoTable.row();
@@ -137,8 +142,8 @@ public class Figure extends GObject {
 		return weapons;
 	}
 
-	public Weapon getCurrentWeapon() {
-		return currentWeapon;
+	public Weapon getMeleeWeapon() {
+		return meleeWeapon;
 	}
 
 	public Array<Weapon> getSpells() {
@@ -173,8 +178,8 @@ public class Figure extends GObject {
 		this.maxLifes = maxLifes;
 	}
 
-	public void setCurrentWeapon(Weapon currentWeapon) {
-		this.currentWeapon = currentWeapon;
+	public void setMeleeWeapon(Weapon meleeWeapon) {
+		this.meleeWeapon = meleeWeapon;
 	}
 
 	public void applayDamage(int damage) {
