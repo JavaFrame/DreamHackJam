@@ -1,8 +1,11 @@
 package ch.dhj.game.encounter.obj.objects;
 
 import ch.dhj.game.encounter.Action;
+import ch.dhj.game.encounter.actions.MeleeWeaponAction;
+import ch.dhj.game.encounter.actions.RangeWeaponAction;
 import ch.dhj.game.player.AnimationSet;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Sebastian on 30.09.2017.
@@ -45,7 +48,19 @@ public class Enemy extends Figure{
 	}
 
 	public Action[] getActions(){
-		return new Action[]{};
+		Array<Action> actions = new Array<>();
+		int ap = 0;
+		while(ap < getMaxActionCount()) {
+			if(getLifes() < 3) {
+				//TODO: heal
+			}
+			if(getMeleeWeapon() != null) {
+				actions.add(new MeleeWeaponAction(getMeleeWeapon(), this, new Figure[]{getEncounterScreen().getPlayer()}));
+			} else if(getRangeWeapon() != null) {
+				actions.add(new RangeWeaponAction(getRangeWeapon(), this, new Figure[]{getEncounterScreen().getPlayer()}));
+			}
+		}
+		return actions.toArray();
 	}
 
 	public int getMinPlayerLevel() {

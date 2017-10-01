@@ -177,8 +177,11 @@ public class Player extends Figure{
 		chooseEnemyTable = new Table(skin);
 		chooseEnemyTable.setVisible(false);
 
-		final List<Enemy> enemies = new List<Enemy>(skin);
-		enemies.setItems(getEncounterConfig().enemies.toArray());
+		final List<Figure> enemies = new List<>(skin);
+		Array<Figure> choosableEnemies = new Array<>();
+		choosableEnemies.addAll(getEncounterConfig().enemies);
+		choosableEnemies.add(this);
+		enemies.setItems(choosableEnemies);
 		chooseEnemyTable.add(enemies);
 
 		chooseEnemyTable.row();
@@ -189,11 +192,11 @@ public class Player extends Figure{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(selectedWeapon.isSpell()) { //weapon is a spell
-					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
+					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				} else if(selectedWeapon.isMelee()) { //weapon is a mele attack
-					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
+					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				} else { //weapon is a range weapon
-					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
+					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				}
 				chooseSpellTable.setVisible(false);
 			}
@@ -215,7 +218,11 @@ public class Player extends Figure{
 				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());
-				enemies.setItems(getEncounterConfig().enemies);
+				//enemies.setItems(getEncounterConfig().enemies);
+				Array<Figure> choosableEnemies = new Array<>();
+				choosableEnemies.addAll(getEncounterConfig().enemies);
+				choosableEnemies.add(Player.this);
+				enemies.setItems(choosableEnemies);
 			}
 		});
 		chooseSpellTable.add(weapons);
@@ -242,6 +249,10 @@ public class Player extends Figure{
 			}
 		});
 		TextButton spellB = new TextButton("Spell", skin);
+		if(getSpells().size == 0) {
+			spellB.setText("Spell (unavaible)");
+			spellB.setTouchable(Touchable.disabled);
+		}
 		spellB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -331,12 +342,23 @@ public class Player extends Figure{
 		rootTable.add(chooseEnemyTable).pad(5);
 
 		rootTable.pack();
-		rootTable.setX(1920/2 - (rootTable.getWidth() + 5));
+		rootTable.setX(5);
+		rootTable.setY(1080-rootTable.getHeight() - 5);
 		//rootTable.setY(rootTable.getHeight()/2);
 	}
 
 	private void addActionToTurn(Action a, int neededActions) {
 		currentTurn.addAction(a);
+		if(actions + neededActions > getMaxActionCount()) {
+			Dialog toManyActions = new Dialog("Not enough ActionPoints!", skin);
+			toManyActions.text("You already used " + actions + " ap of " + getMaxActionCount() + "!");
+			toManyActions.text("The action you wanted to use needes " + neededActions + " ap!");
+			toManyActions.button("Close");
+			toManyActions.show(stage);
+			chooseSpellTable.setVisible(false);
+			chooseEnemyTable.setVisible(false);
+			return;
+		}
 		actions += neededActions;
 		actionsL.setText(String.format("%d/%d Actions", actions, getMaxActionCount()));
 		chooseEnemyTable.setVisible(false);

@@ -75,6 +75,8 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieKingSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_damaged")));
 		zombieKingSet.getWeaponMap().put(Weapon.WeaponType.ZombieKingAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("rock")));
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet, 5);
+		zombieKingEnemy.setMaxLifes(10);
+		zombieKingEnemy.setLifes(10);
 		enemyManager.addEnemy(zombieKingEnemy);
 
 		AnimationSet alienSet = new AnimationSet();
@@ -86,6 +88,8 @@ public class LoadingScreen extends ScreenAdapter {
 		alienSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		alienSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		Enemy alienEnemy = new AlienEnemy(Vector2.Zero, Vector2.Zero, "Alien", alienSet,3);
+		alienEnemy.setMaxLifes(10);
+		alienEnemy.setLifes(10);
 		enemyManager.addEnemy(alienEnemy);
 
 		AnimationSet trumpSet = new AnimationSet();
@@ -95,6 +99,7 @@ public class LoadingScreen extends ScreenAdapter {
 		trumpSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("trump_damaged")));
 		trumpSet.getWeaponMap().put(Weapon.WeaponType.TrumpAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("trump_attack")));
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
+		trumpEnemy.setMaxLifes(10);
 		enemyManager.addEnemy(trumpEnemy);
 
 		/*AnimationSet zombieKingSet = new AnimationSet();
@@ -117,7 +122,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(0.7f, atlas.findRegions("johhny_flamethrower")));
 
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
