@@ -14,6 +14,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,7 +48,9 @@ public class LoadingScreen extends ScreenAdapter {
 			buildPlayer(atlas);
 			buildingEnemies(atlas);
 
-			game.setScreen(new MainMenu(assetManager, game.getBatch(), player));
+			game.setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, "encounter_bg.png", "map/test.tmx", new Enemy[]{
+				enemyManager.getEnemyByName("Zombie")
+			}), assetManager, new SpriteBatch()));
 		}
 	}
 

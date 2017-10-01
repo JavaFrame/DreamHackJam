@@ -16,4 +16,15 @@ public class EnemyManager {
 		enemies.add(e);
 	}
 
+
+	public Array<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	public Enemy getEnemyByName(String name) {
+		for(Enemy e : enemies)
+			if(e.getName().equals(name))
+				return e;
+		return null;
+	}
 }
