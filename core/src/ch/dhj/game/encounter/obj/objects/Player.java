@@ -192,7 +192,10 @@ public class Player extends Figure{
 				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());*/
-				weapons.setItems(getMeleeWeapon(), getRangeWeapon());
+				if(getMeleeWeapon() != null)
+					weapons.setItems(getMeleeWeapon());
+				if(getRangeWeapon() != null)
+					weapons.setItems(getRangeWeapon());
 				chooseSpellTable.setVisible(true);
 
 			}

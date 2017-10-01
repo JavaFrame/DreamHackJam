@@ -27,6 +27,8 @@ public class RangeWeaponAction implements Action {
 
 	private int shootedCount = 0;
 
+	private boolean init = true;
+
 	private Array<Projectile> projecitlPos = new Array<>();
 
 	public RangeWeaponAction(Weapon weapon, Figure you, Figure[] enemies) {
@@ -37,13 +39,18 @@ public class RangeWeaponAction implements Action {
 
 	@Override
 	public void init() {
-		Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
-		you.setAnimation(animation);
+
 	}
 
 	@Override
 	public boolean action() {
 		if(you.getLifes() <= 0) return true;
+		if(init) {
+			Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
+			you.setAnimation(animation);
+			init = false;
+		}
+
 		Figure e = enemies[index];
 		if(doAnimation(you, e)) {
 			alpha = 0;
@@ -63,6 +70,7 @@ public class RangeWeaponAction implements Action {
 		//timeElepsed += Gdx.graphics.getDeltaTime();
 		shootTimeElepsed += Gdx.graphics.getDeltaTime();
 		//you.setTextureRegion(animation.getKeyFrame(timeElepsed));
+		boolean isFinished = you.isAnnimationFinished();
 
 		if(weapon.hashProjectile()) {
 			if(shootTimeElepsed >= weapon.getProjectileBluePrint().getFireTime() && shootedCount == 0) {
@@ -71,6 +79,11 @@ public class RangeWeaponAction implements Action {
 			} else if(shootTimeElepsed >= weapon.getProjectileBluePrint().getRepeatedFireTime() && weapon.getProjectileBluePrint().getFireCount() < shootedCount){
 				shootProjecitle(you.getPosition(), enemy.getPosition());
 				shootTimeElepsed = 0;
+			}
+		} else {
+			if(isFinished) {
+				enemy.applayDamage(weapon.getDamge());
+				you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
 			}
 		}
 
@@ -82,7 +95,7 @@ public class RangeWeaponAction implements Action {
 			}
 		}
 
-		return you.isAnnimationFinished();
+		return isFinished;
 	}
 
 	private void shootProjecitle(Vector2 startPos, Vector2 targetPos) {

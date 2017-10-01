@@ -115,7 +115,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
 
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -133,6 +133,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setEnemyManager(enemyManager);
 		player.setLevel(1);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+		player.setRangeWeapon(new Weapon(Weapon.WeaponType.Flamethrower));
 	}
 	@Override
 	public void show() {
