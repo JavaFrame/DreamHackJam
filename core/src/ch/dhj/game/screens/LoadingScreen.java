@@ -120,7 +120,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johhny", playerSet);
+		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setMaxLifes(10);
 		player.setLifes(10);
 		player.setMaxActionCount(3);
@@ -133,6 +133,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setEnemyManager(enemyManager);
 		player.setLevel(1);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+		player.setRangeWeapon(new Weapon(Weapon.WeaponType.Flamethrower));
 	}
 	@Override
 	public void show() {
