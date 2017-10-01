@@ -189,6 +189,7 @@ public class OverworldScreen implements Screen {
                 frontFieldButton.setTouchable(Touchable.disabled);
                 lastFieldButton.setTouchable(Touchable.disabled);
                 saveAndQuit.setTouchable(Touchable.disabled);
+                overworldMusic.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player, enemyManager));
                 pause();
             }
