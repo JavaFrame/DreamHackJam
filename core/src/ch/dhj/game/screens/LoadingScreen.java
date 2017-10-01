@@ -110,10 +110,12 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_idle")));
 		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_death")));
 		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_damaged")));
+		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/6, atlas.findRegion("johhny_hover")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_gun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_flamethrower")));
 		player = new Player(null, new Vector2(100,1200), new Vector2(500, 500), "Johhny", playerSet);
 	}
 	@Override
