@@ -26,7 +26,7 @@ public class EnemyManager {
 	public Enemy getEnemyByName(String name) {
 		for(Enemy e : enemies)
 			if(e.getName().equals(name))
-				return e;
+				return new Enemy(e);
 		return null;
 	}
 

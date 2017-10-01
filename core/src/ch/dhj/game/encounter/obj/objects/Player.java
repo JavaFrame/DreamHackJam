@@ -34,7 +34,7 @@ public class Player extends Figure{
 	public static final float ACTIONS_FACTOR = 2f;
 	public static final int MAX_ACTIONS = 10;
 
-	private StringBuffer levelChangeReport;
+	private StringBuffer levelChangeReport = new StringBuffer();
 
 	private Skin skin;
 	private TextureAtlas atlasButtons;
@@ -53,6 +53,10 @@ public class Player extends Figure{
 
 	private Weapon selectedWeapon;
 
+	private int oldExp;
+	private int oldLvl;
+	private int gottenExp;
+
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
 		objectPosIndex = 1;
@@ -67,6 +71,8 @@ public class Player extends Figure{
 	public void init() {
 		super.init();
 		constructUi();
+		oldLvl = getLevel();
+		oldExp = getExp();
 
 		getTurnManager().addRoundDoneListener(new TurnManager.TurnManagerListener() {
 			@Override
@@ -77,20 +83,45 @@ public class Player extends Figure{
 				rootTable.setVisible(true);
 
 				if(getEncounterConfig().enemies.size == 0) {
-					Dialog dialog = null;
-					dialog = new Dialog("You won!", skin);
-					dialog.text("You goerqwerft 0 exp!");
+					Dialog levlUpDialog = null;
+					levlUpDialog = new Dialog("Level up!", skin);
+					String[] lines = levelChangeReport.toString().split("\n");
+					for (String s : lines) {
+						levlUpDialog.text(s);
+					}
+					final TextButton closeLvlUpDialog = new TextButton("close", skin);
+					final Dialog finalLevelUpDialog = levlUpDialog;
+					closeLvlUpDialog.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							finalLevelUpDialog.hide();
+							((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+						}
+					});
+
+
+					Dialog wonDialog = null;
+					wonDialog = new Dialog("You won!", skin);
+					wonDialog.text(String.format("You got %d exp!", gottenExp));
+					gottenExp = 0;
 					TextButton closeB = new TextButton("close", skin);
-					final Dialog finalDialog = dialog;
+					final Dialog finalWonDialog = wonDialog;
+					final Dialog finalLevlUpDialog = levlUpDialog;
 					closeB.addListener(new ClickListener() {
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
-							finalDialog.hide();
+							finalWonDialog.hide();
+							if(oldLvl != getLevel()) {
+								finalLevlUpDialog.button(closeLvlUpDialog);
+								finalLevlUpDialog.show(stage);
+							} else {
+								((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+							}
 						}
 					});
-					dialog.button(closeB);
-					dialog.show(stage);
+					wonDialog.button(closeB);
+					wonDialog.show(stage);
+					oldExp = getExp();
 				}
 			}
 		});
@@ -330,24 +361,25 @@ public class Player extends Figure{
 	}
 
 	public void addExp(int exp) {
+		gottenExp += exp;
 		setExp(getExp() + exp);
 		if(getExp() >= getTotalExpToNextLevel()) {
 			levelChangeReport = new StringBuffer();
 			setExp(0);
 			setTotalExpToNextLevel((int) (getTotalExpToNextLevel() * EXP_FACTOR));
 			setLevel(getLevel() + 1);
-			levelChangeReport.append(String.format("%i lvl -> %i lvl", getLevel()-1, getLevel()));
+			levelChangeReport.append(String.format("%d lvl -> %d lvl", getLevel()-1, getLevel()));
 
 			int oldMaxLife = getMaxLifes();
 			setMaxLifes((int) (getMaxLifes() * LIFE_FACTOR));
 			setLifes(getMaxLifes());
-			levelChangeReport.append(String.format("%i lifes -> %i lifes", oldMaxLife, getMaxLifes()));
+			levelChangeReport.append(String.format("%d lifes -> %d lifes", oldMaxLife, getMaxLifes()));
 
 			int oldActionCount = getMaxActionCount();
 			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));
 			if(getMaxActionCount() > MAX_ACTIONS)
 				setMaxActionCount(MAX_ACTIONS);
-			levelChangeReport.append(String.format("%i ap -> %i ap", oldActionCount, getMaxActionCount()));
+			levelChangeReport.append(String.format("%d ap -> %d ap", oldActionCount, getMaxActionCount()));
 		}
 	}
 

@@ -83,7 +83,7 @@ public class RangeWeaponAction implements Action {
 			}
 		} else {
 			if(isFinished) {
-				enemy.applayDamage(weapon.getDamge());
+				enemy.applayDamage(weapon.getDamge(), you);
 				you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
 			}
 		}

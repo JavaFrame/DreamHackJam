@@ -132,6 +132,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));
 		player.setEnemyManager(enemyManager);
 		player.setLevel(1);
+		player.setTotalExpToNextLevel(10);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
 		player.setRangeWeapon(new Weapon(Weapon.WeaponType.Flamethrower));
 	}

@@ -4,8 +4,6 @@ import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.obj.objects.Figure;
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 
@@ -90,7 +88,7 @@ public class MeleeWeaponAction implements Action {
 					oldPosition.set(oldPosition.x-(you.getSize().x/2 + you.getSize().x/4), oldPosition.y);
 					you.getPosition().set(you.getPosition().x-(you.getSize().x/2 + you.getSize().x/4), you.getPosition().y);
 					you.setAnimation(you.getAnimationSet().encounterWalkAnimation);
-					enemy.applayDamage(weapon.getDamge());
+					enemy.applayDamage(weapon.getDamge(), you);
 				}
 
 				break;
