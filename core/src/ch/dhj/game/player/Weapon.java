@@ -104,7 +104,7 @@ public class Weapon {
 	public static enum WeaponType {
 		Gun("Gun", 1, 3, false, false, false, null),
 		Shotgun("Shotgun", 2, 4, true, false, false, null),
-		Stab("Stab", 1, 3, false, true, false, null),
+		Stab("Stab", 1, 2, false, true, false, null),
 		Heal("Heal", 1, -3, false, false, true, null),
 		Fireball("Fireball", 1, 2, false, false, true, null),
 		Flamethrower("Flamethrower", 2, 5, false, true, false, null),
@@ -163,6 +163,9 @@ public class Weapon {
 
 	public Texture getIcon() {return icon;}
 
-	public void setIcon(Texture icon) {this.icon = icon;}
+	public Weapon setIcon(Texture icon) {
+		this.icon = icon;
+		return this;
+	}
 
 }

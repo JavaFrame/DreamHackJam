@@ -409,8 +409,7 @@ public class OverworldScreen implements Screen {
                 } else {
                 	if(player.getObjectPosIndex() <= 4){
 						int enemyCount = RANDOM.nextInt(4);
-						if(enemyCount == 0){enemyCount = 1;}
-						enemyCount = 3;
+						if(enemyCount == 0){enemyCount = 1;
 
 						Enemy[] enemies = new Enemy[enemyCount];
 						int pos = 100;
@@ -431,7 +430,6 @@ public class OverworldScreen implements Screen {
 					} else {
 						int enemyCount = RANDOM.nextInt(4);
 						if(enemyCount == 0){enemyCount = 1;}
-						enemyCount = 3;
 
 						Enemy[] enemies = new Enemy[enemyCount];
 						int pos = 100;

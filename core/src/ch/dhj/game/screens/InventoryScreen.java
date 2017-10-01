@@ -136,12 +136,12 @@ public class InventoryScreen  implements Screen {
         grayBackground.fill();
 
         Pixmap lightGreenBackground = new Pixmap(1,1, Pixmap.Format.RGB565);
-        lightGreenBackground.setColor(Color.LIME);
+        lightGreenBackground.setColor(Color.rgba8888(.7f,.7f,.7f,1));
         lightGreenBackground.fill();
 
-        Pixmap navyBackground = new Pixmap(1,1, Pixmap.Format.RGB565);
-        navyBackground.setColor(Color.NAVY);
-        navyBackground.fill();
+        Pixmap lightGrayBackground = new Pixmap(1,1, Pixmap.Format.RGB565);
+        lightGrayBackground.setColor(Color.rgba8888(.65f,.65f,.65f,1));
+        lightGrayBackground.fill();
 
         Table playerTable = new Table();
         playerTable.setWidth(mainInvTable.getWidth() * .3f);
@@ -180,70 +180,63 @@ public class InventoryScreen  implements Screen {
         Label equipedLabel = new Label("Equiped:", skin);
 
         Label meeleEquiped = new Label("Meele:", skin);
-        Image meeleEquipedImg = new Image(/*TODO: Hier Bild von Equiped Meele*/);
+        Image meeleEquipedImg = new Image();
+        if(player.getMeleeWeapon() != null && player.getMeleeWeapon().getIcon() != null){
+            meeleEquipedImg.setDrawable(new TextureRegionDrawable(new TextureRegion(player.getMeleeWeapon().getIcon())));
+        }
         Label rangedEquiped = new Label("Ranged:", skin);
-        Image rangedEquipedImg = new Image(/*TODO:  Bild von Equiped ranged*/);
-        Label spell1Equiped = new Label("Spell 1:", skin);
-        Image spell1EquipedImg = new Image(/*TODO: Hier Bild von Equiped Spell 1*/);
-        Label spell2Equiped = new Label("Spell 2:", skin);
-        Image spell2EquipedImg = new Image(/*TODO: Hier Bild von Equiped Spell 2*/);
-        Label spell3Equiped = new Label("Spell 3:", skin);
-        Image spell3EquipedImg = new Image(/*TODO: Hier Bild von Equiped Spell 3*/);
-        Label spell4Equiped = new Label("Spell 3:", skin);
-        Image spell4EquipedImg = new Image(/*TODO: Hier Bild von Equiped Spell 4*/);
+        Image rangedEquipedImg = new Image();
+        if(player.getRangeWeapon() != null && player.getRangeWeapon().getIcon() != null){
+            rangedEquipedImg.setDrawable(new TextureRegionDrawable(new TextureRegion(player.getRangeWeapon().getIcon())));
+        }
 
         Table equipedItems = new Table();
 
         equipedItems.add(meeleEquiped).center().padRight(35);
         equipedItems.add(rangedEquiped).center().padLeft(35);
-        equipedItems.row();
+        equipedItems.row().padTop(45);
         equipedItems.add(meeleEquipedImg).center().padRight(35).width(50).height(50);
         equipedItems.add(rangedEquipedImg).center().padLeft(35).width(50).height(50);
-        equipedItems.row();
-        equipedItems.add(spell1Equiped).center().padRight(35);
-        equipedItems.add(spell2Equiped).center().padLeft(35);
-        equipedItems.row();
-        equipedItems.add(spell1EquipedImg).center().padRight(35).width(50).height(50);
-        equipedItems.add(spell2EquipedImg).center().padLeft(35).width(50).height(50);
-        equipedItems.row();
-        equipedItems.add(spell3Equiped).center().padRight(35);
-        equipedItems.add(spell4Equiped).center().padLeft(35);
-        equipedItems.row();
-        equipedItems.add(spell3EquipedImg).center().padRight(35).width(50).height(50);
-        equipedItems.add(spell4EquipedImg).center().padLeft(35).width(50).height(50);
 
         playerTable.row().padTop(35);
         playerTable.add(playerImgTable);
-        playerTable.row().padTop(35);
+        playerTable.row().padTop(50);
         playerTable.add(statsTable);
-        playerTable.row().padTop(150);
+        playerTable.row().padTop(200);
         playerTable.add(equipedLabel);
-        playerTable.row();
+        playerTable.row().padTop(35);
         playerTable.add(equipedItems);
 
         Table inventoryTable = new Table();
         inventoryTable.left().padLeft(30);
 
         Array<Weapon> meeleWeapons = new Array<Weapon>();
-        meeleWeapons.add(new TestWeapon());
         Array<Weapon> rangedWeapons = new Array<Weapon>();
-        Array<Weapon> spellsWeapons = new Array<Weapon>();
-        spellsWeapons.add(new TestSpell());
-        spellsWeapons.add(new TestHealSpell());
+        Array<Weapon> allWeapons = new Array<Weapon>();
+
+        for(Weapon w : player.getWeapons()){
+            if(!w.isSpell()){
+                allWeapons.add(w);
+            }
+            if(w.isMelee()&& !w.isSpell()){
+                meeleWeapons.add(w);
+            }
+            if(!w.isMelee() && !w.isSpell()){
+                rangedWeapons.add(w);
+            }
+        }
 
 
         final Table weaponFilters = new Table();
+        weaponFilters.top().left();
 
         TextButton meeleButton = new TextButton("Meele", skin);
         meeleButton.pad(10,20,10,20);
         meeleButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Meele Weapons
-                spellSlot[0] = 0;
                 isMeele[0] = true;
                 isRanged[0] = false;
-                isSpell[0] = false;
                 hide();
             }
         });
@@ -253,116 +246,49 @@ public class InventoryScreen  implements Screen {
         rangedButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Ranged Weapons
-                spellSlot[0] = 0;
                 isMeele[0] = false;
                 isRanged[0] = true;
-                isSpell[0] = false;
                 hide();
             }
         });
 
-        TextButton spells1Button = new TextButton("Spell 1", skin);
-        spells1Button.pad(10,20,10,20);
-        spells1Button.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Spells for slot 1
-                spellSlot[0] = 1;
-                isMeele[0] = false;
-                isRanged[0] = false;
-                isSpell[0] = true;
-                hide();
-            }
-        });
 
-        TextButton spells2Button = new TextButton("Spell 2", skin);
-        spells2Button.pad(10,20,10,20);
-        spells2Button.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Spells for slot 1
-                spellSlot[0] = 2;
-                isMeele[0] = false;
-                isRanged[0] = false;
-                isSpell[0] = true;
-                hide();
-            }
-        });
-
-        TextButton spells3Button = new TextButton("Spell 3", skin);
-        spells3Button.pad(10,20,10,20);
-        spells3Button.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Spells for slot 1
-                spellSlot[0] = 3;
-                isMeele[0] = false;
-                isRanged[0] = false;
-                isSpell[0] = true;
-                hide();
-            }
-        });
-
-        TextButton spells4Button = new TextButton("Spell 4", skin);
-        spells4Button.pad(10,20,10,20);
-        spells4Button.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Spells for slot 1
-                spellSlot[0] = 4;
-                isMeele[0] = false;
-                isRanged[0] = false;
-                isSpell[0] = true;
-                hide();
-            }
-        });
-
-        weaponFilters.add(meeleButton).pad(10,20,10,20);
-        weaponFilters.add(rangedButton).pad(10,20,10,20);
-        weaponFilters.add(spells1Button).pad(10,20,10,20);
-        weaponFilters.add(spells2Button).pad(10,20,10,20);
-        weaponFilters.add(spells3Button).pad(10,20,10,20);
-        weaponFilters.add(spells4Button).pad(10,20,10,20);
+        weaponFilters.add(meeleButton).pad(10,151,10,151);
+        weaponFilters.add(rangedButton).pad(10,151,10,151);
 
         Table weaponList = new Table();
 
         if(isMeele[0]){
             for(Weapon w : meeleWeapons){
                 Table item = createWeaponListItem(w);
-                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(navyBackground))));
+                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
                 weaponList.add(item).top().left();
                 weaponList.row();
             }
         } else if (isRanged[0]){
             for(Weapon w : rangedWeapons){
                 Table item = createWeaponListItem(w);
-                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(navyBackground))));
-                weaponList.add(item).top().left();
-                weaponList.row();
-            }
-        } else if (isSpell[0]){
-            for(Weapon w : spellsWeapons){
-                Table item = createWeaponListItem(w);
-                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(navyBackground))));
+                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
                 weaponList.add(item).top().left();
                 weaponList.row();
             }
         } else {
-            Table item = createWeaponListItem(null);
-            item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(navyBackground))));
-            weaponList.add(item).top().left();
-            weaponList.row();
+            for(Weapon w : allWeapons){
+                Table item = createWeaponListItem(w);
+                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
+                weaponList.add(item).top().left();
+                weaponList.row();
+            }
         }
 
 
 
         inventoryTable.pad(20,20,20,20).top().left();
-        inventoryTable.add(weaponFilters);
+        inventoryTable.add(weaponFilters).top().left();
         inventoryTable.row().padTop(10);
         inventoryTable.add(weaponList).top().left();
 
-        weaponFilters.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(navyBackground))));
+        weaponFilters.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
         playerTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGreenBackground))));
         inventoryTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGreenBackground))));
         mainInvTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(grayBackground))));

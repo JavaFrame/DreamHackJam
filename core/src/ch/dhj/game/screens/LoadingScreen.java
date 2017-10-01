@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -138,25 +139,28 @@ public class LoadingScreen extends ScreenAdapter {
 
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setAnimation(playerSet.encounterIdleAnimation);
-		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun));
+		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));*/
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun).setIcon((Texture) assetManager.get("textures/shotguunGun.png")));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));*/
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
 		player.setMaxActionCount(2);
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
-		player.getSpells().add(new Weapon(Weapon.WeaponType.Heal));
-		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
 	}
 	@Override
 	public void show() {
 		super.show();
 		assetManager.load("textures/sprites.pack", TextureAtlas.class);
+		assetManager.load("textures/Gun.png", Texture.class);
+		assetManager.load("textures/shotguunGun.png", Texture.class);
+		assetManager.load("textures/Stabbything.png", Texture.class);
+		assetManager.load("textures/Flamethrower_gun_mit_orange.png", Texture.class);
 		assetManager.load("textures/walkUp.pack", TextureAtlas.class);
 		assetManager.load("textures/walkDown.pack", TextureAtlas.class);
 		assetManager.load("textures/walkLeft.pack", TextureAtlas.class);
