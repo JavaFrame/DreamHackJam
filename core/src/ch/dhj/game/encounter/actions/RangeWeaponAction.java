@@ -62,6 +62,7 @@ public class RangeWeaponAction implements Action {
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
+		if(enemy.isDead()) return true;
 		//Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
 		/*if(animation == null) {
 			System.err.println("Animation of weapon " + weapon + " returned null!");

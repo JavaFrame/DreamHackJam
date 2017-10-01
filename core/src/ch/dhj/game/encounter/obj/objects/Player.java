@@ -75,6 +75,23 @@ public class Player extends Figure{
 				actions = 0;
 				turnActionTable.setVisible(true);
 				rootTable.setVisible(true);
+
+				if(getEncounterConfig().enemies.size == 0) {
+					Dialog dialog = null;
+					dialog = new Dialog("You won!", skin);
+					dialog.text("You goerqwerft 0 exp!");
+					TextButton closeB = new TextButton("close", skin);
+					final Dialog finalDialog = dialog;
+					closeB.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+							finalDialog.hide();
+						}
+					});
+					dialog.button(closeB);
+					dialog.show(stage);
+				}
 			}
 		});
 	}
