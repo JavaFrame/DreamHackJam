@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class ZombieEnemy extends Enemy {
 	public ZombieEnemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
-		super(position, scale, name, animationSet);
+		super(position, scale, name, animationSet, 1);
 	}
 
 	@Override

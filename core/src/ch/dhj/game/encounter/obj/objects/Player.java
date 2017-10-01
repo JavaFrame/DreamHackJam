@@ -75,6 +75,7 @@ public class Player extends Figure{
 				currentTurn = new Turn();
 				actions = 0;
 				turnActionTable.setVisible(true);
+				rootTable.setVisible(true);
 			}
 		});
 	}
@@ -117,6 +118,7 @@ public class Player extends Figure{
 				} else { //weapon is a range weapon
 					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}));
 				}
+				chooseSpellTable.setVisible(false);
 			}
 		});
 		chooseEnemyTable.add(doButton).width(100);
@@ -273,6 +275,7 @@ public class Player extends Figure{
 		getTurnManager().start();
 
 		chooseEnemyTable.setVisible(false);
+		chooseSpellTable.setVisible(false);
 		rootTable.setVisible(false);
 		turnActionTable.setVisible(true);
 		actions = 0;
@@ -321,6 +324,8 @@ public class Player extends Figure{
 	public void died() {
 		Dialog dialog = new Dialog("You died!",  skin);
 		dialog.text("You have no health left!");
+		dialog.show(stage);
+		System.out.println("palyer died");
 	}
 
 	public int getObjectPosIndex() {

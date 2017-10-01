@@ -37,7 +37,8 @@ public class RangeWeaponAction implements Action {
 
 	@Override
 	public void init() {
-
+		Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
+		you.setAnimation(animation);
 	}
 
 	@Override
@@ -54,14 +55,14 @@ public class RangeWeaponAction implements Action {
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
-		Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
-		if(animation == null) {
+		//Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
+		/*if(animation == null) {
 			System.err.println("Animation of weapon " + weapon + " returned null!");
 			return true;
-		}
-		timeElepsed += Gdx.graphics.getDeltaTime();
+		}*/
+		//timeElepsed += Gdx.graphics.getDeltaTime();
 		shootTimeElepsed += Gdx.graphics.getDeltaTime();
-		you.setTextureRegion(animation.getKeyFrame(timeElepsed));
+		//you.setTextureRegion(animation.getKeyFrame(timeElepsed));
 
 		if(weapon.hashProjectile()) {
 			if(shootTimeElepsed >= weapon.getProjectileBluePrint().getFireTime() && shootedCount == 0) {
@@ -81,7 +82,7 @@ public class RangeWeaponAction implements Action {
 			}
 		}
 
-		return animation.isAnimationFinished(timeElepsed);
+		return you.isAnnimationFinished();
 	}
 
 	private void shootProjecitle(Vector2 startPos, Vector2 targetPos) {

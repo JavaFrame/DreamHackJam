@@ -11,9 +11,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -65,7 +63,9 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_death")));
 		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_damaged")));
 		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_attack")));
-		Enemy zombieEnemy = new ZombieEnemy(Vector2.Zero, Vector2.Zero, "Zombie", zombieSet);
+		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet);
+		zombieEnemy.setMaxLifes(10);
+		zombieEnemy.setLifes(10);
 		enemyManager.addEnemy(zombieEnemy);
 
 		AnimationSet zombieKingSet = new AnimationSet();
@@ -107,9 +107,23 @@ public class LoadingScreen extends ScreenAdapter {
 
 	private void buildPlayer(TextureAtlas atlas) {
 		AnimationSet playerSet = new AnimationSet();
-		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_idle")));
+		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/4, atlas.findRegions("johhny_hover")));
+		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_idle")));
 		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_death")));
 		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_damaged")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1, atlas.findRegions("johhny_gun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
+		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johhny", playerSet);
+		player.setMaxLifes(10);
+		player.setLifes(10);
+		player.setMaxActionCount(3);
+		player.setCurrentWeapon(new Weapon(Weapon.WeaponType.Stab));
+		player.setAnimation(playerSet.encounterIdleAnimation);
 		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/6, atlas.findRegion("johhny_hover")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_gun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_shotgun")));
