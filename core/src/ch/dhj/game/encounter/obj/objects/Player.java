@@ -8,6 +8,7 @@ import ch.dhj.game.encounter.actions.MeleeWeaponAction;
 import ch.dhj.game.encounter.actions.RangeWeaponAction;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
+import ch.dhj.game.screens.EncounterScreen;
 import ch.dhj.game.screens.MainMenu;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.Game;
@@ -90,6 +91,7 @@ public class Player extends Figure{
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
 						newWeaponDialg.hide();
+						EncounterScreen.encounterMusic.stop();
 						((Game) Gdx.app.getApplicationListener()).
 								setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 					}
@@ -140,6 +142,7 @@ public class Player extends Figure{
 								newWeaponDialg.add(new Image(newWeapon.getIcon()));
 								newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
 							} else {
+								EncounterScreen.encounterMusic.stop();
 								((Game) Gdx.app.getApplicationListener()).
 										setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 							}
@@ -162,8 +165,10 @@ public class Player extends Figure{
 								finalLevlUpDialog.button(closeLvlUpDialog);
 								finalLevlUpDialog.show(stage);
 							} else {
+								EncounterScreen.encounterMusic.stop();
 								((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 							}
+							EncounterScreen.encounterMusic.stop();
 							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
@@ -350,6 +355,7 @@ public class Player extends Figure{
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalDialog.hide();
+							EncounterScreen.encounterMusic.stop();
 							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
@@ -492,6 +498,7 @@ public class Player extends Figure{
 				Player.this.setTotalExpToNextLevel(10);
 				Player.this.getWeapons().clear();
 				Player.this.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+				EncounterScreen.encounterMusic.stop();
 				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this , enemyManager));
 			}
 		});

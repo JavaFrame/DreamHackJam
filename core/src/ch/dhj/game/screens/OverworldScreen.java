@@ -11,6 +11,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -104,6 +105,8 @@ public class OverworldScreen implements Screen {
     private static final int SIZE = EnemyTypes.values().length;
     private static final Random RANDOM = new Random();
 
+    private Music overworldMusic;
+
     public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em, boolean lastScreenInventory) {
 
 		this.assetManager = assetManager;
@@ -111,6 +114,10 @@ public class OverworldScreen implements Screen {
         player = p;
         enemyManager = em;
         lastScreenInv = lastScreenInventory;
+
+        overworldMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Ross Bugden - Skies.mp3"));
+        overworldMusic.setLooping(true);
+        overworldMusic.setVolume(.3f);
 
         this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -165,6 +172,8 @@ public class OverworldScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+
+        overworldMusic.play();
 
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
@@ -236,7 +245,7 @@ public class OverworldScreen implements Screen {
                 frontFieldButton.setTouchable(Touchable.disabled);
                 lastFieldButton.setTouchable(Touchable.disabled);
                 saveAndQuit.setTouchable(Touchable.disabled);
-
+                overworldMusic.stop();
 				Gdx.app.exit();
 			}
 		});
@@ -401,9 +410,11 @@ public class OverworldScreen implements Screen {
                         break;
                 }
                 if (player.getObjectPosIndex() == 11) {
+                    overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
                             enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2)}), assetManager, batch));
                 } else if (player.getObjectPosIndex() == 22) {
+                    overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
                             enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel() * 3)}), assetManager, batch));
                 } else {
@@ -429,6 +440,7 @@ public class OverworldScreen implements Screen {
                                 up = !up;
                                 enemies[i].setSize(new Vector2(500, 500));
                             }
+                            overworldMusic.stop();
                             ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
                         } else {
                             if (enemyCount == 0) {
@@ -452,6 +464,7 @@ public class OverworldScreen implements Screen {
                                 up = !up;
                                 enemies[i].setSize(new Vector2(500, 500));
                             }
+                            overworldMusic.stop();
                             ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
                         }
 
@@ -509,5 +522,6 @@ public class OverworldScreen implements Screen {
 		stage.dispose();
 		atlasPlayerImage.dispose();
 		map.dispose();
+        overworldMusic.dispose();
 	}
 }

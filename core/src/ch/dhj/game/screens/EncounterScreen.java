@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -45,6 +46,8 @@ public class EncounterScreen implements Screen {
 	private ParentObject parentObject;
 	private Viewport viewport;
 
+	public static Music encounterMusic;
+
 	private Player player;
 
 	public EncounterScreen(Player player, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
@@ -52,6 +55,10 @@ public class EncounterScreen implements Screen {
 		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = new SpriteBatch();
+
+		encounterMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Bubblegum Punk - Original Royalty Free Rock Song.mp3"));
+		encounterMusic.setLooping(true);
+		encounterMusic.setVolume(.3f);
 
 		viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_WIDTH);
 
@@ -83,7 +90,9 @@ public class EncounterScreen implements Screen {
 
 
 	@Override
-	public void show() {}
+	public void show() {
+		encounterMusic.play();
+	}
 
 	@Override
 	public void render(float delta) {
@@ -127,6 +136,7 @@ public class EncounterScreen implements Screen {
 	@Override
 	public void dispose() {
 		parentObject.dispose();
+		encounterMusic.dispose();
 	}
 
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -37,12 +38,16 @@ public class MainMenu implements Screen {
     private AssetManager assetManager;
     private Player player;
     private EnemyManager enemyManager;
+    private Music mainScreenMusic;
 
     public MainMenu(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
         this.assetManager = assetManager;
         this.batch = batch;
         player = p;
         enemyManager = em;
+        mainScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Funny Song - Bensound (Royalty Free Music).mp3"));
+        mainScreenMusic.setLooping(true);
+        mainScreenMusic.setVolume(.3f);
 
         this.assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
         this.assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
@@ -70,6 +75,8 @@ public class MainMenu implements Screen {
         //Stage should controll input:
         Gdx.input.setInputProcessor(stage);
 
+        mainScreenMusic.play();
+
         //Create Table
         Table mainTable = new Table();
         //Set table to fill stage
@@ -86,6 +93,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                mainScreenMusic.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager, false));
             }
         });
@@ -148,4 +156,5 @@ public class MainMenu implements Screen {
         batch.dispose();
         skin.dispose();
         stage.dispose();
+        mainScreenMusic.dispose();
     }}

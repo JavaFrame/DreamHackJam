@@ -12,6 +12,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -55,6 +56,7 @@ public class InventoryScreen  implements Screen {
     private final boolean[] isSpell = {false};
     private final int[] spellSlot = {0};
     private EnemyManager enemyManager;
+    private Music invScreenMusic;
 
     public InventoryScreen(AssetManager am, SpriteBatch sb, Player p, EnemyManager em) {
         assetManager = am;
@@ -66,6 +68,10 @@ public class InventoryScreen  implements Screen {
         assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
         assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         assetManager.finishLoading();
+
+        invScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Funny Song - Bensound (Royalty Free Music).mp3"));
+        invScreenMusic.setLooping(true);
+        invScreenMusic.setVolume(.3f);
 
         atlasButtons = assetManager.get("textures/defaultSkin.pack");
         skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
@@ -102,6 +108,8 @@ public class InventoryScreen  implements Screen {
         //Stage should controll input:
         Gdx.input.setInputProcessor(stage);
 
+        invScreenMusic.play();
+
         //Create Table
         Table resumeButtonTable = new Table();
         //Set table to fill stage
@@ -117,6 +125,7 @@ public class InventoryScreen  implements Screen {
         resumeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                invScreenMusic.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager, true));
             }
         });
@@ -347,6 +356,7 @@ public class InventoryScreen  implements Screen {
         batch.dispose();
         skin.dispose();
         stage.dispose();
+        invScreenMusic.dispose();
     }
 
     public Table createWeaponListItem(final Weapon w){
