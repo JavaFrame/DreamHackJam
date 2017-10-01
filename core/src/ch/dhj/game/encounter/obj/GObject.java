@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -16,19 +17,21 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public abstract class GObject {
 	private ParentObject parent;
-	private Sprite texture;
+	private TextureRegion texture;
 
 	private Vector2 position;
-
+	private Vector2 size;
 
 	public GObject(Vector2 position) {
 		this.position = position;
+		this.size = new Vector2(1, 1);
 		this.texture = null;
 	}
 
-	public GObject(Sprite texture, Vector2 position) {
+	public GObject(Sprite texture, Vector2 position, Vector2 size) {
 		this.texture = texture;
 		this.position = position;
+		this.size = size;
 	}
 
 	/**
@@ -41,10 +44,10 @@ public abstract class GObject {
 	 * @param delta
 	 */
 	public void render(float delta, SpriteBatch batch) {
-		if(getSprite() != null) {
-			//batch.draw(getSprite(), getPosition().x, getPosition().y);
-			getSprite().setPosition(getPosition().x, getPosition().y);
-			getSprite().draw(batch);
+		if(getTextureRegion() != null) {
+			batch.draw(getTextureRegion(), getPosition().x, getPosition().y, getSize().x, getSize().y);
+			/*getTextureRegion().setPosition(getPosition().x, getPosition().y);
+			getTextureRegion().draw(batch);*/
 		}
 	}
 
@@ -82,11 +85,11 @@ public abstract class GObject {
 		return position;
 	}
 
-	public Sprite getSprite() {
+	public TextureRegion getTextureRegion() {
 		return texture;
 	}
 
-	public void setSprite(Sprite texture) {
+	public void setTextureRegion(TextureRegion texture) {
 		this.texture = texture;
 	}
 
@@ -119,5 +122,13 @@ public abstract class GObject {
 	public EncounterScreen getEncounterScreen() {
 		if(getParent() == null) return null;
 		return getParent().getEncounterScreen();
+	}
+
+	public Vector2 getSize() {
+		return size;
+	}
+
+	public void setSize(Vector2 size) {
+		this.size = size;
 	}
 }

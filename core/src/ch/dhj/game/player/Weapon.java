@@ -1,7 +1,7 @@
 package ch.dhj.game.player;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Created by Sebastian on 30.09.2017.
@@ -13,17 +13,22 @@ public class Weapon {
 	private boolean multipleTargets;
 	private boolean melee;
 	private boolean spell;
+	private ProjectileBluePrint projectileBluePrint;
+	private WeaponType type;
 
-	private Animation animation;
+	public Weapon(WeaponType type) {
+		this(type.getName(), type.getActionCost(), type.getDamge(), type.isMultipleTargets(), type.isMelee(), type.isSpell(), type.getProjectileBluePrint());
+		this.type = type;
+	}
 
-	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean melee, boolean spell, Animation animation) {
+	public Weapon(String name, int actionCost, int damge, boolean multipleTargets, boolean melee, boolean spell, ProjectileBluePrint projectileBluePrint) {
 		this.name = name;
 		this.actionCost = actionCost;
 		this.damge = damge;
 		this.multipleTargets = multipleTargets;
 		this.melee = melee;
 		this.spell = spell;
-		this.animation = animation;
+		this.projectileBluePrint = projectileBluePrint;
 	}
 
 	public String getName() {
@@ -70,13 +75,79 @@ public class Weapon {
 		this.spell = spell;
 	}
 
-	public Animation<Texture> getAnimation() {
-		return animation;
+	public boolean hashProjectile() {
+		return projectileBluePrint != null;
 	}
 
-	public static enum WeaponTypes {
-		Gun,
-		Shotgun,
-		
+	public ProjectileBluePrint getProjectileBluePrint() {
+		return projectileBluePrint;
+	}
+
+	public WeaponType getType() {
+		return type;
+	}
+
+	public Animation<TextureRegion> getAnimation(AnimationSet animationSet) {
+		if(getType() != null)
+			return animationSet.weaponMap.get(getType());
+		else return null;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+	public static enum WeaponType {
+		Gun("Gun", 1, 3, false, false, false, null),
+		Shotgun("Shotgun", 2, 4, true, false, false, null),
+		Stab("Stab", 1, 3, false, true, false, null),
+		Heal("Heal", 1, -3, false, false, true, null);
+
+		private String name;
+		private int actionCost;
+		private int damge;
+		private boolean multipleTargets;
+		private boolean melee;
+		private boolean spell;
+		private ProjectileBluePrint projectileBluePrint;
+
+		WeaponType(String name, int actionCost, int damge, boolean multipleTargets, boolean melee, boolean spell, ProjectileBluePrint projectileBluePrint) {
+			this.name = name;
+			this.actionCost = actionCost;
+			this.damge = damge;
+			this.multipleTargets = multipleTargets;
+			this.melee = melee;
+			this.spell = spell;
+			this.projectileBluePrint = projectileBluePrint;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getActionCost() {
+			return actionCost;
+		}
+
+		public int getDamge() {
+			return damge;
+		}
+
+		public boolean isMultipleTargets() {
+			return multipleTargets;
+		}
+
+		public boolean isMelee() {
+			return melee;
+		}
+
+		public boolean isSpell() {
+			return spell;
+		}
+
+		public ProjectileBluePrint getProjectileBluePrint() {
+			return projectileBluePrint;
+		}
 	}
 }

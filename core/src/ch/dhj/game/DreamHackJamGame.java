@@ -14,8 +14,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -30,31 +29,52 @@ public class DreamHackJamGame extends Game {
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
+		assetManager.load("textures/johhny.atlas", TextureAtlas.class);
 		batch = new SpriteBatch();
+		assetManager.finishLoading();
 
+		TextureAtlas atlas = assetManager.get("textures/johhny.atlas");
 
-		List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
-		Player p = new Player(new Sprite(new Texture(Gdx.files.internal("textures/Johhny.png"))), new Vector2(1800, 30), "Joshua", new AnimationSet());
+		AnimationSet masterAnimationSet = new AnimationSet(
+			null,
+				null,
+				null,
+				null,
+				null,
+				new Animation<TextureRegion>(1/10, atlas.findRegions("johhny_stab")),
+				new Weapon.WeaponType[]{Weapon.WeaponType.Gun, Weapon.WeaponType.Shotgun, Weapon.WeaponType.Stab, Weapon.WeaponType.Heal},
+				new Animation[]{new Animation(1/6, atlas.findRegions("johhny_gun")),
+						new Animation(1/6, atlas.findRegions("johhny_shotgun")),
+						new Animation(1/2, atlas.findRegions("johhny_stab")),
+						new Animation(1/6, atlas.findRegions("johhny_heal")),
+			}
+		);
+
+		AnimationSet playerAnimationSet = new AnimationSet(masterAnimationSet);
+		List<Weapon> weapons = new ArrayList(Arrays.asList(new Weapon(Weapon.WeaponType.Gun), new Weapon(Weapon.WeaponType.Shotgun), new Weapon(Weapon.WeaponType.Stab), new Weapon(Weapon.WeaponType.Heal)));
+		Player p = new Player(new Sprite(atlas.findRegion("johnny_gun",0)), new Vector2(1300, 200), new Vector2(500, 500), "Joshua", new AnimationSet(masterAnimationSet));
 		p.setMaxActionCount(2);
-		p.setCurrentWeapon(weapons.get(0));
-		p.getSpells().add(weapons.get(1));
-		p.getSpells().add(weapons.get(2));
+		p.setCurrentWeapon(weapons.get(2));
+		p.getSpells().add(weapons.get(3));
 
 		//this.setScreen(new MainMenu(assetManager, batch));
+		Enemy tE = new Enemy(new Vector2(100, 300), new Vector2(500, 500), "BadBoy 3", new AnimationSet(masterAnimationSet)) {
+			@Override
+			public Action[] getActions() {
+				return new Action[0];
+			}
+		};
+		tE.setMaxLifes(10);
+		tE.setLifes(10);
+		tE.setLevel(3);
+
 		this.setScreen(
 				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
-						new Enemy[]{new Enemy(
-								new Vector2(30, 100),
-								"BadBoy",
-								new AnimationSet()) {
-					@Override
-					public Action[] getActions() {
-						return new Action[0];
-					}
-				}, new Enemy(
-								new Vector2(300, 100),
+						new Enemy[]{tE, new Enemy(
+								new Vector2(300, 200),
+								new Vector2(500, 500),
 								"BadBoy2",
-								new AnimationSet()) {
+								new AnimationSet(masterAnimationSet)) {
 							@Override
 							public Action[] getActions() {
 								return new Action[0];

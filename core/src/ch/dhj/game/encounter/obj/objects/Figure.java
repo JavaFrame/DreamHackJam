@@ -1,12 +1,15 @@
 package ch.dhj.game.encounter.obj.objects;
 
+import ch.dhj.game.customcomponents.LoadingBar;
 import ch.dhj.game.encounter.obj.GObject;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -26,22 +29,59 @@ public class Figure extends GObject {
 	private AnimationSet animationSet;
 
 
+
+	private Label nameL;
+	private Label levelL;
+	private Label lifesL;
+	private Table infoTable;
+
 	public Figure(Vector2 position, String name, AnimationSet animationSet) {
 		super(position);
 		this.name = name;
 		this.animationSet = animationSet;
-		setSprite(new Sprite(new Texture(Gdx.files.internal("textures/Johhny.png"))));
+		//setTextureRegion(new Sprite(new Texture(Gdx.files.internal("textures/Johhny.png"))));
 	}
 
-	public Figure(Sprite texture, Vector2 position, String name, AnimationSet animationSet) {
-		super(texture, position);
+	public Figure(Sprite texture, Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
+		super(texture, position, scale);
 		this.name = name;
 		this.animationSet = animationSet;
 	}
 
 	@Override
 	public void init() {
+		TextureAtlas atlasButtons = new TextureAtlas("textures/defaultSkin.pack");
+		Skin skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
 
+		infoTable = new Table(skin);
+
+		nameL = new Label(getName(), skin);
+		nameL.setFontScale(3);
+		levelL = new Label(getLevel() + "lvl", skin);
+		levelL.setFontScale(3);
+		lifesL = new Label(getLifes() + "/" + getMaxLifes() + " health", skin);
+		lifesL.setFontScale(3);
+
+		infoTable.add(nameL);
+		infoTable.row();
+		infoTable.add(levelL);
+		infoTable.row();
+		infoTable.add(lifesL);
+		infoTable.setPosition(getPosition().x+(getSize().x/4), getPosition().y+getSize().y + infoTable.getHeight());
+	}
+
+	public void drawLifeInfos(SpriteBatch batch) {
+		/*levelL.setPosition(nameL.getX() + nameL.getGlyphLayout().width + 5, getPosition().y+getSize().y+80);
+		nameL.draw(batch, 1f);
+		levelL.draw(batch, 1f);
+		lifesL.draw(batch, 1f);*/
+		infoTable.draw(batch, 1f);
+	}
+
+	@Override
+	public void render(float delta, SpriteBatch batch) {
+		super.render(delta, batch);
+		drawLifeInfos(batch);
 	}
 
 	@Override
@@ -119,6 +159,13 @@ public class Figure extends GObject {
 
 	public void setCurrentWeapon(Weapon currentWeapon) {
 		this.currentWeapon = currentWeapon;
+	}
+
+	public void applayDamage(int damage) {
+		setLifes(getLifes()-damage);
+		if(getLifes() <= 0) {
+
+		}
 	}
 
 	@Override
