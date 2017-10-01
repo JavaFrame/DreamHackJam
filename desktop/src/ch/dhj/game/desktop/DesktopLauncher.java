@@ -8,8 +8,9 @@ import ch.dhj.game.DreamHackJamGame;
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = WorldConfig.VIEWPORT_WIDTH / 2;
-		config.height = WorldConfig.VIEWPORT_HEIGHT / 2;
+		config.width = WorldConfig.VIEWPORT_WIDTH;
+		config.height = WorldConfig.VIEWPORT_HEIGHT;
+//		config.fullscreen = true;
 		new LwjglApplication(new DreamHackJamGame(), config);
 	}
 }

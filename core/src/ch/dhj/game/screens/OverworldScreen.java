@@ -35,8 +35,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.awt.*;
+import java.awt.Dialog;
 import java.util.Comparator;
 import java.util.Map;
 
@@ -76,13 +76,36 @@ public class OverworldScreen implements Screen {
     private final TextButton saveAndQuit;
     private EnemyManager enemyManager;
     private String encounterBackground;
+    private boolean lastScreenInv;
+    private static String[] dialog = new String[]{"Johnny, wake up! You need to save the world.",
+            "Ohh who I am? You don’t need to know Johnny, you don’t need to know.",
+            "Well, well this land looks really f*cked up. What happened?",
+            "Johnny watch out there might be danger around here.",
+            "Huh Johnny, why do you have such a common name? You’re a goddamn main character.",
+            "Something really bad happened here.",
+            "Come on we ain’t got unlimited time to save the world.",
+            "You don’t want to save the world? Well you don’t have a lot of other options, right?",
+            "Thinking about it, how will you save the world anyway? Magic, time travel or what are you thinking of?",
+            "I sense danger ahead if I were you I would prepare myself for a beating.",
+            "Well this guy had a fancy crown didn’t he? I want to know where he got that from.",
+            "Can’t we turn around and get that crown? No? Sad...",
+            "Man what happened here? Looks kind of like some nuclear stuff.",
+            "Maybe we can find answers at one of these craters.",
+            "Johnny, may I ask you how you survived whatever happened? You don’t know either? I would have liked to know it.",
+            "I think we’re getting closer to the source of it all.",
+            "Weird that we haven’t seen a single other survivor on our way.",
+            "There is something in that crater over there let’s check it out.",
+            "Maybe we’ll get answers when we arrive in the middle.",
+            "We’re getting close to the potential end of an amazing story.",
+            "What the f*ck is this? Come one we need to find out.",
+            "Trump?! Really?! I mean there are a lot of ways for an apocalypse to happen and the writer picked Trump?! Well, who am I to judge. Hope I see you again Johnny."};
 
-
-    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
+    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em, boolean lastScreenInventory) {
 		this.assetManager = assetManager;
 		this.batch = batch;
         player = p;
         enemyManager = em;
+        lastScreenInv = lastScreenInventory;
 
         this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -131,7 +154,7 @@ public class OverworldScreen implements Screen {
 		inventory  = new TextButton("Inventory", skin);
 		frontFieldButton = new TextButton("Go to next Field", skin);
 		lastFieldButton = new TextButton("Go to last Field", skin);
-		saveAndQuit = new TextButton("Save and Exit", skin);
+		saveAndQuit = new TextButton("Exit", skin);
 	}
 
 	@Override
@@ -268,6 +291,14 @@ public class OverworldScreen implements Screen {
         playerGUI.pack();
         stage.addActor(playerGUI);
 
+        if(!lastScreenInv) {
+            com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog = new com.badlogic.gdx.scenes.scene2d.ui.Dialog("Story", skin);
+            dialog.text(this.dialog[player.getObjectPosIndex() - 1]);
+            TextButton closeB = new TextButton("close", skin);
+            final com.badlogic.gdx.scenes.scene2d.ui.Dialog finalDialog = dialog;
+            dialog.button("close", closeB);
+            dialog.show(stage);
+        }
    }
 
 	@Override
@@ -364,8 +395,6 @@ public class OverworldScreen implements Screen {
                         encounterBackground = "textures/encounter_bg_crater.png";
                         break;
                 }
-
-                // TODO: Add encounter + Dialog
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
                         enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),1)
                 }),assetManager,batch));

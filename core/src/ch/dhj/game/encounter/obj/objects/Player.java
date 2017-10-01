@@ -117,6 +117,8 @@ public class Player extends Figure{
 							} else {
 								((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
 							}
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+							finalDialog.hide();
 						}
 					});
 					wonDialog.button(closeB);
@@ -295,7 +297,7 @@ public class Player extends Figure{
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalDialog.hide();
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
 					dialog.button("close", closeB);
@@ -368,12 +370,12 @@ public class Player extends Figure{
 			setExp(0);
 			setTotalExpToNextLevel((int) (getTotalExpToNextLevel() * EXP_FACTOR));
 			setLevel(getLevel() + 1);
-			levelChangeReport.append(String.format("%d lvl -> %d lvl", getLevel()-1, getLevel()));
+			levelChangeReport.append(String.format("%i lvl -> %i lvl", getLevel()-1, getLevel()));
 
 			int oldMaxLife = getMaxLifes();
 			setMaxLifes((int) (getMaxLifes() * LIFE_FACTOR));
 			setLifes(getMaxLifes());
-			levelChangeReport.append(String.format("%d lifes -> %d lifes", oldMaxLife, getMaxLifes()));
+			levelChangeReport.append(String.format("%i lifes -> %i lifes", oldMaxLife, getMaxLifes()));
 
 			int oldActionCount = getMaxActionCount();
 			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));
