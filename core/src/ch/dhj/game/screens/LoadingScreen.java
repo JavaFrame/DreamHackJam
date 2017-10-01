@@ -122,26 +122,28 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>(1, atlas.findRegions("fireball")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(0.7f, atlas.findRegions("johhny_flamethrower")));
 
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
-		player.setMaxLifes(10);
-		player.setLifes(10);
-		player.setMaxActionCount(3);
 		player.setAnimation(playerSet.encounterIdleAnimation);
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));
 		player.setEnemyManager(enemyManager);
+		player.setMaxLifes(10);
+		player.setLifes(10);
+		player.setMaxActionCount(3);
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
-		player.setRangeWeapon(new Weapon(Weapon.WeaponType.Flamethrower));
 	}
 	@Override
 	public void show() {
