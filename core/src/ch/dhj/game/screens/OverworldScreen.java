@@ -154,7 +154,7 @@ public class OverworldScreen implements Screen {
 		inventory  = new TextButton("Inventory", skin);
 		frontFieldButton = new TextButton("Go to next Field", skin);
 		lastFieldButton = new TextButton("Go to last Field", skin);
-		saveAndQuit = new TextButton("Save and Exit", skin);
+		saveAndQuit = new TextButton("Exit", skin);
 	}
 
 	@Override

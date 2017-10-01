@@ -9,7 +9,7 @@ public class DreamHackJamGame extends Game {
 
 	private AssetManager assetManager;
 	private SpriteBatch batch;
-	
+
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
