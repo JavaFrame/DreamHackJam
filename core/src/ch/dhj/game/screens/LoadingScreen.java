@@ -121,7 +121,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1, atlas.findRegions("johhny_gun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1, atlas.findRegions("johhny_heal")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>(1, atlas.findRegions("fireball")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(0.7f, atlas.findRegions("johhny_flamethrower")));
@@ -143,6 +143,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setMaxActionCount(3);
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
+		player.getSpells().add(new Weapon(Weapon.WeaponType.Heal));
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
 	}
 	@Override
