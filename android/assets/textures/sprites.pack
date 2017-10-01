@@ -1,1371 +1,1384 @@
 
 sprites.png
-size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 alien_damged
   rotate: false
-  xy: 478, 2
+  xy: 1, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 4
-alien_damged
+  index: 0
+alien_idle
   rotate: false
-  xy: 546, 70
+  xy: 1, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 6
-alien_damged
+  index: 0
+alien_shoot
   rotate: false
-  xy: 546, 70
+  xy: 1, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+alien_shoot
+  rotate: false
+  xy: 1, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
+alien_damged
+  rotate: false
+  xy: 1, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+alien_damged
+  rotate: false
+  xy: 1, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
 alien_death
   rotate: false
-  xy: 546, 70
+  xy: 1, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 alien_damged
   rotate: false
-  xy: 1498, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-alien_damged
-  rotate: false
-  xy: 1668, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-alien_damged
-  rotate: false
-  xy: 1770, 2
+  xy: 35, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
-alien_death
+alien_damged
   rotate: false
-  xy: 104, 2
+  xy: 1, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
-alien_death
+alien_damged
   rotate: false
-  xy: 240, 70
+  xy: 35, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 11
-alien_death
+  index: 4
+alien_damged
   rotate: false
-  xy: 240, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 13
-alien_death
-  rotate: false
-  xy: 240, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 15
-alien_death
-  rotate: false
-  xy: 308, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 17
-alien_death
-  rotate: false
-  xy: 308, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 19
-alien_death
-  rotate: false
-  xy: 308, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 16
-alien_death
-  rotate: false
-  xy: 376, 70
+  xy: 69, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 alien_death
   rotate: false
-  xy: 376, 36
+  xy: 1, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 alien_death
   rotate: false
-  xy: 1022, 70
+  xy: 35, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+alien_death
+  rotate: false
+  xy: 69, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+alien_death
+  rotate: false
+  xy: 103, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+alien_death
+  rotate: false
+  xy: 1, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+alien_death
+  rotate: false
+  xy: 35, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+alien_death
+  rotate: false
+  xy: 69, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 alien_death
   rotate: false
-  xy: 1022, 36
+  xy: 103, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+alien_death
+  rotate: false
+  xy: 137, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 9
 alien_death
   rotate: false
-  xy: 1192, 36
+  xy: 1, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 10
 alien_death
   rotate: false
-  xy: 1192, 2
+  xy: 35, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+alien_death
+  rotate: false
+  xy: 69, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 12
 alien_death
   rotate: false
-  xy: 1260, 70
+  xy: 103, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+alien_death
+  rotate: false
+  xy: 137, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 14
 alien_death
   rotate: false
-  xy: 1260, 36
+  xy: 171, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 15
+alien_death
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 16
+alien_death
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 17
+alien_death
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 19
+alien_death
+  rotate: false
+  xy: 35, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 18
-alien_death
-  rotate: false
-  xy: 1362, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-alien_death
-  rotate: false
-  xy: 1600, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-alien_death
-  rotate: false
-  xy: 1634, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 8
-alien_death
-  rotate: false
-  xy: 1804, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
 alien_idle
   rotate: false
-  xy: 1430, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-alien_damged
-  rotate: false
-  xy: 1430, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-alien_shoot
-  rotate: false
-  xy: 1430, 36
+  xy: 69, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 alien_shoot
   rotate: false
-  xy: 1430, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-alien_idle
-  rotate: false
-  xy: 1498, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-alien_shoot
-  rotate: false
-  xy: 920, 70
+  xy: 103, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 alien_shoot
   rotate: false
-  xy: 920, 36
+  xy: 137, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+alien_shoot
+  rotate: false
+  xy: 171, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 alien_shoot
   rotate: false
-  xy: 954, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-alien_shoot
-  rotate: false
-  xy: 1804, 70
+  xy: 205, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 alien_shoot
   rotate: false
-  xy: 1804, 2
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+fireball
+  rotate: false
+  xy: 69, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+fireball
+  rotate: false
+  xy: 103, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+fireball
+  rotate: false
+  xy: 137, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+fireball
+  rotate: false
+  xy: 171, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 fireball
   rotate: false
-  xy: 2, 36
+  xy: 205, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+fireball
+  rotate: false
+  xy: 239, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+fireball
+  rotate: false
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+fireball
+  rotate: false
+  xy: 103, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
-fireball
+johhny_damaged
   rotate: false
-  xy: 104, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-fireball
-  rotate: false
-  xy: 648, 70
+  xy: 137, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
-fireball
+johhny_death
   rotate: false
-  xy: 818, 36
+  xy: 137, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 6
-fireball
+  index: 0
+johhny_idle
   rotate: false
-  xy: 852, 2
+  xy: 137, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
-fireball
+  index: 0
+johhny_idle
   rotate: false
-  xy: 1838, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-fireball
-  rotate: false
-  xy: 1838, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-fireball
-  rotate: false
-  xy: 1872, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-johhny_damaged
-  rotate: false
-  xy: 886, 70
+  xy: 137, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 johhny_damaged
   rotate: false
-  xy: 886, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-johhny_damaged
-  rotate: false
-  xy: 886, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-johhny_damaged
-  rotate: false
-  xy: 886, 2
+  xy: 171, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 johhny_damaged
   rotate: false
-  xy: 1736, 36
+  xy: 171, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+johhny_damaged
+  rotate: false
+  xy: 205, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+johhny_damaged
+  rotate: false
+  xy: 239, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 johhny_damaged
   rotate: false
-  xy: 1770, 70
+  xy: 273, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+johhny_damaged
+  rotate: false
+  xy: 103, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 johhny_death
   rotate: false
-  xy: 138, 2
+  xy: 137, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+johhny_death
+  rotate: false
+  xy: 171, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 johhny_death
   rotate: false
-  xy: 206, 70
+  xy: 205, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+johhny_death
+  rotate: false
+  xy: 239, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 johhny_death
   rotate: false
-  xy: 206, 36
+  xy: 273, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+johhny_death
+  rotate: false
+  xy: 307, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 johhny_death
   rotate: false
-  xy: 206, 2
+  xy: 137, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+johhny_death
+  rotate: false
+  xy: 171, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 johhny_death
   rotate: false
-  xy: 274, 36
+  xy: 205, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 13
+  index: 9
 johhny_death
   rotate: false
-  xy: 444, 70
+  xy: 239, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+johhny_death
+  rotate: false
+  xy: 273, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 11
 johhny_death
   rotate: false
-  xy: 444, 36
+  xy: 307, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 12
 johhny_death
   rotate: false
-  xy: 444, 2
+  xy: 341, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+johhny_death
+  rotate: false
+  xy: 171, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 14
+johhny_death
+  rotate: false
+  xy: 205, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 15
 johhny_death
   rotate: false
-  xy: 512, 70
+  xy: 239, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 16
+johhny_death
+  rotate: false
+  xy: 273, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 17
 johhny_death
   rotate: false
-  xy: 512, 36
+  xy: 307, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 18
+johhny_death
+  rotate: false
+  xy: 341, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 19
 johhny_death
   rotate: false
-  xy: 682, 70
+  xy: 375, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 20
 johhny_death
   rotate: false
-  xy: 682, 70
+  xy: 375, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 21
-johhny_death
-  rotate: false
-  xy: 784, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 10
-johhny_death
-  rotate: false
-  xy: 954, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 14
-johhny_death
-  rotate: false
-  xy: 1192, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-johhny_death
-  rotate: false
-  xy: 1158, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-johhny_death
-  rotate: false
-  xy: 1226, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 7
-johhny_death
-  rotate: false
-  xy: 1226, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 9
-johhny_death
-  rotate: false
-  xy: 1396, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 12
-johhny_death
-  rotate: false
-  xy: 1464, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 16
-johhny_death
-  rotate: false
-  xy: 1464, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 18
 johhny_gun
   rotate: false
-  xy: 172, 70
+  xy: 205, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+johhny_gun
+  rotate: false
+  xy: 239, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 johhny_gun
   rotate: false
-  xy: 988, 2
+  xy: 273, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 johhny_gun
   rotate: false
-  xy: 1226, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-johhny_gun
-  rotate: false
-  xy: 1566, 2
+  xy: 307, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 johhny_heal
   rotate: false
-  xy: 750, 2
+  xy: 341, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 johhny_heal
   rotate: false
-  xy: 784, 2
+  xy: 375, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+johhny_heal
+  rotate: false
+  xy: 409, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+johhny_heal
+  rotate: false
+  xy: 239, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+johhny_heal
+  rotate: false
+  xy: 273, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 johhny_heal
   rotate: false
-  xy: 852, 70
+  xy: 307, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 6
+  index: 5
 johhny_heal
   rotate: false
-  xy: 852, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 9
-johhny_heal
-  rotate: false
-  xy: 852, 36
+  xy: 307, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 johhny_heal
   rotate: false
-  xy: 852, 36
+  xy: 341, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 5
+  index: 6
 johhny_heal
   rotate: false
-  xy: 1022, 2
+  xy: 341, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 9
 johhny_heal
   rotate: false
-  xy: 1056, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 10
-johhny_heal
-  rotate: false
-  xy: 1056, 2
+  xy: 375, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 johhny_heal
   rotate: false
-  xy: 1464, 2
+  xy: 375, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
-johhny_heal
-  rotate: false
-  xy: 1702, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
+  index: 10
 johhny_hover
   rotate: false
-  xy: 172, 36
+  xy: 409, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+johhny_hover
+  rotate: false
+  xy: 443, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
-johhny_hover
-  rotate: false
-  xy: 1736, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
 johhny_idle
   rotate: false
-  xy: 648, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-johhny_damaged
-  rotate: false
-  xy: 648, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-johhny_death
-  rotate: false
-  xy: 648, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-johhny_idle
-  rotate: false
-  xy: 648, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-johhny_idle
-  rotate: false
-  xy: 1838, 2
+  xy: 273, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 johhny_shotgun
   rotate: false
-  xy: 342, 36
+  xy: 307, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+johhny_shotgun
+  rotate: false
+  xy: 341, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 johhny_shotgun
   rotate: false
-  xy: 342, 36
+  xy: 341, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 johhny_shotgun
   rotate: false
-  xy: 512, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-johhny_shotgun
-  rotate: false
-  xy: 1430, 2
+  xy: 375, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 johhny_shotgun
   rotate: false
-  xy: 1668, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-johhny_shotgun
-  rotate: false
-  xy: 1736, 70
+  xy: 409, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
-johhny_stab
+johhny_shotgun
   rotate: false
-  xy: 1600, 2
+  xy: 443, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 5
 johhny_stab
   rotate: false
-  xy: 1634, 2
+  xy: 477, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
+johhny_stab
+  rotate: false
+  xy: 307, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
 rock
   rotate: false
-  xy: 342, 2
+  xy: 341, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 zombie_king_damaged
   rotate: false
-  xy: 342, 2
+  xy: 341, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 zombie_king_death
   rotate: false
-  xy: 342, 2
+  xy: 341, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 rock
   rotate: false
-  xy: 410, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-rock
-  rotate: false
-  xy: 376, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-rock
-  rotate: false
-  xy: 1328, 2
+  xy: 375, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 rock
   rotate: false
-  xy: 1362, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-trump_damged
-  rotate: false
-  xy: 580, 36
+  xy: 409, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
-trump_damged
+rock
   rotate: false
-  xy: 614, 70
+  xy: 443, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+rock
+  rotate: false
+  xy: 477, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 trump_damged
   rotate: false
-  xy: 614, 36
+  xy: 511, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+trump_death
+  rotate: false
+  xy: 511, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+trump_idle
+  rotate: false
+  xy: 511, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+trump_twitter
+  rotate: false
+  xy: 511, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+trump_damged
+  rotate: false
+  xy: 341, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+trump_damged
+  rotate: false
+  xy: 341, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 trump_damged
   rotate: false
-  xy: 614, 36
+  xy: 375, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
+  index: 2
 trump_damged
   rotate: false
-  xy: 1532, 2
+  xy: 409, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 trump_damged
   rotate: false
-  xy: 1566, 36
+  xy: 443, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+trump_damged
+  rotate: false
+  xy: 477, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 trump_death
   rotate: false
-  xy: 70, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-trump_death
-  rotate: false
-  xy: 70, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-trump_death
-  rotate: false
-  xy: 138, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 8
-trump_death
-  rotate: false
-  xy: 308, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 11
-trump_death
-  rotate: false
-  xy: 648, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 12
-trump_death
-  rotate: false
-  xy: 1056, 36
+  xy: 511, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 trump_death
   rotate: false
-  xy: 1124, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-trump_death
-  rotate: false
-  xy: 1090, 2
+  xy: 545, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 trump_death
   rotate: false
-  xy: 1124, 36
+  xy: 375, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+trump_death
+  rotate: false
+  xy: 409, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+trump_death
+  rotate: false
+  xy: 443, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+trump_death
+  rotate: false
+  xy: 477, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+trump_death
+  rotate: false
+  xy: 511, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 trump_death
   rotate: false
-  xy: 1124, 2
+  xy: 545, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+trump_death
+  rotate: false
+  xy: 579, 205
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 9
 trump_death
   rotate: false
-  xy: 1294, 36
+  xy: 409, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 10
 trump_death
   rotate: false
-  xy: 1600, 36
+  xy: 443, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
+  index: 11
+trump_death
+  rotate: false
+  xy: 477, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
 trump_idle
   rotate: false
-  xy: 580, 70
+  xy: 511, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 trump_projectile
   rotate: false
-  xy: 478, 70
+  xy: 545, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 trump_twitter
   rotate: false
-  xy: 70, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 9
-trump_twitter
-  rotate: false
-  xy: 70, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 8
-trump_twitter
-  rotate: false
-  xy: 70, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 7
-trump_twitter
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-trump_damged
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-trump_death
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-trump_idle
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-trump_twitter
-  rotate: false
-  xy: 580, 2
+  xy: 579, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 trump_twitter
   rotate: false
-  xy: 920, 2
+  xy: 613, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+trump_twitter
+  rotate: false
+  xy: 443, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 trump_twitter
   rotate: false
-  xy: 954, 2
+  xy: 477, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 trump_twitter
   rotate: false
-  xy: 988, 36
+  xy: 511, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+trump_twitter
+  rotate: false
+  xy: 545, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 trump_twitter
   rotate: false
-  xy: 1090, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-trump_twitter
-  rotate: false
-  xy: 1294, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-zombie_attack
-  rotate: false
-  xy: 2, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-zombie_attack
-  rotate: false
-  xy: 36, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-zombie_attack
-  rotate: false
-  xy: 104, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-zombie_attack
-  rotate: false
-  xy: 1090, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-zombie_attack
-  rotate: false
-  xy: 1158, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-zombie_attack
-  rotate: false
-  xy: 1634, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-zombie_damaged
-  rotate: false
-  xy: 36, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-zombie_damaged
-  rotate: false
-  xy: 36, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-zombie_damaged
-  rotate: false
-  xy: 682, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-zombie_damaged
-  rotate: false
-  xy: 1056, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-zombie_damaged
-  rotate: false
-  xy: 1770, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-zombie_death
-  rotate: false
-  xy: 342, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 14
-zombie_death
-  rotate: false
-  xy: 342, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 13
-zombie_death
-  rotate: false
-  xy: 546, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-zombie_death
-  rotate: false
-  xy: 546, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-zombie_death
-  rotate: false
-  xy: 716, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 9
-zombie_death
-  rotate: false
-  xy: 682, 2
+  xy: 579, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
-zombie_death
+trump_twitter
   rotate: false
-  xy: 750, 36
+  xy: 579, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 11
-zombie_death
+  index: 8
+trump_twitter
   rotate: false
-  xy: 784, 70
+  xy: 579, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+zombie_attack
+  rotate: false
+  xy: 613, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
+zombie_attack
+  rotate: false
+  xy: 647, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+zombie_attack
+  rotate: false
+  xy: 477, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+zombie_attack
+  rotate: false
+  xy: 511, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+zombie_attack
+  rotate: false
+  xy: 545, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+zombie_attack
+  rotate: false
+  xy: 579, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
 zombie_damaged
   rotate: false
-  xy: 784, 70
+  xy: 613, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+zombie_death
+  rotate: false
+  xy: 613, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 zombie_idle
   rotate: false
-  xy: 784, 70
+  xy: 613, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
-zombie_death
+zombie_damaged
   rotate: false
-  xy: 818, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-zombie_death
-  rotate: false
-  xy: 1294, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 8
-zombie_death
-  rotate: false
-  xy: 1532, 70
+  xy: 647, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
-zombie_death
+zombie_damaged
   rotate: false
-  xy: 1498, 2
+  xy: 681, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+zombie_damaged
+  rotate: false
+  xy: 511, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
-zombie_death
+zombie_damaged
   rotate: false
-  xy: 1532, 36
+  xy: 545, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+zombie_damaged
+  rotate: false
+  xy: 579, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 zombie_death
   rotate: false
-  xy: 1668, 36
+  xy: 613, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+zombie_death
+  rotate: false
+  xy: 647, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+zombie_death
+  rotate: false
+  xy: 681, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+zombie_death
+  rotate: false
+  xy: 715, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+zombie_death
+  rotate: false
+  xy: 545, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+zombie_death
+  rotate: false
+  xy: 579, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+zombie_death
+  rotate: false
+  xy: 613, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+zombie_death
+  rotate: false
+  xy: 647, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+zombie_death
+  rotate: false
+  xy: 681, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+zombie_death
+  rotate: false
+  xy: 715, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 10
 zombie_death
   rotate: false
-  xy: 1702, 70
+  xy: 749, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+zombie_death
+  rotate: false
+  xy: 579, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 12
+zombie_death
+  rotate: false
+  xy: 613, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+zombie_death
+  rotate: false
+  xy: 613, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 14
 zombie_idle
   rotate: false
-  xy: 1328, 70
+  xy: 647, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 zombie_king_damaged
   rotate: false
-  xy: 410, 36
+  xy: 681, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+zombie_king_damaged
+  rotate: false
+  xy: 715, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 zombie_king_damaged
   rotate: false
-  xy: 410, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-zombie_king_damaged
-  rotate: false
-  xy: 1396, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-zombie_king_damaged
-  rotate: false
-  xy: 1362, 2
+  xy: 749, 171
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 zombie_king_damaged
   rotate: false
-  xy: 1430, 70
+  xy: 783, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+zombie_king_damaged
+  rotate: false
+  xy: 613, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 zombie_king_death
   rotate: false
-  xy: 2, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 8
-zombie_king_death
-  rotate: false
-  xy: 138, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 4
-zombie_king_death
-  rotate: false
-  xy: 274, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 12
-zombie_king_death
-  rotate: false
-  xy: 274, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 9
-zombie_king_death
-  rotate: false
-  xy: 308, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 6
-zombie_king_death
-  rotate: false
-  xy: 478, 36
+  xy: 647, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 zombie_king_death
   rotate: false
-  xy: 614, 2
+  xy: 681, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 zombie_king_death
   rotate: false
-  xy: 716, 36
+  xy: 715, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+zombie_king_death
+  rotate: false
+  xy: 749, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+zombie_king_death
+  rotate: false
+  xy: 783, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+zombie_king_death
+  rotate: false
+  xy: 817, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+zombie_king_death
+  rotate: false
+  xy: 647, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+zombie_king_death
+  rotate: false
+  xy: 681, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+zombie_king_death
+  rotate: false
+  xy: 715, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+zombie_king_death
+  rotate: false
+  xy: 749, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+zombie_king_death
+  rotate: false
+  xy: 783, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 11
+zombie_king_death
+  rotate: false
+  xy: 817, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
+zombie_king_death
+  rotate: false
+  xy: 851, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 13
+zombie_king_death
+  rotate: false
+  xy: 681, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 14
 zombie_king_death
   rotate: false
-  xy: 750, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 17
-zombie_king_death
-  rotate: false
-  xy: 716, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 18
-zombie_king_death
-  rotate: false
-  xy: 716, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 19
-zombie_king_death
-  rotate: false
-  xy: 716, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 20
-zombie_king_death
-  rotate: false
-  xy: 818, 70
+  xy: 715, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 15
 zombie_king_death
   rotate: false
-  xy: 988, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 13
-zombie_king_death
-  rotate: false
-  xy: 1158, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-zombie_king_death
-  rotate: false
-  xy: 1260, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 11
-zombie_king_death
-  rotate: false
-  xy: 1328, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-zombie_king_death
-  rotate: false
-  xy: 1396, 2
+  xy: 749, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 16
 zombie_king_death
   rotate: false
-  xy: 1566, 70
+  xy: 783, 103
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 10
+  index: 17
 zombie_king_death
   rotate: false
-  xy: 1702, 2
+  xy: 817, 137
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 7
+  index: 18
+zombie_king_death
+  rotate: false
+  xy: 817, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 19
+zombie_king_death
+  rotate: false
+  xy: 817, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 20
+zombie_king_idol
+  rotate: false
+  xy: 851, 171
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+zombie_king_idol
+  rotate: false
+  xy: 885, 205
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2

@@ -50,7 +50,7 @@ public class LoadingScreen extends ScreenAdapter {
 		super.render(delta);
 		renderProgressBar();
 		if(assetManager.update()){
-			TextureAtlas atlas = assetManager.get("textures/sprites.atlas", TextureAtlas.class);
+			TextureAtlas atlas = assetManager.get("textures/sprites.pack", TextureAtlas.class);
 			buildPlayer(atlas);
 			buildingEnemies(atlas);
 			buildOverworldAnimations();
@@ -69,11 +69,11 @@ public class LoadingScreen extends ScreenAdapter {
 		enemyManager.addEnemy(zombieEnemy);
 
 		AnimationSet zombieKingSet = new AnimationSet();
-		zombieKingSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_attack")));
-		zombieKingSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_idle")));
+		zombieKingSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("rock")));
+		zombieKingSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_idol")));
 		zombieKingSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_death")));
 		zombieKingSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_damaged")));
-		zombieKingSet.getWeaponMap().put(Weapon.WeaponType.ZombieKingAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_king_attack")));
+		zombieKingSet.getWeaponMap().put(Weapon.WeaponType.ZombieKingAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("rock")));
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet);
 		enemyManager.addEnemy(zombieKingEnemy);
 
@@ -119,7 +119,7 @@ public class LoadingScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
-		assetManager.load("textures/sprites.atlas", TextureAtlas.class);
+		assetManager.load("textures/sprites.pack", TextureAtlas.class);
 		assetManager.load("textures/walkUp.pack", TextureAtlas.class);
 		assetManager.load("textures/walkDown.pack", TextureAtlas.class);
 		assetManager.load("textures/walkLeft.pack", TextureAtlas.class);
