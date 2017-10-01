@@ -407,26 +407,48 @@ public class OverworldScreen implements Screen {
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
                             enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel()*3)}),assetManager,batch));
                 } else {
-                    int enemyCount = RANDOM.nextInt(4);
-                    if(enemyCount == 0){enemyCount = 1;}
+                	if(player.getObjectPosIndex() <= 4){
+						int enemyCount = RANDOM.nextInt(4);
+						if(enemyCount == 0){enemyCount = 1;
 
-                    Enemy[] enemies = new Enemy[enemyCount];
-                    int pos = 100;
-                    boolean up = false;
-                    for(int i = 0; i < enemyCount; i++){
+						Enemy[] enemies = new Enemy[enemyCount];
+						int pos = 100;
+						boolean up = false;
+						for(int i = 0; i < enemyCount; i++){
 
-                        int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
-                        if(enemyLevel == 0){enemyLevel = 1;}
+							int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+							if(enemyLevel == 0){enemyLevel = 1;}
 
-                        String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
-                        enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName),enemyLevel);
-                        enemies[i].getPosition().set(pos, (up?400:100));
-                        pos += 200;
-                        up = !up;
-                        enemies[i].setSize(new Vector2(500, 500));
-                    }
+							String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+							enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName),player.getLevel());
+							enemies[i].getPosition().set(pos, (up?400:100));
+							pos += 200;
+							up = !up;
+							enemies[i].setSize(new Vector2(500, 500));
+						}
+						((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
+					} else {
+						int enemyCount = RANDOM.nextInt(4);
+						if(enemyCount == 0){enemyCount = 1;}
 
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
+						Enemy[] enemies = new Enemy[enemyCount];
+						int pos = 100;
+						boolean up = false;
+						for(int i = 0; i < enemyCount; i++){
+
+							int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+							if(enemyLevel == 0){enemyLevel = 1;}
+
+							String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+							enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),player.getLevel());
+							enemies[i].getPosition().set(pos, (up?400:100));
+							pos += 200;
+							up = !up;
+							enemies[i].setSize(new Vector2(500, 500));
+						}
+						((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
+					}
+
                 }
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);

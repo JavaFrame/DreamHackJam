@@ -52,18 +52,21 @@ public class RangeWeaponAction implements Action {
 		}
 
 		Figure e = enemies[index];
-		if(doAnimation(you, e)) {
+		if(doAnimation(you, e) && !e.isDead()) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;
+		} else if(e.isDead()) {
+			index++;
+			timeElepsed = 0;
+			alpha = 0;
 		}
 
 		return index >= enemies.length;
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
-		if(enemy.isDead()) return true;
-		//Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
+			//Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
 		/*if(animation == null) {
 			System.err.println("Animation of weapon " + weapon + " returned null!");
 			return true;

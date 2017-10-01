@@ -47,7 +47,7 @@ public class Enemy extends Figure{
 		getEncounterConfig().enemies.removeValue((Enemy) this, false);
 	}
 
-	public Action[] getActions(){
+	public Array<Action> getActions(){
 		Array<Action> actions = new Array<>();
 		int ap = 0;
 		while(ap < getMaxActionCount()) {
@@ -56,11 +56,13 @@ public class Enemy extends Figure{
 			}
 			if(getMeleeWeapon() != null) {
 				actions.add(new MeleeWeaponAction(getMeleeWeapon(), this, new Figure[]{getEncounterScreen().getPlayer()}));
+				ap += getMeleeWeapon().getActionCost();
 			} else if(getRangeWeapon() != null) {
 				actions.add(new RangeWeaponAction(getRangeWeapon(), this, new Figure[]{getEncounterScreen().getPlayer()}));
+				ap += getMeleeWeapon().getActionCost();
 			}
 		}
-		return actions.toArray();
+		return actions;
 	}
 
 	public int getMinPlayerLevel() {

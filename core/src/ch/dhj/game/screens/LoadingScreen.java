@@ -65,8 +65,9 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_damaged")));
 		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("zombie_attack")));
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
-		zombieEnemy.setMaxLifes(10);
-		zombieEnemy.setLifes(10);
+		zombieEnemy.setMaxLifes(5);
+		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
+		zombieEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(zombieEnemy);
 
 		AnimationSet zombieKingSet = new AnimationSet();
@@ -78,6 +79,8 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet, 5);
 		zombieKingEnemy.setMaxLifes(10);
 		zombieKingEnemy.setLifes(10);
+		zombieKingEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieKingAttack));
+		zombieKingEnemy.setMaxActionCount(3);
 		enemyManager.addEnemy(zombieKingEnemy);
 
 		AnimationSet alienSet = new AnimationSet();
@@ -91,6 +94,8 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy alienEnemy = new AlienEnemy(Vector2.Zero, Vector2.Zero, "Alien", alienSet,3);
 		alienEnemy.setMaxLifes(10);
 		alienEnemy.setLifes(10);
+		alienEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.AlienAttack));
+		alienEnemy.setMaxActionCount(4);
 		enemyManager.addEnemy(alienEnemy);
 
 		AnimationSet trumpSet = new AnimationSet();
@@ -101,6 +106,8 @@ public class LoadingScreen extends ScreenAdapter {
 		trumpSet.getWeaponMap().put(Weapon.WeaponType.TrumpAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("trump_attack")));
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
 		trumpEnemy.setMaxLifes(10);
+		trumpEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.TrumpAttack));
+		trumpEnemy.setMaxActionCount(4);
 		enemyManager.addEnemy(trumpEnemy);
 
 		/*AnimationSet zombieKingSet = new AnimationSet();
@@ -115,29 +122,29 @@ public class LoadingScreen extends ScreenAdapter {
 
 	private void buildPlayer(TextureAtlas atlas) {
 		AnimationSet playerSet = new AnimationSet();
-		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/4, atlas.findRegions("johhny_hover")));
-		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_idle")));
-		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_death")));
-		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_damaged")));
+		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_hover")));
+		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_idle")));
+		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_death")));
+		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_damaged")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1, atlas.findRegions("johhny_gun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>(1, atlas.findRegions("fireball")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(0.7f, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(0.5f, atlas.findRegions("johhny_shotgun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_stab")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>((float)1/5, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>((float)1/4, atlas.findRegions("fireball")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float) 1/3, atlas.findRegions("johhny_flamethrower")));
 
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setAnimation(playerSet.encounterIdleAnimation);
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
+		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun).setIcon((Texture) assetManager.get("textures/shotguunGun.png")));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));*/
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
