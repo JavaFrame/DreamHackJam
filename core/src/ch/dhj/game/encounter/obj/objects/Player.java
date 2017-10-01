@@ -8,6 +8,7 @@ import ch.dhj.game.encounter.actions.MeleeWeaponAction;
 import ch.dhj.game.encounter.actions.RangeWeaponAction;
 import ch.dhj.game.player.AnimationSet;
 import ch.dhj.game.player.Weapon;
+import ch.dhj.game.screens.MainMenu;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -405,8 +406,24 @@ public class Player extends Figure{
 	public void died() {
 		Dialog dialog = new Dialog("You died!",  skin);
 		dialog.text("You have no health left!");
+		TextButton restartGameButton = new TextButton("Back to Main Menu", skin);
+		final Dialog finalDialog = dialog;
+		restartGameButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				finalDialog.hide();
+				Player.this.setMaxLifes(10);
+				Player.this.setLifes(10);
+				Player.this.setMaxActionCount(3);
+				Player.this.setLevel(1);
+				Player.this.setTotalExpToNextLevel(10);
+				Player.this.getWeapons().clear();
+				Player.this.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab));
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this , enemyManager));
+			}
+		});
+		dialog.button("Back to Main Menu", restartGameButton);
 		dialog.show(stage);
-		System.out.println("palyer died");
 	}
 
 	public int getObjectPosIndex() {
