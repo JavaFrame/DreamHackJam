@@ -67,6 +67,11 @@ public class OverworldScreen implements Screen {
     private float alpha = 0;
     private float alphaAdd;
     private TextureRegion jonny;
+    private final TextButton inventory;
+    private final TextButton frontFieldButton;
+    private final TextButton lastFieldButton;
+    private final TextButton saveAndQuit;
+
 
     public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p) {
 		this.assetManager = assetManager;
@@ -117,6 +122,10 @@ public class OverworldScreen implements Screen {
 		camera.update();
 
 		stage = new Stage(new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT), this.batch);
+		inventory  = new TextButton("Inventory", skin);
+		frontFieldButton = new TextButton("Go to next Field", skin);
+		lastFieldButton = new TextButton("Go to last Field", skin);
+		saveAndQuit = new TextButton("Save and Exit", skin);
 	}
 
 	@Override
@@ -127,9 +136,20 @@ public class OverworldScreen implements Screen {
 		mainTable.setFillParent(true);
 		mainTable.bottom().right();
 
-		TextButton frontFieldButton = new TextButton("Go to next Field", skin);
-		TextButton lastFieldButton = new TextButton("Go to last Field", skin);
-		TextButton saveAndQuit = new TextButton("Save and Exit", skin);
+        inventory.pad(5,20,5,20);
+
+        inventory.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Open Inventory
+                inventory.setDisabled(true);
+                frontFieldButton.setDisabled(true);
+                lastFieldButton.setDisabled(true);
+                saveAndQuit.setDisabled(true);
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player));
+                pause();
+            }
+        });
 
 		frontFieldButton.pad(5,20,5,20);
 		lastFieldButton.pad(5,20,5,20);
@@ -139,6 +159,11 @@ public class OverworldScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
                 if(player.getObjectPosIndex() < 22) {
+                    inventory.setDisabled(true);
+                    frontFieldButton.setDisabled(true);
+                    lastFieldButton.setDisabled(true);
+                    saveAndQuit.setDisabled(true);
+
                     targetPos = corners[player.getObjectPosIndex() + 1];
                     player.setObjectPosIndex(player.getObjectPosIndex() + 1);
                     alpha = 0;
@@ -155,6 +180,11 @@ public class OverworldScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
                 if(player.getObjectPosIndex() > 1) {
+                    inventory.setDisabled(true);
+                    frontFieldButton.setDisabled(true);
+                    lastFieldButton.setDisabled(true);
+                    saveAndQuit.setDisabled(true);
+
                     targetPos = corners[player.getObjectPosIndex() - 1];
                     player.setObjectPosIndex(player.getObjectPosIndex() - 1);
                     alpha = 0;
@@ -169,7 +199,11 @@ public class OverworldScreen implements Screen {
 		saveAndQuit.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				// SAVE
+                inventory.setDisabled(true);
+                frontFieldButton.setDisabled(true);
+                lastFieldButton.setDisabled(true);
+                saveAndQuit.setDisabled(true);
+
 				Gdx.app.exit();
 			}
 		});
@@ -201,17 +235,7 @@ public class OverworldScreen implements Screen {
         Label levelPlayer = new Label(String.valueOf(this.player.getLevel()),skin);
         Label expPlayer = new Label(this.player.getExp() + "/" + this.player.getTotalExpToNextLevel(),skin);
 
-        TextButton inventory = new TextButton("Inventory", skin);
 
-        inventory.pad(5,20,5,20);
-        inventory.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // Open Inventory
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player));
-                pause();
-            }
-        });
         playerStats.add(hp).left();
         playerStats.add(hpPlayer).left();
         playerStats.row();
@@ -252,16 +276,53 @@ public class OverworldScreen implements Screen {
 
         if(targetPos != null ){
 
-            // TODO: CHECK WICH ANIMATION TO USE
+            player.getAnimationSet().setJonnyWalkUpAnimationTime(player.getAnimationSet().getJonnyWalkUpAnimationTime() + Gdx.graphics.getDeltaTime());
+            player.getAnimationSet().setJonnyWalkDownAnimationTime(player.getAnimationSet().getJonnyWalkDownAnimationTime() + Gdx.graphics.getDeltaTime());
+            player.getAnimationSet().setJonnyWalkLeftAnimationTime(player.getAnimationSet().getJonnyWalkLeftAnimationTime() + Gdx.graphics.getDeltaTime());
+            player.getAnimationSet().setJonnyWalkRightAnimationTime(player.getAnimationSet().getJonnyWalkRightAnimationTime() + Gdx.graphics.getDeltaTime());
 
-            int differenzX = 0;
-            int diffetenzY = 0;
+            float differenzX = 0;
+            float differenzY = 0;
             boolean negativX = false;
             boolean negativY = false;
 
+            if(playerPos.x > targetPos.x){
+                negativX = true;
+                differenzX = playerPos.x - targetPos.x;
+            } else {
+                differenzX = targetPos.x - playerPos.x;
+            }
+
+            if(playerPos.y > targetPos.y){
+                negativY = true;
+                differenzY = playerPos.y - targetPos.y;
+            } else {
+                differenzY = targetPos.y - playerPos.y;
+            }
+
+            if(differenzX > differenzY){
+                if(!negativX){
+                    jonny = (TextureRegion) player.getAnimationSet().getWalkRightAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkRightAnimationTime());
+                } else {
+                    jonny = (TextureRegion) player.getAnimationSet().getWalkLeftAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkLeftAnimationTime());
+                }
+            } else {
+                if(!negativY){
+                    jonny = (TextureRegion) player.getAnimationSet().getWalkUpAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkUpAnimationTime());
+                } else {
+                    jonny = (TextureRegion) player.getAnimationSet().getWalkDownAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkDownAnimationTime());
+                }
+            }
+
             playerPos.interpolate(targetPos, alpha, Interpolation.pow2);
             alpha += alphaAdd * delta;
+
             if(playerPos.epsilonEquals(targetPos,1)){
+                inventory.setDisabled(false);
+                frontFieldButton.setDisabled(false);
+                lastFieldButton.setDisabled(false);
+                saveAndQuit.setDisabled(false);
+
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;
                 alpha = 0;
