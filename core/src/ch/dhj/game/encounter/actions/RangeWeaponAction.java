@@ -52,7 +52,7 @@ public class RangeWeaponAction implements Action {
 		}
 
 		Figure e = enemies[index];
-		if(doAnimation(you, e) && !e.isDead()) {
+		if(doAnimation(you, e) || !e.isDead() || you.isDead()) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;
