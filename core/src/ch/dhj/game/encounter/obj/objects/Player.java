@@ -12,6 +12,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -45,7 +46,7 @@ public class Player extends Figure{
 	private Table chooseSpellTable;
 	private Table turnActionTable;
 	private Label actionsL;
-
+	public int objectPosIndex = 1;
 
 	private int actions;
 
@@ -55,11 +56,12 @@ public class Player extends Figure{
 
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
-
+		objectPosIndex = 1;
 	}
 
 	public Player(Sprite texture, Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
 		super(texture, position, scale, name, animationSet);
+		objectPosIndex = 1;
 	}
 
 	@Override
@@ -72,22 +74,7 @@ public class Player extends Figure{
 			public void triggered(TurnManager manager) {
 				currentTurn = new Turn();
 				actions = 0;
-				rootTable.setVisible(true);
-				chooseEnemyTable.setVisible(false);
-				chooseSpellTable.setVisible(false);
-				if(getEncounterConfig().enemies.size == 0) {
-					Dialog winDialog = new Dialog("You won!", skin);
-					winDialog.text("You got 0 exp");
-					TextButton closeB = new TextButton("Go to overworld!", skin);
-					closeB.addListener(new ClickListener() {
-						@Override
-						public void clicked(InputEvent event, float x, float y) {
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch()));
-						}
-					});
-					winDialog.add(closeB);
-					winDialog.show(stage);
-				}
+				turnActionTable.setVisible(true);
 			}
 		});
 	}
@@ -335,4 +322,13 @@ public class Player extends Figure{
 		Dialog dialog = new Dialog("You died!",  skin);
 		dialog.text("You have no health left!");
 	}
+
+	public int getObjectPosIndex() {
+		return objectPosIndex;
+	}
+
+	public void setObjectPosIndex(int objectPosIndex) {
+		this.objectPosIndex = objectPosIndex;
+	}
+
 }

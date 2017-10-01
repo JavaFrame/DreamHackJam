@@ -1,5 +1,6 @@
 package ch.dhj.game.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -15,6 +16,7 @@ public class Weapon {
 	private boolean spell;
 	private ProjectileBluePrint projectileBluePrint;
 	private WeaponType type;
+	private Texture icon;
 
 	public Weapon(WeaponType type) {
 		this(type.getName(), type.getActionCost(), type.getDamge(), type.isMultipleTargets(), type.isMelee(), type.isSpell(), type.getProjectileBluePrint());
@@ -28,6 +30,7 @@ public class Weapon {
 		this.multipleTargets = multipleTargets;
 		this.melee = melee;
 		this.spell = spell;
+		this.icon = icon;
 		this.projectileBluePrint = projectileBluePrint;
 	}
 
@@ -150,4 +153,9 @@ public class Weapon {
 			return projectileBluePrint;
 		}
 	}
+
+	public Texture getIcon() {return icon;}
+
+	public void setIcon(Texture icon) {this.icon = icon;}
+
 }

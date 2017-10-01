@@ -1,5 +1,6 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenu implements Screen {
@@ -30,11 +32,12 @@ public class MainMenu implements Screen {
     protected Skin skin;
     private Sprite background;
     private AssetManager assetManager;
+    private Player player;
 
-    public MainMenu(AssetManager assetManager, SpriteBatch batch) {
+    public MainMenu(AssetManager assetManager, SpriteBatch batch, Player p) {
         this.assetManager = assetManager;
         this.batch = batch;
-
+        player = p;
 
         this.assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
         this.assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
@@ -44,10 +47,11 @@ public class MainMenu implements Screen {
         skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
         atlasBackground = this.assetManager.get("textures/atlasMainMenu.pack");
 
-        background = new Sprite(atlasBackground.findRegion("Placeholder_titel"));
+        background = new Sprite(atlasBackground.findRegion("Title"));
+        background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT);
 
         camera = new OrthographicCamera();
-        viewport = new FillViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
+        viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
@@ -77,7 +81,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player));
             }
         });
         exitButton.addListener(new ClickListener(){

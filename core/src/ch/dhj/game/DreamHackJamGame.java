@@ -14,76 +14,115 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class DreamHackJamGame extends Game {
 
 	private AssetManager assetManager;
 	private SpriteBatch batch;
+	private float jonnyWalkDuration;
+	private TextureAtlas walkUpAtlas;
+	private TextureAtlas walkDownAtlas;
+	private TextureAtlas walkLeftAtlas;
+	private TextureAtlas walkRightAtlas;
 
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
-		assetManager.load("textures/johhny.atlas", TextureAtlas.class);
 		batch = new SpriteBatch();
+
+		List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
+		Player p = new Player(new Texture(Gdx.files.internal("textures/Johhny.png")), new Vector2(30, 30), "Joshua", new AnimationSet());
+		p.setMaxActionCount(2);
+		p.setCurrentWeapon(weapons.get(0));
+		p.getSpells().add(weapons.get(1));
+		p.getSpells().add(weapons.get(2));
+
+		this.assetManager.load("textures/walkUp.pack", TextureAtlas.class);
+		this.assetManager.load("textures/walkDown.pack", TextureAtlas.class);
+		this.assetManager.load("textures/walkLeft.pack", TextureAtlas.class);
+		this.assetManager.load("textures/walkRight.pack", TextureAtlas.class);
 		assetManager.finishLoading();
 
-		TextureAtlas atlas = assetManager.get("textures/johhny.atlas");
+		walkUpAtlas = assetManager.get("textures/walkUp.pack");
+		walkDownAtlas = assetManager.get("textures/walkDown.pack");
+		walkLeftAtlas = assetManager.get("textures/walkLeft.pack");
+		walkRightAtlas = assetManager.get("textures/walkRight.pack");
 
-		AnimationSet masterAnimationSet = new AnimationSet(
-			null,
-				null,
-				null,
-				null,
-				null,
-				new Animation<TextureRegion>(1/10, atlas.findRegions("johhny_stab")),
-				new Weapon.WeaponType[]{Weapon.WeaponType.Gun, Weapon.WeaponType.Shotgun, Weapon.WeaponType.Stab, Weapon.WeaponType.Heal},
-				new Animation[]{new Animation(1/6, atlas.findRegions("johhny_gun")),
-						new Animation(1/6, atlas.findRegions("johhny_shotgun")),
-						new Animation(1/2, atlas.findRegions("johhny_stab")),
-						new Animation(1/6, atlas.findRegions("johhny_heal")),
-			}
-		);
+		jonnyWalkDuration = 1.0f / 2f;
 
-		AnimationSet playerAnimationSet = new AnimationSet(masterAnimationSet);
-		List<Weapon> weapons = new ArrayList(Arrays.asList(new Weapon(Weapon.WeaponType.Gun), new Weapon(Weapon.WeaponType.Shotgun), new Weapon(Weapon.WeaponType.Stab), new Weapon(Weapon.WeaponType.Heal)));
-		Player p = new Player(new Sprite(atlas.findRegion("johnny_gun",0)), new Vector2(1300, 200), new Vector2(500, 500), "Joshua", new AnimationSet(masterAnimationSet));
-		p.setMaxActionCount(2);
-		p.setCurrentWeapon(weapons.get(2));
-		p.getSpells().add(weapons.get(3));
-		p.setMaxLifes(10);
-		p.setLifes(10);
-
-		//this.setScreen(new MainMenu(assetManager, batch));
-		Enemy tE = new Enemy(new Vector2(100, 300), new Vector2(500, 500), "BadBoy 3", new AnimationSet(masterAnimationSet)) {
+		Array<TextureAtlas.AtlasRegion> jonnyWalkUpRegions = new Array<TextureAtlas.AtlasRegion>(walkUpAtlas.getRegions());
+		jonnyWalkUpRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
 			@Override
-			public Action[] getActions() {
-				return new Action[0];
+			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
+				return o1.name.compareTo(o2.name);
 			}
-		};
-		tE.setMaxLifes(3);
-		tE.setLifes(3);
-		tE.setLevel(3);
+		});
+		p.getAnimationSet().setWalkUpAnimation(new Animation(jonnyWalkDuration, jonnyWalkUpRegions, Animation.PlayMode.LOOP));
+		p.getAnimationSet().setJonnyWalkUpAnimationTime(Gdx.graphics.getDeltaTime());
 
-		this.setScreen(
+		Array<TextureAtlas.AtlasRegion> jonnyWalkDownRegions = new Array<TextureAtlas.AtlasRegion>(walkDownAtlas.getRegions());
+		jonnyWalkDownRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
+			@Override
+			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
+				return o1.name.compareTo(o2.name);
+			}
+		});
+		p.getAnimationSet().setWalkDownAnimation(new Animation(jonnyWalkDuration, jonnyWalkDownRegions, Animation.PlayMode.LOOP));
+		p.getAnimationSet().setJonnyWalkDownAnimationTime(Gdx.graphics.getDeltaTime());
+
+		Array<TextureAtlas.AtlasRegion> jonnyWalkLeftRegions = new Array<TextureAtlas.AtlasRegion>(walkLeftAtlas.getRegions());
+		jonnyWalkLeftRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
+			@Override
+			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
+				return o1.name.compareTo(o2.name);
+			}
+		});
+		p.getAnimationSet().setWalkLeftAnimation(new Animation(jonnyWalkDuration, jonnyWalkLeftRegions, Animation.PlayMode.LOOP));
+		p.getAnimationSet().setJonnyWalkLeftAnimationTime(Gdx.graphics.getDeltaTime());
+
+		Array<TextureAtlas.AtlasRegion> jonnyWalkRightRegions = new Array<TextureAtlas.AtlasRegion>(walkRightAtlas.getRegions());
+		jonnyWalkRightRegions.sort(new Comparator<TextureAtlas.AtlasRegion>() {
+			@Override
+			public int compare(TextureAtlas.AtlasRegion o1, TextureAtlas.AtlasRegion o2) {
+				return o1.name.compareTo(o2.name);
+			}
+		});
+		p.getAnimationSet().setWalkRightAnimation(new Animation(jonnyWalkDuration, jonnyWalkRightRegions, Animation.PlayMode.LOOP));
+		p.getAnimationSet().setJonnyWalkRightAnimationTime(Gdx.graphics.getDeltaTime());
+
+		this.setScreen(new MainMenu(assetManager, batch, p));
+		/*this.setScreen(
 				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
-						new Enemy[]{tE, new Enemy(
-								new Vector2(300, 200),
-								new Vector2(500, 500),
+						new Enemy[]{new Enemy(
+								new Vector2(100, 100),
+								"BadBoy",
+								new AnimationSet()) {
+					@Override
+					public Action[] getActions() {
+						return new Action[0];
+					}
+				}, new Enemy(
+								new Vector2(100, 100),
 								"BadBoy2",
-								new AnimationSet(masterAnimationSet)) {
+								new AnimationSet()) {
 							@Override
 							public Action[] getActions() {
 								return new Action[0];
 							}
 						}}),
 						assetManager,
-						batch));
+						batch));*/
 	}
 
 	@Override
