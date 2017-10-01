@@ -4,6 +4,7 @@ import ch.dhj.game.encounter.TurnManager;
 import ch.dhj.game.screens.EncounterScreen;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public abstract class GObject {
 	private ParentObject parent;
 	private TextureRegion texture;
+	private Animation<TextureRegion> animation;
+	private float stateTime;
 
 	private Vector2 position;
 	private Vector2 size;
@@ -44,10 +47,11 @@ public abstract class GObject {
 	 * @param delta
 	 */
 	public void render(float delta, SpriteBatch batch) {
-		if(getTextureRegion() != null) {
+		if(getTextureRegion() != null && getAnimation() == null) {
 			batch.draw(getTextureRegion(), getPosition().x, getPosition().y, getSize().x, getSize().y);
-			/*getTextureRegion().setPosition(getPosition().x, getPosition().y);
-			getTextureRegion().draw(batch);*/
+		} else if(getAnimation() != null) {
+			stateTime += delta;
+			batch.draw(getAnimation().getKeyFrame(stateTime), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		}
 	}
 
@@ -130,5 +134,27 @@ public abstract class GObject {
 
 	public void setSize(Vector2 size) {
 		this.size = size;
+	}
+
+	public Animation<TextureRegion> getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(Animation<TextureRegion> animation) {
+		this.animation = animation;
+		stateTime = 0;
+	}
+
+	public boolean isAnnimationFinished() {
+		if(getAnimation() == null) return true;
+		return getAnimation().isAnimationFinished(getStateTime());
+	}
+
+	public void setStateTime(float stateTime) {
+		this.stateTime = stateTime;
+	}
+
+	public float getStateTime() {
+		return stateTime;
 	}
 }

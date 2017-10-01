@@ -15,6 +15,10 @@ public abstract class Enemy extends Figure{
 		//getTextureRegion().setSize(-1, 1);
 	}
 
+	@Override
+	public void died() {
+		getEncounterConfig().enemies.removeValue((Enemy) this, false);
+	}
 
 	public abstract Action[] getActions();
 }

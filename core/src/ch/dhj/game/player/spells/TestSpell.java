@@ -12,6 +12,6 @@ public class TestSpell extends Weapon {
 				2,
 				false,
 				false,
-				true, projectile);
+				true, null);
 	}
 }

@@ -6,6 +6,7 @@ import ch.dhj.game.encounter.obj.objects.Figure;
  * Created by Sebastian on 30.09.2017.
  */
 public interface Action {
+	void init();
 
 	/**
 	 * Will be called every update call of the Turn until it returns true.

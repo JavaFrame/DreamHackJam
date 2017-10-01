@@ -56,6 +56,8 @@ public class DreamHackJamGame extends Game {
 		p.setMaxActionCount(2);
 		p.setCurrentWeapon(weapons.get(2));
 		p.getSpells().add(weapons.get(3));
+		p.setMaxLifes(10);
+		p.setLifes(10);
 
 		//this.setScreen(new MainMenu(assetManager, batch));
 		Enemy tE = new Enemy(new Vector2(100, 300), new Vector2(500, 500), "BadBoy 3", new AnimationSet(masterAnimationSet)) {
@@ -64,8 +66,8 @@ public class DreamHackJamGame extends Game {
 				return new Action[0];
 			}
 		};
-		tE.setMaxLifes(10);
-		tE.setLifes(10);
+		tE.setMaxLifes(3);
+		tE.setLifes(3);
 		tE.setLevel(3);
 
 		this.setScreen(

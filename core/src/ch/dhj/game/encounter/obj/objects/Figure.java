@@ -28,8 +28,6 @@ public class Figure extends GObject {
 	private Array<Weapon> spells = new Array<>(3);
 	private AnimationSet animationSet;
 
-
-
 	private Label nameL;
 	private Label levelL;
 	private Label lifesL;
@@ -75,11 +73,21 @@ public class Figure extends GObject {
 		nameL.draw(batch, 1f);
 		levelL.draw(batch, 1f);
 		lifesL.draw(batch, 1f);*/
+		infoTable.setPosition(getPosition().x+(getSize().x/4), getPosition().y+getSize().y + infoTable.getHeight());
 		infoTable.draw(batch, 1f);
 	}
 
 	@Override
 	public void render(float delta, SpriteBatch batch) {
+		if(isDead()) {
+			if(!isAnnimationFinished()) {
+				super.render(delta, batch);
+			} else {
+				died();
+				getParent().remove(this);
+			}
+			return;
+		}
 		super.render(delta, batch);
 		drawLifeInfos(batch);
 	}
@@ -87,6 +95,10 @@ public class Figure extends GObject {
 	@Override
 	public void dispose() {
 		
+	}
+
+	public void died() {
+
 	}
 
 	public String getName() {
@@ -111,6 +123,10 @@ public class Figure extends GObject {
 
 	public int getLifes() {
 		return lifes;
+	}
+
+	public boolean isDead() {
+		return getLifes() <= 0;
 	}
 
 	public int getMaxLifes() {
@@ -163,8 +179,9 @@ public class Figure extends GObject {
 
 	public void applayDamage(int damage) {
 		setLifes(getLifes()-damage);
+		lifesL.setText(getLifes() + "/" + getMaxLifes() + " health");
 		if(getLifes() <= 0) {
-
+			setAnimation(getAnimationSet().encounterDieAnimation);
 		}
 	}
 

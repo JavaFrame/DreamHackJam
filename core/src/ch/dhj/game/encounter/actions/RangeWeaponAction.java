@@ -36,6 +36,11 @@ public class RangeWeaponAction implements Action {
 	}
 
 	@Override
+	public void init() {
+
+	}
+
+	@Override
 	public boolean action() {
 		if(you.getLifes() <= 0) return true;
 		Figure e = enemies[index];

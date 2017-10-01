@@ -33,6 +33,11 @@ public class MeleeWeaponAction implements Action {
 	}
 
 	@Override
+	public void init() {
+		you.setAnimation(you.getAnimationSet().encounterWalkAnimation);
+	}
+
+	@Override
 	public boolean action() {
 		Figure e = enemies[index];
 		if(doAnimation(you, e)) {
@@ -45,7 +50,6 @@ public class MeleeWeaponAction implements Action {
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
-		System.out.println(you.getPosition());
 		switch (state) {
 			case GO_TO:
 				Vector2 targetPos;
@@ -57,25 +61,27 @@ public class MeleeWeaponAction implements Action {
 				you.getPosition().set(you.getPosition().interpolate(targetPos, alpha, Interpolation.fade));
 				alpha += 0.1 * Gdx.graphics.getDeltaTime();
 				timeElepsed += Gdx.graphics.getDeltaTime();
-				you.setTextureRegion(you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
+				//you.setTextureRegion(you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
 				//you.getTextureRegion().setTexture(you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
 				if(you.getPosition().equals(targetPos)) {
 					state = ActionState.ATTACK;
 					timeElepsed = 0;
 					alpha = 0;
+					you.setAnimation(weapon.getAnimation(you.getAnimationSet()));
 				}
 				break;
 			case ATTACK:
-				Animation<TextureRegion> a = you.getCurrentWeapon().getAnimation(you.getAnimationSet());
+				/*Animation<TextureRegion> a = you.getCurrentWeapon().getAnimation(you.getAnimationSet());
 				if(a == null)  {
 					state = ActionState.GO_FROM;
 					timeElepsed = 0;
 					alpha = 0;
-				}
+				}*/
 				//you.getTextureRegion().setTexture(a.getKeyFrame(timeElepsed));
-				you.setTextureRegion(a.getKeyFrame(timeElepsed));
-				timeElepsed += Gdx.graphics.getDeltaTime();
-				if(a.isAnimationFinished(timeElepsed)) {
+				/*you.setTextureRegion(a.getKeyFrame(timeElepsed));
+				timeElepsed += Gdx.graphics.getDeltaTime();*/
+
+				if(you.isAnnimationFinished()) {
 					state = ActionState.GO_FROM;
 					timeElepsed = 0;
 					alpha = 0;
@@ -83,6 +89,8 @@ public class MeleeWeaponAction implements Action {
 					you.setSize(new Vector2(-you.getSize().x, you.getSize().y));
 					oldPosition.set(oldPosition.x-(you.getSize().x/2 + you.getSize().x/4), oldPosition.y);
 					you.getPosition().set(you.getPosition().x-(you.getSize().x/2 + you.getSize().x/4), you.getPosition().y);
+					you.setAnimation(you.getAnimationSet().encounterWalkAnimation);
+					enemy.applayDamage(weapon.getDamge());
 				}
 
 				break;
@@ -90,7 +98,7 @@ public class MeleeWeaponAction implements Action {
 				you.getPosition().set(you.getPosition().interpolate(oldPosition, alpha, Interpolation.fade));
 				alpha += 0.1 * Gdx.graphics.getDeltaTime();
 				timeElepsed += Gdx.graphics.getDeltaTime();
-				you.setTextureRegion( you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
+				//you.setTextureRegion( you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
 				//you.getTextureRegion().setTexture(you.getAnimationSet().encounterWalkAnimation.getKeyFrame(timeElepsed));
 				if(you.getPosition().equals(oldPosition)) {
 					you.setSize(new Vector2(-you.getSize().x, you.getSize().y));

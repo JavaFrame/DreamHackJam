@@ -10,6 +10,7 @@ import ch.dhj.game.player.Weapon;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -45,6 +46,7 @@ public class Player extends Figure{
 	private Table turnActionTable;
 	private Label actionsL;
 
+
 	private int actions;
 
 	private Turn currentTurn = new Turn();
@@ -71,6 +73,21 @@ public class Player extends Figure{
 				currentTurn = new Turn();
 				actions = 0;
 				rootTable.setVisible(true);
+				chooseEnemyTable.setVisible(false);
+				chooseSpellTable.setVisible(false);
+				if(getEncounterConfig().enemies.size == 0) {
+					Dialog winDialog = new Dialog("You won!", skin);
+					winDialog.text("You got 0 exp");
+					TextButton closeB = new TextButton("Go to overworld!", skin);
+					closeB.addListener(new ClickListener() {
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch()));
+						}
+					});
+					winDialog.add(closeB);
+					winDialog.show(stage);
+				}
 			}
 		});
 	}
@@ -132,6 +149,7 @@ public class Player extends Figure{
 				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());
+				enemies.setItems(getEncounterConfig().enemies);
 			}
 		});
 		chooseSpellTable.add(weapons);
@@ -310,5 +328,11 @@ public class Player extends Figure{
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
+	}
+
+	@Override
+	public void died() {
+		Dialog dialog = new Dialog("You died!",  skin);
+		dialog.text("You have no health left!");
 	}
 }

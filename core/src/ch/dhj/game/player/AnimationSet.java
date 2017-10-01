@@ -19,6 +19,7 @@ public class AnimationSet {
 	//encounter
 	public Animation<TextureRegion> encounterIdleAnimation;
 	public Animation<TextureRegion> encounterWalkAnimation;
+	public Animation<TextureRegion> encounterDieAnimation;
 
 	public OrderedMap<Weapon.WeaponType, Animation> weaponMap = new OrderedMap<>();
 

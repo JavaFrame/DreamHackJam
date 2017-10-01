@@ -7,6 +7,6 @@ import ch.dhj.game.player.Weapon;
  */
 public class TestWeapon extends Weapon {
 	public TestWeapon() {
-		super("Test Weapon", 2, 5, false, true, false, projectile);
+		super("Test Weapon", 2, 5, false, true, false, null);
 	}
 }

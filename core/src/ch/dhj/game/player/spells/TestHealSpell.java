@@ -12,6 +12,6 @@ public class TestHealSpell extends Weapon {
 				-3,
 				false,
 				false,
-				true, projectile);
+				true, null);
 	}
 }

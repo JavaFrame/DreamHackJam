@@ -21,6 +21,7 @@ public class ParentObject {
 	public static final int POSITION_ITERATIONS = 2;
 
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
+	private Array<GObject> toRemove = new Array<>();
 
 	private boolean alreadyStarted = false;
 
@@ -67,6 +68,11 @@ public class ParentObject {
 		}
 	}
 
+	public boolean remove(GObject obj) {
+		toRemove.add(obj);
+		return objects.contains(obj);
+	}
+
 
 	public void init() {
 		for(GObject obj : objects)
@@ -76,6 +82,9 @@ public class ParentObject {
 	public void render(float delta, SpriteBatch batch) {
 		for(GObject obj :  objects)
 			obj.render(delta, batch);
+
+		for(GObject obj : toRemove)
+			objects.remove(obj);
 	}
 	public void renderUi(float delta, SpriteBatch batch) {
 		for(GObject obj :  objects)

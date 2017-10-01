@@ -103,8 +103,6 @@ public class EncounterScreen implements Screen {
 		batch.end();
 		parentObject.renderUi(delta, batch);
 
-
-
 		parentObject.getTurnManager().update();
 	}
 
