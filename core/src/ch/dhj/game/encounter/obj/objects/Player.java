@@ -190,11 +190,11 @@ public class Player extends Figure{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(selectedWeapon.isSpell()) { //weapon is a spell
-					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}));
+					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				} else if(selectedWeapon.isMelee()) { //weapon is a mele attack
-					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}));
+					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				} else { //weapon is a range weapon
-					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}));
+					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Enemy[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				}
 				chooseSpellTable.setVisible(false);
 			}
@@ -211,7 +211,7 @@ public class Player extends Figure{
 			public void clicked(InputEvent event, float x, float y) {
 				Weapon w = weapons.getSelected();
 				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
+					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()), w.getActionCost());
 					return;
 				}
 				selectedWeapon = w;
@@ -234,14 +234,6 @@ public class Player extends Figure{
 		attackB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//
-				/*Weapon w = Player.this.getMeleeWeapon();
-				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()));
-					return;
-				}
-				selectedWeapon = w;
-				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());*/
 				if(getMeleeWeapon() != null)
 					weapons.setItems(getMeleeWeapon());
 				if(getRangeWeapon() != null)
@@ -259,11 +251,15 @@ public class Player extends Figure{
 				chooseEnemyTable.setVisible(false);
 			}
 		});
-		TextButton defendB = new TextButton("Defend", skin);
-		defendB.addListener(new ClickListener() {
+		TextButton doNothingB = new TextButton("Do nothing", skin);
+		doNothingB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-
+				actions++;
+				actionsL.setText(String.format("%d/%d Actions", actions, getMaxActionCount()));
+				if(actions >= getMaxActionCount()) {
+					endTurn();
+				}
 			}
 		});
 		TextButton runB = new TextButton("Run", skin);
@@ -328,7 +324,7 @@ public class Player extends Figure{
 		turnActionTable.row();
 		turnActionTable.add(spellB).width(200).height(50);
 		turnActionTable.row();
-		turnActionTable.add(defendB).width(200).height(50);
+		turnActionTable.add(doNothingB).width(200).height(50);
 		turnActionTable.row();
 		turnActionTable.add(runB).width(200).height(50);
 
@@ -340,9 +336,9 @@ public class Player extends Figure{
 		//rootTable.setY(rootTable.getHeight()/2);
 	}
 
-	private void addActionToTurn(Action a) {
+	private void addActionToTurn(Action a, int neededActions) {
 		currentTurn.addAction(a);
-		actions++;
+		actions += neededActions;
 		actionsL.setText(String.format("%d/%d Actions", actions, getMaxActionCount()));
 		chooseEnemyTable.setVisible(false);
 		if(actions >= getMaxActionCount()) {

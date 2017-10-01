@@ -98,7 +98,7 @@ public class Weapon {
 
 	@Override
 	public String toString() {
-		return getName();
+		return getName() + " (" + getActionCost() + " actions)";
 	}
 
 	public static enum WeaponType {
