@@ -400,19 +400,28 @@ public class OverworldScreen implements Screen {
                         encounterBackground = "textures/encounter_bg_crater.png";
                         break;
                 }
+                if(player.getObjectPosIndex() == 11){
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
+                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel()*2)}),assetManager,batch));
+                } else if(player.getObjectPosIndex() == 22){
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
+                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel()*3)}),assetManager,batch));
+                } else {
+                    int enemyCount = RANDOM.nextInt(4);
+                    if(enemyCount == 0){enemyCount = 1;}
 
-                int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
-                if(enemyLevel == 0){enemyLevel = 1;}
+                    Enemy[] enemies = new Enemy[enemyCount];
+                    for(int i = 0; i < enemyCount; i++){
 
-                int enemyCount = RANDOM.nextInt(4);
-                if(enemyCount == 0){enemyCount =1;}
+                        int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+                        if(enemyLevel == 0){enemyLevel = 1;}
 
-                Enemy[] enemies = new Enemy[enemyCount];
-                for(int i = 0; i < enemyCount; i++){
-                    enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(EnemyTypes.values()[RANDOM.nextInt(SIZE)].toString()),enemyLevel);
+                        String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+                        enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Alien"),enemyLevel);
+                    }
+
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
                 }
-
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;

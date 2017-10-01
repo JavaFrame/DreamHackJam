@@ -83,6 +83,8 @@ public class LoadingScreen extends ScreenAdapter {
 		alienSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("alien_death")));
 		alienSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("alien_damaged")));
 		alienSet.getWeaponMap().put(Weapon.WeaponType.AlienAttack, new Animation<TextureRegion>(1/6, atlas.findRegions("alien_attack")));
+		alienSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+		alienSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		Enemy alienEnemy = new AlienEnemy(Vector2.Zero, Vector2.Zero, "Alien", alienSet,3);
 		enemyManager.addEnemy(alienEnemy);
 
