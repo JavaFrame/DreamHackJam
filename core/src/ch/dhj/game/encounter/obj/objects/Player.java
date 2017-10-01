@@ -83,6 +83,18 @@ public class Player extends Figure{
 				turnActionTable.setVisible(true);
 				rootTable.setVisible(true);
 
+				final Dialog newWeaponDialg = new Dialog("You got a new Weapon!", skin);
+				TextButton newWeaponCloseB = new TextButton("Go to Overworld!", skin);
+				newWeaponCloseB.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						newWeaponDialg.hide();
+						((Game) Gdx.app.getApplicationListener()).
+								setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+					}
+				});
+				newWeaponDialg.button(newWeaponCloseB);
+
 				if(getEncounterConfig().enemies.size == 0) {
 					Dialog levlUpDialog = null;
 					levlUpDialog = new Dialog("Level up!", skin);
@@ -96,7 +108,37 @@ public class Player extends Figure{
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalLevelUpDialog.hide();
-							((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+							int level = getLevel();
+							Weapon newWeapon = null;
+							switch (level) {
+								case 3:
+									newWeapon = new Weapon(Weapon.WeaponType.Heal);
+									getSpells().add(newWeapon);
+									break;
+								case 5:
+									newWeapon = new Weapon(Weapon.WeaponType.Gun);
+									getWeapons().add(newWeapon);
+									break;
+								case 7:
+									newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+									getWeapons().add(newWeapon);
+									break;
+								case 9:
+									newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
+									getWeapons().add(newWeapon);
+									break;
+								case 12:
+									newWeapon = new Weapon(Weapon.WeaponType.Fireball);
+									getSpells().add(newWeapon);
+									break;
+							}
+							if(newWeapon != null) {
+								newWeaponDialg.add(new Image(newWeapon.getIcon()));
+								newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
+							} else {
+								((Game) Gdx.app.getApplicationListener()).
+										setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+							}
 						}
 					});
 

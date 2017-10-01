@@ -114,29 +114,29 @@ public class LoadingScreen extends ScreenAdapter {
 
 	private void buildPlayer(TextureAtlas atlas) {
 		AnimationSet playerSet = new AnimationSet();
-		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>(1/4, atlas.findRegions("johhny_hover")));
-		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_idle")));
-		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_death")));
-		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>(1/6, atlas.findRegions("johhny_damaged")));
+		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_hover")));
+		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_idle")));
+		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_death")));
+		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_damaged")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1, atlas.findRegions("johhny_gun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_shotgun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>(1/2, atlas.findRegions("johhny_stab")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>(1, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(1, atlas.findRegions("johhny_flamethrower")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>(1, atlas.findRegions("fireball")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>(0.7f, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(0.5f, atlas.findRegions("johhny_shotgun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_stab")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>((float)1/5, atlas.findRegions("johhny_heal")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_flamethrower")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>((float)1/4, atlas.findRegions("fireball")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float) 1/3, atlas.findRegions("johhny_flamethrower")));
 
 		playerSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		playerSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setAnimation(playerSet.encounterIdleAnimation);
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
+		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower));*/
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
