@@ -194,4 +194,12 @@ public class Figure extends GObject {
 	public String toString() {
 		return getName();
 	}
+
+	public Weapon getRangeWeapon() {
+		return rangeWeapon;
+	}
+
+	public void setRangeWeapon(Weapon rangeWeapon) {
+		this.rangeWeapon = rangeWeapon;
+	}
 }

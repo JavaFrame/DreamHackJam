@@ -177,7 +177,7 @@ public class Player extends Figure{
 		//actions menu
 		actionsL = new Label(String.format("%d/%d Actions", actions, getMaxActionCount()), skin);
 		final TextButton attackB = new TextButton("Attack", skin);
-		if(getMeleeWeapon() == null) {
+		if(getMeleeWeapon() == null && getRangeWeapon() == null) {
 			attackB.setTouchable(Touchable.disabled);
 			attackB.setText(attackB.getText() + " (unavailbe)");
 		}
@@ -192,7 +192,7 @@ public class Player extends Figure{
 				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());*/
-				weapons.setItems(getMeleeWeapon());
+				weapons.setItems(getMeleeWeapon(), getRangeWeapon());
 				chooseSpellTable.setVisible(true);
 
 			}
