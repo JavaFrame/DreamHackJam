@@ -12,6 +12,7 @@ import ch.dhj.game.screens.MainMenu;
 import ch.dhj.game.screens.OverworldScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -117,14 +118,17 @@ public class Player extends Figure{
 									break;
 								case 5:
 									newWeapon = new Weapon(Weapon.WeaponType.Gun);
+									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 									getWeapons().add(newWeapon);
 									break;
 								case 7:
 									newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 									getWeapons().add(newWeapon);
 									break;
 								case 9:
 									newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
+									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 									getWeapons().add(newWeapon);
 									break;
 								case 12:

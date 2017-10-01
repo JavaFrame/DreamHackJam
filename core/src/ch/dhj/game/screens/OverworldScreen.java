@@ -309,13 +309,13 @@ public class OverworldScreen implements Screen {
 	@Override
 	public void render(float delta) {
 
-		Gdx.gl.glClearColor(0f, .4f, 1f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f, .4f, 1f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         jonnyWaveAnimationTime += Gdx.graphics.getDeltaTime();
         playerImage.setDrawable(new TextureRegionDrawable((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime)));
 
-        if(targetPos != null ){
+        if (targetPos != null) {
 
             player.getAnimationSet().setJonnyWalkUpAnimationTime(player.getAnimationSet().getJonnyWalkUpAnimationTime() + Gdx.graphics.getDeltaTime());
             player.getAnimationSet().setJonnyWalkDownAnimationTime(player.getAnimationSet().getJonnyWalkDownAnimationTime() + Gdx.graphics.getDeltaTime());
@@ -327,28 +327,28 @@ public class OverworldScreen implements Screen {
             boolean negativX = false;
             boolean negativY = false;
 
-            if(playerPos.x > targetPos.x){
+            if (playerPos.x > targetPos.x) {
                 negativX = true;
                 differenzX = playerPos.x - targetPos.x;
             } else {
                 differenzX = targetPos.x - playerPos.x;
             }
 
-            if(playerPos.y > targetPos.y){
+            if (playerPos.y > targetPos.y) {
                 negativY = true;
                 differenzY = playerPos.y - targetPos.y;
             } else {
                 differenzY = targetPos.y - playerPos.y;
             }
 
-            if(differenzX > differenzY){
-                if(!negativX){
+            if (differenzX > differenzY) {
+                if (!negativX) {
                     jonny = (TextureRegion) player.getAnimationSet().getWalkRightAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkRightAnimationTime());
                 } else {
                     jonny = (TextureRegion) player.getAnimationSet().getWalkLeftAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkLeftAnimationTime());
                 }
             } else {
-                if(!negativY){
+                if (!negativY) {
                     jonny = (TextureRegion) player.getAnimationSet().getWalkUpAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkUpAnimationTime());
                 } else {
                     jonny = (TextureRegion) player.getAnimationSet().getWalkDownAnimation().getKeyFrame(player.getAnimationSet().getJonnyWalkDownAnimationTime());
@@ -358,7 +358,7 @@ public class OverworldScreen implements Screen {
             playerPos.interpolate(targetPos, alpha, Interpolation.pow2);
             alpha += alphaAdd * delta;
 
-            if(playerPos.epsilonEquals(targetPos,1)){
+            if (playerPos.epsilonEquals(targetPos, 1)) {
                 inventory.setTouchable(Touchable.enabled);
                 frontFieldButton.setTouchable(Touchable.enabled);
                 lastFieldButton.setTouchable(Touchable.enabled);
@@ -366,7 +366,7 @@ public class OverworldScreen implements Screen {
 
                 encounterBackground = "textures/encounter_bg.png";
 
-                switch(player.getObjectPosIndex()){
+                switch (player.getObjectPosIndex()) {
                     case 1:
                     case 3:
                     case 4:
@@ -400,78 +400,84 @@ public class OverworldScreen implements Screen {
                         encounterBackground = "textures/encounter_bg_crater.png";
                         break;
                 }
-                if(player.getObjectPosIndex() == 11){
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
-                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel()*2)}),assetManager,batch));
-                } else if(player.getObjectPosIndex() == 22){
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
-                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel()*3)}),assetManager,batch));
+                if (player.getObjectPosIndex() == 11) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
+                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2)}), assetManager, batch));
+                } else if (player.getObjectPosIndex() == 22) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
+                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel() * 3)}), assetManager, batch));
                 } else {
-                	if(player.getObjectPosIndex() <= 4){
-						int enemyCount = RANDOM.nextInt(4);
-						if(enemyCount == 0){enemyCount = 1;
+                    if (player.getObjectPosIndex() <= 4) {
+                        int enemyCount = RANDOM.nextInt(4);
+                        if (enemyCount == 0) {
+                            enemyCount = 1;
 
-						Enemy[] enemies = new Enemy[enemyCount];
-						int pos = 100;
-						boolean up = false;
-						for(int i = 0; i < enemyCount; i++){
+                            Enemy[] enemies = new Enemy[enemyCount];
+                            int pos = 100;
+                            boolean up = false;
+                            for (int i = 0; i < enemyCount; i++) {
 
-							int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
-							if(enemyLevel == 0){enemyLevel = 1;}
+                                int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+                                if (enemyLevel == 0) {
+                                    enemyLevel = 1;
+                                }
 
-							String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
-							enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName),player.getLevel());
-							enemies[i].getPosition().set(pos, (up?400:100));
-							pos += 200;
-							up = !up;
-							enemies[i].setSize(new Vector2(500, 500));
-						}
-						((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
-					} else {
-						int enemyCount = RANDOM.nextInt(4);
-						if(enemyCount == 0){enemyCount = 1;}
+                                String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+                                enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName), player.getLevel());
+                                enemies[i].getPosition().set(pos, (up ? 400 : 100));
+                                pos += 200;
+                                up = !up;
+                                enemies[i].setSize(new Vector2(500, 500));
+                            }
+                            ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
+                        } else {
+                            if (enemyCount == 0) {
+                                enemyCount = 1;
+                            }
 
-						Enemy[] enemies = new Enemy[enemyCount];
-						int pos = 100;
-						boolean up = false;
-						for(int i = 0; i < enemyCount; i++){
+                            Enemy[] enemies = new Enemy[enemyCount];
+                            int pos = 100;
+                            boolean up = false;
+                            for (int i = 0; i < enemyCount; i++) {
 
-							int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
-							if(enemyLevel == 0){enemyLevel = 1;}
+                                int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
+                                if (enemyLevel == 0) {
+                                    enemyLevel = 1;
+                                }
 
-							String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
-							enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),player.getLevel());
-							enemies[i].getPosition().set(pos, (up?400:100));
-							pos += 200;
-							up = !up;
-							enemies[i].setSize(new Vector2(500, 500));
-						}
-						((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
-					}
+                                String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+                                enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"), player.getLevel());
+                                enemies[i].getPosition().set(pos, (up ? 400 : 100));
+                                pos += 200;
+                                up = !up;
+                                enemies[i].setSize(new Vector2(500, 500));
+                            }
+                            ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
+                        }
 
+                    }
+
+                    jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
+                    targetPos = null;
+                    alpha = 0;
                 }
-
-                jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
-                targetPos = null;
-                alpha = 0;
             }
         }
-
-        camera.position.set(playerPos.x , playerPos.y, 0);
+        camera.position.set(playerPos.x, playerPos.y, 0);
 
         mapRenderer.render();
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        batch.draw(jonny, playerPos.x, playerPos.y, 8*3.5f,8*3.5f);
+        batch.draw(jonny, playerPos.x, playerPos.y, 8 * 3.5f, 8 * 3.5f);
         batch.end();
 
-		stage.act();
-		stage.draw();
-		camera.update();
+        stage.act();
+        stage.draw();
+        camera.update();
 
         mapRenderer.setView(camera);
-	}
+    }
 
 	@Override
 	public void resize(int width, int height) {

@@ -349,7 +349,7 @@ public class InventoryScreen  implements Screen {
         stage.dispose();
     }
 
-    public Table createWeaponListItem(Weapon w){
+    public Table createWeaponListItem(final Weapon w){
         Table item = new Table();
         Image icon = new Image();
         Label name = new Label("Test", skin);
@@ -360,7 +360,15 @@ public class InventoryScreen  implements Screen {
         equipButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: Equip Weapon
+                if(w != null) {
+                    if (w.isMelee()) {
+                        player.setMeleeWeapon(w);
+                        hide();
+                    } else {
+                        player.setRangeWeapon(w);
+                        hide();
+                    }
+                }
             }
         });
 
