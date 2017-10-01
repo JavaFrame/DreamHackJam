@@ -163,6 +163,9 @@ public class Weapon {
 
 	public Texture getIcon() {return icon;}
 
-	public void setIcon(Texture icon) {this.icon = icon;}
+	public Weapon setIcon(Texture icon) {
+		this.icon = icon;
+		return this;
+	}
 
 }

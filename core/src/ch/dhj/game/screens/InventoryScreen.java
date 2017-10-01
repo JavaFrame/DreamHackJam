@@ -180,9 +180,15 @@ public class InventoryScreen  implements Screen {
         Label equipedLabel = new Label("Equiped:", skin);
 
         Label meeleEquiped = new Label("Meele:", skin);
-        Image meeleEquipedImg = new Image(/*TODO: Hier Bild von Equiped Meele*/);
+        Image meeleEquipedImg = new Image();
+        if(player.getMeleeWeapon() != null && player.getMeleeWeapon().getIcon() != null){
+            meeleEquipedImg.setDrawable(new TextureRegionDrawable(new TextureRegion(player.getMeleeWeapon().getIcon())));
+        }
         Label rangedEquiped = new Label("Ranged:", skin);
-        Image rangedEquipedImg = new Image(/*TODO:  Bild von Equiped ranged*/);
+        Image rangedEquipedImg = new Image();
+        if(player.getRangeWeapon() != null && player.getRangeWeapon().getIcon() != null){
+            rangedEquipedImg.setDrawable(new TextureRegionDrawable(new TextureRegion(player.getRangeWeapon().getIcon())));
+        }
 
         Table equipedItems = new Table();
 
@@ -206,16 +212,29 @@ public class InventoryScreen  implements Screen {
 
         Array<Weapon> meeleWeapons = new Array<Weapon>();
         Array<Weapon> rangedWeapons = new Array<Weapon>();
+        Array<Weapon> allWeapons = new Array<Weapon>();
+
+        for(Weapon w : player.getWeapons()){
+            if(!w.isSpell()){
+                allWeapons.add(w);
+            }
+            if(w.isMelee()&& !w.isSpell()){
+                meeleWeapons.add(w);
+            }
+            if(!w.isMelee() && !w.isSpell()){
+                rangedWeapons.add(w);
+            }
+        }
 
 
         final Table weaponFilters = new Table();
+        weaponFilters.top().left();
 
         TextButton meeleButton = new TextButton("Meele", skin);
         meeleButton.pad(10,20,10,20);
         meeleButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Meele Weapons
                 isMeele[0] = true;
                 isRanged[0] = false;
                 hide();
@@ -227,7 +246,6 @@ public class InventoryScreen  implements Screen {
         rangedButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: Filter Ranged Weapons
                 isMeele[0] = false;
                 isRanged[0] = true;
                 hide();
@@ -235,8 +253,8 @@ public class InventoryScreen  implements Screen {
         });
 
 
-        weaponFilters.add(meeleButton).pad(10,20,10,20);
-        weaponFilters.add(rangedButton).pad(10,20,10,20);
+        weaponFilters.add(meeleButton).pad(10,151,10,151);
+        weaponFilters.add(rangedButton).pad(10,151,10,151);
 
         Table weaponList = new Table();
 
@@ -255,16 +273,18 @@ public class InventoryScreen  implements Screen {
                 weaponList.row();
             }
         } else {
-            Table item = createWeaponListItem(null);
-            item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
-            weaponList.add(item).top().left();
-            weaponList.row();
+            for(Weapon w : allWeapons){
+                Table item = createWeaponListItem(w);
+                item.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(lightGrayBackground))));
+                weaponList.add(item).top().left();
+                weaponList.row();
+            }
         }
 
 
 
         inventoryTable.pad(20,20,20,20).top().left();
-        inventoryTable.add(weaponFilters);
+        inventoryTable.add(weaponFilters).top().left();
         inventoryTable.row().padTop(10);
         inventoryTable.add(weaponList).top().left();
 
