@@ -12,8 +12,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -46,7 +45,10 @@ public class EncounterScreen implements Screen {
 	private ParentObject parentObject;
 	private Viewport viewport;
 
+	private Player player;
+
 	public EncounterScreen(Player player, EncounterConfig config, AssetManager assetManager, SpriteBatch batch) {
+		this.player = player;
 		this.config = config;
 		this.assetManager = assetManager;
 		this.batch = new SpriteBatch();
@@ -97,10 +99,11 @@ public class EncounterScreen implements Screen {
 
 		/*mapRenderer.setView(camera);
 		mapRenderer.render();*/
-
+		TextureAtlas atlas = getAssetManager().get("textures/sprites.pack");
 		batch.begin();
 			parentObject.render(delta, batch);
 			//batch.draw(new Texture(Gdx.files.internal("textures/texture.png")), 0, 0, 1000, 1000);
+//			batch.draw(new Animation<TextureRegion>(1, atlas.findRegions("alien_idle")).getKeyFrame(0), 0, 0, 500, 500);
 		batch.end();
 		parentObject.renderUi(delta, batch);
 
@@ -129,6 +132,10 @@ public class EncounterScreen implements Screen {
 
 	public Viewport getViewport() {
 		return viewport;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	public static class EncounterConfig {

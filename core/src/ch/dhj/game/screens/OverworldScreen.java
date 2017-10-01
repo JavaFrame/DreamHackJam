@@ -411,6 +411,8 @@ public class OverworldScreen implements Screen {
                     if(enemyCount == 0){enemyCount = 1;}
 
                     Enemy[] enemies = new Enemy[enemyCount];
+                    int pos = 100;
+                    boolean up = false;
                     for(int i = 0; i < enemyCount; i++){
 
                         int enemyLevel = RANDOM.nextInt(player.getLevel() + 5);
@@ -418,6 +420,10 @@ public class OverworldScreen implements Screen {
 
                         String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
                         enemies[i] = enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName),enemyLevel);
+                        enemies[i].getPosition().set(pos, (up?400:100));
+                        pos += 200;
+                        up = !up;
+                        enemies[i].setSize(new Vector2(500, 500));
                     }
 
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",enemies),assetManager,batch));
