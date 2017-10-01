@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Sebastian on 01.10.2017.
  */
 public class ZombieEnemy extends Enemy {
-	public ZombieEnemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
-		super(position, scale, name, animationSet, 1);
+	public ZombieEnemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet, int minPlayerLevel) {
+		super(position, scale, name, animationSet, minPlayerLevel);
 	}
 
 	@Override

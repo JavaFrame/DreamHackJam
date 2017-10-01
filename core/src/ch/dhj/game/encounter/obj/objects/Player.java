@@ -1,5 +1,6 @@
 package ch.dhj.game.encounter.obj.objects;
 
+import ch.dhj.game.EnemyManager;
 import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.Turn;
 import ch.dhj.game.encounter.TurnManager;
@@ -47,6 +48,7 @@ public class Player extends Figure{
 	private Table turnActionTable;
 	private Label actionsL;
 	public int objectPosIndex = 1;
+	private EnemyManager enemyManager;
 
 	private int actions;
 
@@ -216,7 +218,7 @@ public class Player extends Figure{
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalDialog.hide();
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this));
+							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager));
 						}
 					});
 					dialog.button("close", closeB);
@@ -336,4 +338,11 @@ public class Player extends Figure{
 		this.objectPosIndex = objectPosIndex;
 	}
 
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
+	public void setEnemyManager(EnemyManager enemyManager) {
+		this.enemyManager = enemyManager;
+	}
 }

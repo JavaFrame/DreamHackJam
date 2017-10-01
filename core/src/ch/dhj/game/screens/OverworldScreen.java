@@ -75,6 +75,7 @@ public class OverworldScreen implements Screen {
     private final TextButton lastFieldButton;
     private final TextButton saveAndQuit;
     private EnemyManager enemyManager;
+    private String encounterBackground;
 
 
     public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
@@ -151,7 +152,7 @@ public class OverworldScreen implements Screen {
                 frontFieldButton.setTouchable(Touchable.disabled);
                 lastFieldButton.setTouchable(Touchable.disabled);
                 saveAndQuit.setTouchable(Touchable.disabled);
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player, enemyManager));
                 pause();
             }
         });
@@ -327,9 +328,47 @@ public class OverworldScreen implements Screen {
                 lastFieldButton.setTouchable(Touchable.enabled);
                 saveAndQuit.setTouchable(Touchable.enabled);
 
+                encounterBackground = "textures/encounter_bg.png";
+
+                switch(player.getObjectPosIndex()){
+                    case 1:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 13:
+                        encounterBackground = "textures/encounter_bg_street.png";
+                        break;
+                    case 2:
+                    case 12:
+                    case 15:
+                    case 18:
+                    case 20:
+                        encounterBackground = "textures/encounter_bg_city.png";
+                        break;
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                        encounterBackground = "textures/encounter_bg_beach.png";
+                        break;
+                    case 14:
+                    case 16:
+                    case 17:
+                    case 19:
+                        encounterBackground = "textures/encounter_bg.png";
+                        break;
+                    case 21:
+                    case 22:
+                        encounterBackground = "textures/encounter_bg_crater.png";
+                        break;
+                }
+
                 // TODO: Add encounter + Dialog
-//                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,"encounter_bg.png","",new Enemy[]{
-//                }));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,encounterBackground,"",new Enemy[]{
+                        enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie"),1)
+                }),assetManager,batch));
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;

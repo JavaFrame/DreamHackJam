@@ -5,8 +5,8 @@ import ch.dhj.game.player.AnimationSet;
 import com.badlogic.gdx.math.Vector2;
 
 public class TrumpEnemy extends Enemy {
-    public TrumpEnemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
-        super(position, scale, name, animationSet);
+    public TrumpEnemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet,int minPlayerLevel) {
+        super(position, scale, name, animationSet,minPlayerLevel);
     }
 
     @Override

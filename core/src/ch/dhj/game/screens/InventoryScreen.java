@@ -1,5 +1,7 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.EnemyManager;
+import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.player.Weapon;
 import ch.dhj.game.player.spells.TestHealSpell;
@@ -52,11 +54,13 @@ public class InventoryScreen  implements Screen {
     private final boolean[] isRanged = {false};
     private final boolean[] isSpell = {false};
     private final int[] spellSlot = {0};
+    private EnemyManager enemyManager;
 
-    public InventoryScreen(AssetManager am, SpriteBatch sb, Player p) {
+    public InventoryScreen(AssetManager am, SpriteBatch sb, Player p, EnemyManager em) {
         assetManager = am;
         batch = sb;
         player = p;
+        enemyManager = em;
 
         assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
         assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
@@ -113,7 +117,7 @@ public class InventoryScreen  implements Screen {
         resumeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager ));
             }
         });
 
