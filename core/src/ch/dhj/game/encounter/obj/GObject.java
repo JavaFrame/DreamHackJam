@@ -51,6 +51,8 @@ public abstract class GObject {
 			batch.draw(getTextureRegion(), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		} else if(getAnimation() != null) {
 			stateTime += delta;
+			if(stateTime == 0)
+				stateTime = 0.1f;
 			batch.draw(getAnimation().getKeyFrame(stateTime), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		}
 	}

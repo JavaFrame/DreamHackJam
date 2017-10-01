@@ -40,7 +40,7 @@ public class MeleeWeaponAction implements Action {
 	@Override
 	public boolean action() {
 		Figure e = enemies[index];
-		if(doAnimation(you, e) || e.isDead()) {
+		if(doAnimation(you, e) || e.isDead() || you.isDead()) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;

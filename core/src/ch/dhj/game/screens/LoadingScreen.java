@@ -149,7 +149,7 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
-		player.setMaxActionCount(3);
+		player.setMaxActionCount(2);
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
