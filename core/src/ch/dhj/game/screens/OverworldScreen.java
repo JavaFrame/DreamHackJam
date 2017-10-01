@@ -1,5 +1,7 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.EnemyManager;
+import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
@@ -72,12 +74,14 @@ public class OverworldScreen implements Screen {
     private final TextButton frontFieldButton;
     private final TextButton lastFieldButton;
     private final TextButton saveAndQuit;
+    private EnemyManager enemyManager;
 
 
-    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p) {
+    public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
 		this.assetManager = assetManager;
 		this.batch = batch;
         player = p;
+        enemyManager = em;
 
         this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -322,6 +326,10 @@ public class OverworldScreen implements Screen {
                 frontFieldButton.setTouchable(Touchable.enabled);
                 lastFieldButton.setTouchable(Touchable.enabled);
                 saveAndQuit.setTouchable(Touchable.enabled);
+
+                // TODO: Add encounter + Dialog
+//                ((Game)Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player,new EncounterScreen.EncounterConfig(0,"encounter_bg.png","",new Enemy[]{
+//                }));
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;

@@ -1,5 +1,7 @@
 package ch.dhj.game.screens;
 
+import ch.dhj.game.EnemyManager;
+import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.omg.IOP.ENCODING_CDR_ENCAPS;
 
 public class MainMenu implements Screen {
 
@@ -33,11 +36,13 @@ public class MainMenu implements Screen {
     private Sprite background;
     private AssetManager assetManager;
     private Player player;
+    private EnemyManager enemyManager;
 
-    public MainMenu(AssetManager assetManager, SpriteBatch batch, Player p) {
+    public MainMenu(AssetManager assetManager, SpriteBatch batch, Player p, EnemyManager em) {
         this.assetManager = assetManager;
         this.batch = batch;
         player = p;
+        enemyManager = em;
 
         this.assetManager.load("textures/defaultSkin.pack", TextureAtlas.class);
         this.assetManager.load("textures/atlasMainMenu.pack", TextureAtlas.class);
@@ -81,7 +86,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager));
             }
         });
         exitButton.addListener(new ClickListener(){

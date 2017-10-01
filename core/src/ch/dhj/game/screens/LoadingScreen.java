@@ -54,7 +54,7 @@ public class LoadingScreen extends ScreenAdapter {
 			buildPlayer(atlas);
 			buildingEnemies(atlas);
 			buildOverworldAnimations();
-			game.setScreen(new MainMenu(assetManager, game.getBatch(), player));
+			game.setScreen(new MainMenu(assetManager, game.getBatch(), player, enemyManager));
 		}
 	}
 
