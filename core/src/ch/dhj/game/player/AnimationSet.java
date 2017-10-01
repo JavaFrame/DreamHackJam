@@ -29,26 +29,29 @@ public class AnimationSet {
 	public OrderedMap<Weapon.WeaponType, Animation> weaponMap = new OrderedMap<>();
 
 	public AnimationSet(AnimationSet animationSet) {
-		this(animationSet.walkUpAnimation,
+		/*this(animationSet.walkUpAnimation,
 				animationSet.walkDownAnimation,
 				animationSet.walkLeftAnimation,
 				animationSet.walkRightAnimation,
 				animationSet.encounterIdleAnimation,
 				animationSet.encounterWalkAnimation,
 				new Weapon.WeaponType[]{},
-				new Animation[]{});
+				new Animation[]{});*/
+		setWalkUpAnimation(animationSet.getWalkUpAnimation());
+		setWalkDownAnimation(animationSet.getWalkDownAnimation());
+		setWalkLeftAnimation(animationSet.getWalkLeftAnimation());
+		setWalkRightAnimation(animationSet.getWalkRightAnimation());
+		setJonnyWalkUpAnimationTime(animationSet.getJonnyWalkUpAnimationTime());
+		setJonnyWalkDownAnimationTime(animationSet.getJonnyWalkDownAnimationTime());
+		setJonnyWalkLeftAnimationTime(animationSet.getJonnyWalkLeftAnimationTime());
+		setJonnyWalkRightAnimationTime(animationSet.getJonnyWalkRightAnimationTime());
+		setEncounterWalkAnimation(animationSet.getEncounterWalkAnimation());
+		setEncounterDieAnimation(animationSet.getEncounterDieAnimation());
+		setEncounterIdleAnimation(animationSet.getEncounterIdleAnimation());
 		this.weaponMap = animationSet.weaponMap;
 	}
 
-	public AnimationSet(Animation<TextureRegion> walkUpAnimation,
-						Animation<TextureRegion> walkDownAnimation,
-						Animation<TextureRegion> walkLeftAnimation,
-						Animation<TextureRegion> walkRightAnimation,
-						Animation<TextureRegion> encounterIdleAnimation,
-						Animation<TextureRegion> encounterWalkAnimation,
-						Weapon.WeaponType[] weaponTypes,
-						Animation<TextureRegion>[] weaponAnimations
-	) {
+	public AnimationSet() {
 		this.walkUpAnimation = walkUpAnimation;
 		this.walkDownAnimation = walkDownAnimation;
 		this.walkLeftAnimation = walkLeftAnimation;
@@ -56,12 +59,12 @@ public class AnimationSet {
 		this.encounterIdleAnimation = encounterIdleAnimation;
 		this.encounterWalkAnimation = encounterWalkAnimation;
 
-		if(weaponAnimations.length != weaponTypes.length)
+		/*if(weaponAnimations.length != weaponTypes.length)
 			throw new IllegalArgumentException("Length of weaponTypes array and weaponAnimations array have to match!");
 
 		for (int i = 0; i < weaponAnimations.length; i++) {
 			weaponMap.put(weaponTypes[i], weaponAnimations[i]);
-		}
+		}*/
 	}
 
 
@@ -129,4 +132,35 @@ public class AnimationSet {
 		this.jonnyWalkRightAnimationTime = jonnyWalkRightAnimationTime;
 	}
 
+	public Animation<TextureRegion> getEncounterIdleAnimation() {
+		return encounterIdleAnimation;
+	}
+
+	public void setEncounterIdleAnimation(Animation<TextureRegion> encounterIdleAnimation) {
+		this.encounterIdleAnimation = encounterIdleAnimation;
+	}
+
+	public Animation<TextureRegion> getEncounterWalkAnimation() {
+		return encounterWalkAnimation;
+	}
+
+	public void setEncounterWalkAnimation(Animation<TextureRegion> encounterWalkAnimation) {
+		this.encounterWalkAnimation = encounterWalkAnimation;
+	}
+
+	public Animation<TextureRegion> getEncounterDieAnimation() {
+		return encounterDieAnimation;
+	}
+
+	public void setEncounterDieAnimation(Animation<TextureRegion> encounterDieAnimation) {
+		this.encounterDieAnimation = encounterDieAnimation;
+	}
+
+	public OrderedMap<Weapon.WeaponType, Animation> getWeaponMap() {
+		return weaponMap;
+	}
+
+	public void setWeaponMap(OrderedMap<Weapon.WeaponType, Animation> weaponMap) {
+		this.weaponMap = weaponMap;
+	}
 }

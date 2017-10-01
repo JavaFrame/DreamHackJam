@@ -42,7 +42,7 @@ public class DreamHackJamGame extends Game {
 		batch = new SpriteBatch();
 
 		List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
-		Player p = new Player(new Texture(Gdx.files.internal("textures/Johhny.png")), new Vector2(30, 30), "Joshua", new AnimationSet());
+		Player p = new Player(null, new Vector2(1200, 100), new Vector2(500, 500), "Johhy", new AnimationSet());
 		p.setMaxActionCount(2);
 		p.setCurrentWeapon(weapons.get(0));
 		p.getSpells().add(weapons.get(1));
