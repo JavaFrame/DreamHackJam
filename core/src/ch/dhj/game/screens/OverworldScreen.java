@@ -158,6 +158,11 @@ public class OverworldScreen implements Screen {
                     targetPos = corners[player.getObjectPosIndex() - 1];
                     player.setObjectPosIndex(player.getObjectPosIndex() - 1);
                     alpha = 0;
+
+                    float distance = (float)Math.sqrt((Math.pow(playerPos.x - targetPos.x,2)) + (Math.pow(playerPos.y - targetPos.y,2)));
+                    float duration = distance/20;
+                    alphaAdd =(float)0.1*duration;
+                    alphaAdd = 1/alphaAdd;
                 }
 			}
 		});
@@ -246,9 +251,18 @@ public class OverworldScreen implements Screen {
         playerImage.setDrawable(new TextureRegionDrawable((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime)));
 
         if(targetPos != null ){
+
+            // TODO: CHECK WICH ANIMATION TO USE
+
+            int differenzX = 0;
+            int diffetenzY = 0;
+            boolean negativX = false;
+            boolean negativY = false;
+
             playerPos.interpolate(targetPos, alpha, Interpolation.pow2);
             alpha += alphaAdd * delta;
             if(playerPos.epsilonEquals(targetPos,1)){
+                jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;
                 alpha = 0;
             }
