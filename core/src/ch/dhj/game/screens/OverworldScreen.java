@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -142,10 +143,10 @@ public class OverworldScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Open Inventory
-                inventory.setDisabled(true);
-                frontFieldButton.setDisabled(true);
-                lastFieldButton.setDisabled(true);
-                saveAndQuit.setDisabled(true);
+                inventory.setTouchable(Touchable.disabled);
+                frontFieldButton.setTouchable(Touchable.disabled);
+                lastFieldButton.setTouchable(Touchable.disabled);
+                saveAndQuit.setTouchable(Touchable.disabled);
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new InventoryScreen(assetManager, batch, player));
                 pause();
             }
@@ -159,10 +160,10 @@ public class OverworldScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
                 if(player.getObjectPosIndex() < 22) {
-                    inventory.setDisabled(true);
-                    frontFieldButton.setDisabled(true);
-                    lastFieldButton.setDisabled(true);
-                    saveAndQuit.setDisabled(true);
+                    inventory.setTouchable(Touchable.disabled);
+                    frontFieldButton.setTouchable(Touchable.disabled);
+                    lastFieldButton.setTouchable(Touchable.disabled);
+                    saveAndQuit.setTouchable(Touchable.disabled);
 
                     targetPos = corners[player.getObjectPosIndex() + 1];
                     player.setObjectPosIndex(player.getObjectPosIndex() + 1);
@@ -180,11 +181,10 @@ public class OverworldScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
                 if(player.getObjectPosIndex() > 1) {
-                    inventory.setDisabled(true);
-                    frontFieldButton.setDisabled(true);
-                    lastFieldButton.setDisabled(true);
-                    saveAndQuit.setDisabled(true);
-
+                    inventory.setTouchable(Touchable.disabled);
+                    frontFieldButton.setTouchable(Touchable.disabled);
+                    lastFieldButton.setTouchable(Touchable.disabled);
+                    saveAndQuit.setTouchable(Touchable.disabled);
                     targetPos = corners[player.getObjectPosIndex() - 1];
                     player.setObjectPosIndex(player.getObjectPosIndex() - 1);
                     alpha = 0;
@@ -199,10 +199,10 @@ public class OverworldScreen implements Screen {
 		saveAndQuit.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-                inventory.setDisabled(true);
-                frontFieldButton.setDisabled(true);
-                lastFieldButton.setDisabled(true);
-                saveAndQuit.setDisabled(true);
+                inventory.setTouchable(Touchable.disabled);
+                frontFieldButton.setTouchable(Touchable.disabled);
+                lastFieldButton.setTouchable(Touchable.disabled);
+                saveAndQuit.setTouchable(Touchable.disabled);
 
 				Gdx.app.exit();
 			}
@@ -318,10 +318,10 @@ public class OverworldScreen implements Screen {
             alpha += alphaAdd * delta;
 
             if(playerPos.epsilonEquals(targetPos,1)){
-                inventory.setDisabled(false);
-                frontFieldButton.setDisabled(false);
-                lastFieldButton.setDisabled(false);
-                saveAndQuit.setDisabled(false);
+                inventory.setTouchable(Touchable.enabled);
+                frontFieldButton.setTouchable(Touchable.enabled);
+                lastFieldButton.setTouchable(Touchable.enabled);
+                saveAndQuit.setTouchable(Touchable.enabled);
 
                 jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
                 targetPos = null;
