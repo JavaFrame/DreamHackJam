@@ -25,6 +25,7 @@ public class AnimationSet {
 	public Animation<TextureRegion> encounterIdleAnimation;
 	public Animation<TextureRegion> encounterWalkAnimation;
 	public Animation<TextureRegion> encounterDieAnimation;
+	public Animation<TextureRegion> encounterDamagedAnimation;
 
 	public OrderedMap<Weapon.WeaponType, Animation> weaponMap = new OrderedMap<>();
 
@@ -154,6 +155,14 @@ public class AnimationSet {
 
 	public void setEncounterDieAnimation(Animation<TextureRegion> encounterDieAnimation) {
 		this.encounterDieAnimation = encounterDieAnimation;
+	}
+
+	public Animation<TextureRegion> getEncounterDamagedAnimation() {
+		return encounterDamagedAnimation;
+	}
+
+	public void setEncounterDamagedAnimation(Animation<TextureRegion> encounterDamagedAnimation) {
+		this.encounterDamagedAnimation = encounterDamagedAnimation;
 	}
 
 	public OrderedMap<Weapon.WeaponType, Animation> getWeaponMap() {

@@ -9,6 +9,7 @@ import ch.dhj.game.player.spells.TestHealSpell;
 import ch.dhj.game.player.spells.TestSpell;
 import ch.dhj.game.player.weapons.TestWeapon;
 import ch.dhj.game.screens.EncounterScreen;
+import ch.dhj.game.screens.LoadingScreen;
 import ch.dhj.game.screens.MainMenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -36,12 +37,15 @@ public class DreamHackJamGame extends Game {
 	private TextureAtlas walkLeftAtlas;
 	private TextureAtlas walkRightAtlas;
 
+
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
 
-		List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
+		setScreen(new LoadingScreen());
+
+		/*List<Weapon> weapons = new ArrayList(Arrays.asList(new TestWeapon(), new TestSpell(), new TestHealSpell()));
 		Player p = new Player(null, new Vector2(1200, 100), new Vector2(500, 500), "Johhy", new AnimationSet());
 		p.setMaxActionCount(2);
 		p.setCurrentWeapon(weapons.get(0));
@@ -101,7 +105,15 @@ public class DreamHackJamGame extends Game {
 		p.getAnimationSet().setWalkRightAnimation(new Animation(jonnyWalkDuration, jonnyWalkRightRegions, Animation.PlayMode.LOOP));
 		p.getAnimationSet().setJonnyWalkRightAnimationTime(Gdx.graphics.getDeltaTime());
 
-		this.setScreen(new MainMenu(assetManager, batch, p));
+		this.setScreen(new EncounterScreen(p, new EncounterScreen.EncounterConfig(0,"textures/encounter_bg.png", "map/test.tmx", new Enemy[]{
+				new Enemy(new Vector2(200, 100), new Vector2(500, 500), "Bad Boy",
+						) {
+					@Override
+					public Action[] getActions() {
+						return new Action[0];
+					}
+				}
+		})));
 		/*this.setScreen(
 				new EncounterScreen(p, new EncounterScreen.EncounterConfig(0, "textures/encounter_bg.png", "map/test.tmx",
 						new Enemy[]{new Enemy(
@@ -134,5 +146,13 @@ public class DreamHackJamGame extends Game {
 	@Override
 	public void dispose () {
 		assetManager.dispose();
+	}
+
+	public AssetManager getAssetManager() {
+		return assetManager;
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
 	}
 }

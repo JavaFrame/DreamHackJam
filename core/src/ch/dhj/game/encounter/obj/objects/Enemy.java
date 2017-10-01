@@ -11,7 +11,7 @@ public abstract class Enemy extends Figure{
 	public Enemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
 		setSize(scale);
-		setTextureRegion(animationSet.encounterWalkAnimation.getKeyFrame(0));
+		setTextureRegion(animationSet.encounterIdleAnimation.getKeyFrame(0));
 		//getTextureRegion().setSize(-1, 1);
 	}
 
