@@ -67,7 +67,8 @@ public class InventoryScreen  implements Screen {
         skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
         atlasBackground = assetManager.get("textures/atlasMainMenu.pack");
 
-        background = new Sprite(atlasBackground.findRegion("Placeholder_titel"));
+        background = new Sprite(atlasBackground.findRegion("Title"));
+        background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT);
 
         atlasPlayerImage = assetManager.get("textures/jonnySprite.pack");
 

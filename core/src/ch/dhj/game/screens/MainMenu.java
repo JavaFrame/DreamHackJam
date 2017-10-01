@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenu implements Screen {
@@ -46,10 +47,11 @@ public class MainMenu implements Screen {
         skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
         atlasBackground = this.assetManager.get("textures/atlasMainMenu.pack");
 
-        background = new Sprite(atlasBackground.findRegion("Placeholder_titel"));
+        background = new Sprite(atlasBackground.findRegion("Title"));
+        background.setSize(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT);
 
         camera = new OrthographicCamera();
-        viewport = new FillViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
+        viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);

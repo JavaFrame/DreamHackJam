@@ -4,15 +4,22 @@ import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapRenderer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -26,7 +33,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.awt.*;
 import java.util.Comparator;
+import java.util.Map;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
 import static ch.dhj.game.utils.WorldConfig.*;
@@ -52,7 +61,12 @@ public class OverworldScreen implements Screen {
     private TiledMap map;
     private MapRenderer mapRenderer;
     private Player player;
-
+    private Vector2[] corners;
+    private Vector2 playerPos;
+    private Vector2 targetPos;
+    private float alpha = 0;
+    private float alphaAdd;
+    private TextureRegion jonny;
 
     public OverworldScreen(AssetManager assetManager, SpriteBatch batch, Player p) {
 		this.assetManager = assetManager;
@@ -61,12 +75,21 @@ public class OverworldScreen implements Screen {
 
         this.assetManager.load("textures/jonnySprite.pack", TextureAtlas.class);
         this.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        this.assetManager.load("map/test.tmx", TiledMap.class);
+        this.assetManager.load("map/Aktuelle_overworld.tmx", TiledMap.class);
         assetManager.finishLoading();
 
-        map = assetManager.get("map/test.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 10);
+        map = assetManager.get("map/Aktuelle_overworld.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 3.5f);
 
+        corners = new Vector2[map.getLayers().getCount()];
+
+        for(int i = 0; i < map.getLayers().getCount(); i++){
+            if(i != 0) {
+                MapObject object = map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class).first();
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                corners[i] = new Vector2((rect.x + rect.width / 2)*3.5f, (rect.y + rect.height / 2)*3.5f);
+            }
+        }
 
         atlasPlayerImage = assetManager.get("textures/jonnySprite.pack");
 
@@ -81,17 +104,19 @@ public class OverworldScreen implements Screen {
         jonnyWaveAnimation = new Animation(jonnyWaveDuration, jonnyWaveRegions, Animation.PlayMode.LOOP);
         jonnyWaveAnimationTime = Gdx.graphics.getDeltaTime();
 
-		atlasButtons = assetManager.get("textures/defaultSkin.pack");
+        jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);
+        playerPos = corners[player.getObjectPosIndex()];
+
+        atlasButtons = assetManager.get("textures/defaultSkin.pack");
 		skin = new Skin(Gdx.files.internal("textures/defaultSkin.json"), atlasButtons);
 
 		camera = new OrthographicCamera();
 		viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT,camera);
 		viewport.apply();
 
-		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 
-		stage = new Stage(viewport, this.batch);
+		stage = new Stage(new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT), this.batch);
 	}
 
 	@Override
@@ -113,14 +138,27 @@ public class OverworldScreen implements Screen {
 		frontFieldButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-			// Move
+                if(player.getObjectPosIndex() < 22) {
+                    targetPos = corners[player.getObjectPosIndex() + 1];
+                    player.setObjectPosIndex(player.getObjectPosIndex() + 1);
+                    alpha = 0;
+
+                    float distance = (float)Math.sqrt((Math.pow(playerPos.x - targetPos.x,2)) + (Math.pow(playerPos.y - targetPos.y,2)));
+                    float duration = distance/20;
+                    alphaAdd =(float)0.1*duration;
+                    alphaAdd = 1/alphaAdd;
+                }
 			}
 		});
 
 		lastFieldButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				// Move
+                if(player.getObjectPosIndex() > 1) {
+                    targetPos = corners[player.getObjectPosIndex() - 1];
+                    player.setObjectPosIndex(player.getObjectPosIndex() - 1);
+                    alpha = 0;
+                }
 			}
 		});
 		saveAndQuit.addListener(new ClickListener(){
@@ -195,25 +233,41 @@ public class OverworldScreen implements Screen {
         playerGUI.padRight(20);
         playerGUI.pack();
         stage.addActor(playerGUI);
-	}
+
+   }
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1.0f, .12f, .16f, 1);
+
+		Gdx.gl.glClearColor(0f, .4f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         jonnyWaveAnimationTime += Gdx.graphics.getDeltaTime();
         playerImage.setDrawable(new TextureRegionDrawable((TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime)));
 
-        batch.begin();
-		batch.setProjectionMatrix(camera.combined);
-        batch.end();
-        mapRenderer.setView(camera);
+        if(targetPos != null ){
+            playerPos.interpolate(targetPos, alpha, Interpolation.pow2);
+            alpha += alphaAdd * delta;
+            if(playerPos.epsilonEquals(targetPos,1)){
+                targetPos = null;
+                alpha = 0;
+            }
+        }
+
+        camera.position.set(playerPos.x , playerPos.y, 0);
+
         mapRenderer.render();
+
+        batch.begin();
+        batch.setProjectionMatrix(camera.combined);
+        batch.draw(jonny, playerPos.x, playerPos.y, 8*3.5f,8*3.5f);
+        batch.end();
 
 		stage.act();
 		stage.draw();
 		camera.update();
+
+        mapRenderer.setView(camera);
 	}
 
 	@Override

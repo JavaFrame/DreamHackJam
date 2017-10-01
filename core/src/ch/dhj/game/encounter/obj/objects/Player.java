@@ -34,6 +34,7 @@ public class Player extends Figure{
 	private Stage stage;
 	private Table turnActionTable;
 	private Label actionsL;
+	public int objectPosIndex = 1;
 
 	private int actions;
 
@@ -43,11 +44,12 @@ public class Player extends Figure{
 
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
-
+		objectPosIndex = 1;
 	}
 
 	public Player(Texture texture, Vector2 position, String name, AnimationSet animationSet) {
 		super(texture, position, name, animationSet);
+		objectPosIndex = 1;
 	}
 
 	@Override
@@ -196,4 +198,13 @@ public class Player extends Figure{
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 	}
+
+	public int getObjectPosIndex() {
+		return objectPosIndex;
+	}
+
+	public void setObjectPosIndex(int objectPosIndex) {
+		this.objectPosIndex = objectPosIndex;
+	}
+
 }
