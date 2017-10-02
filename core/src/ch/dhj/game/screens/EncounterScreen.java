@@ -92,9 +92,7 @@ public class EncounterScreen implements Screen {
 
 
 	@Override
-	public void show() {
-		encounterMusic.play();
-	}
+	public void show() {if(!encounterMusic.isPlaying()){encounterMusic.play();}}
 
 	@Override
 	public void render(float delta) {

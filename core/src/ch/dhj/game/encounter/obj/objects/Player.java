@@ -168,8 +168,12 @@ public class Player extends Figure{
 									break;
 							}
 							if(newWeapon != null) {
-								newWeaponDialg.add(new Image(newWeapon.getIcon()));
-								newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
+								if(!newWeapon.isSpell()) {
+									newWeaponDialg.add(new Image(newWeapon.getIcon()));
+									newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
+								} else {
+									newWeaponDialg.text("You got a " + newWeapon.getName() + " Spell!");
+								}
 								newWeaponDialg.show(stage);
 							} else {
 								EncounterScreen.encounterMusic.stop();
@@ -186,20 +190,17 @@ public class Player extends Figure{
 					gottenExp = 0;
 					TextButton closeB = new TextButton("close", skin);
 					final Dialog finalWonDialog = wonDialog;
-					final Dialog finalLevlUpDialog = levlUpDialog;
 					closeB.addListener(new ClickListener() {
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
 							finalWonDialog.hide();
 							if(oldLvl != getLevel()) {
-								finalLevlUpDialog.button(closeLvlUpDialog);
-								finalLevlUpDialog.show(stage);
+								finalLevelUpDialog.button(closeLvlUpDialog);
+								finalLevelUpDialog.show(stage);
 							} else {
 								EncounterScreen.encounterMusic.stop();
 								((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 							}
-							EncounterScreen.encounterMusic.stop();
-							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
 					wonDialog.button(closeB);
@@ -375,8 +376,8 @@ public class Player extends Figure{
 				} else if(level < getLevel()) {
 					chances = 0.2f;
 				}
+				Dialog dialog = null;
 				if(random <= chances) {
-					Dialog dialog = null;
 					dialog = new Dialog("Running successful!", skin);
 					dialog.text("You got away with a black eye!");
 					TextButton closeB = new TextButton("close", skin);
@@ -390,9 +391,7 @@ public class Player extends Figure{
 						}
 					});
 					dialog.button("close", closeB);
-					dialog.show(stage);
 				} else {
-					Dialog dialog = null;
 					dialog = new Dialog("Running failed!", skin);
 					dialog.text("You couldn't run away! \nYour turn ends!");
 					TextButton closeB = new TextButton("close", skin);
@@ -405,6 +404,8 @@ public class Player extends Figure{
 						}
 					});
 					dialog.button("close", closeB);
+				}
+				if(dialog != null) {
 					dialog.show(stage);
 				}
 			}
@@ -484,7 +485,7 @@ public class Player extends Figure{
 			int oldMaxLife = getMaxLifes();
 			setMaxLifes((int) (getMaxLifes() * LIFE_FACTOR));
 			setLifes(getMaxLifes());
-			levelChangeReport.append(String.format("%d lifes -> %d lifes\n", oldMaxLife, getMaxLifes()));
+			levelChangeReport.append(String.format("%d hp -> %d hp\n", oldMaxLife, getMaxLifes()));
 
 			int oldActionCount = getMaxActionCount();
 			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));

@@ -108,7 +108,9 @@ public class InventoryScreen  implements Screen {
         //Stage should controll input:
         Gdx.input.setInputProcessor(stage);
 
-        invScreenMusic.play();
+        if(!invScreenMusic.isPlaying()) {
+            invScreenMusic.play();
+        }
 
         //Create Table
         Table resumeButtonTable = new Table();
