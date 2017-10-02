@@ -68,7 +68,7 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
 		zombieEnemy.setMaxLifes(5);
 		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
-		zombieEnemy.setMaxActionCount(2);
+		zombieEnemy.setMaxActionCount(1);
 		enemyManager.addEnemy(zombieEnemy);
 
 		AnimationSet zombieKingSet = new AnimationSet();
@@ -81,7 +81,7 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieKingEnemy.setMaxLifes(10);
 		zombieKingEnemy.setLifes(10);
 		zombieKingEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieKingAttack));
-		zombieKingEnemy.setMaxActionCount(3);
+		zombieKingEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(zombieKingEnemy);
 
 		AnimationSet alienSet = new AnimationSet();
@@ -96,7 +96,7 @@ public class LoadingScreen extends ScreenAdapter {
 		alienEnemy.setMaxLifes(10);
 		alienEnemy.setLifes(10);
 		alienEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.AlienAttack));
-		alienEnemy.setMaxActionCount(4);
+		alienEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(alienEnemy);
 
 		AnimationSet trumpSet = new AnimationSet();
@@ -108,7 +108,7 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
 		trumpEnemy.setMaxLifes(10);
 		trumpEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.TrumpAttack));
-		trumpEnemy.setMaxActionCount(4);
+		trumpEnemy.setMaxActionCount(3);
 		enemyManager.addEnemy(trumpEnemy);
 
 		/*AnimationSet zombieKingSet = new AnimationSet();

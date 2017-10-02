@@ -170,6 +170,7 @@ public class Player extends Figure{
 							if(newWeapon != null) {
 								newWeaponDialg.add(new Image(newWeapon.getIcon()));
 								newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
+								newWeaponDialg.show(stage);
 							} else {
 								EncounterScreen.encounterMusic.stop();
 								((Game) Gdx.app.getApplicationListener()).

@@ -412,12 +412,16 @@ public class OverworldScreen implements Screen {
                 }
                 if (player.getObjectPosIndex() == 11) {
                     overworldMusic.stop();
+					Enemy e = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2);
+					e.getPosition().set(100, 100);
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
-                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2)}), assetManager, batch));
+                            e}), assetManager, batch));
                 } else if (player.getObjectPosIndex() == 22) {
                     overworldMusic.stop();
+					Enemy e = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel() * 3);
+					e.getPosition().set(100, 100);
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
-                            enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel() * 3)}), assetManager, batch));
+                            e}), assetManager, batch));
                 } else {
                     if (player.getObjectPosIndex() <= 4) {
                         int enemyCount = RANDOM.nextInt(4);
