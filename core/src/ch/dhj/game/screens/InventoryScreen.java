@@ -127,7 +127,9 @@ public class InventoryScreen  implements Screen {
         resumeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                invScreenMusic.stop();
+                while(invScreenMusic.isPlaying()) {
+                    invScreenMusic.stop();
+                }
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager, true));
             }
         });
