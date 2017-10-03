@@ -145,8 +145,10 @@ public class Player extends Figure{
 							switch (level) {
 								case 3:
 								case 4:
-									newWeapon = new Weapon(Weapon.WeaponType.Heal);
-									getSpells().add(newWeapon);
+									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+										newWeapon = new Weapon(Weapon.WeaponType.Heal);
+										getSpells().add(newWeapon);
+									}
 									break;
 								case 5:
 								case 6:
@@ -154,9 +156,11 @@ public class Player extends Figure{
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
-									newWeapon = new Weapon(Weapon.WeaponType.Gun);
-									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
-									getWeapons().add(newWeapon);
+									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
+										newWeapon = new Weapon(Weapon.WeaponType.Gun);
+										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
+										getWeapons().add(newWeapon);
+									}
 									break;
 								case 7:
 								case 8:
@@ -169,9 +173,11 @@ public class Player extends Figure{
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 										getWeapons().add(newWeapon);
 									}
-									newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
-									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
-									getWeapons().add(newWeapon);
+									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
+										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
+										getWeapons().add(newWeapon);
+									}
 									break;
 								case 9:
 								case 10:
@@ -190,9 +196,11 @@ public class Player extends Figure{
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 										getWeapons().add(newWeapon);
 									}
-									newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
-									newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
-									getWeapons().add(newWeapon);
+									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
+										newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
+										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
+										getWeapons().add(newWeapon);
+									}
 									break;
 								case 12:
 								case 13:
@@ -229,8 +237,10 @@ public class Player extends Figure{
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 										getWeapons().add(newWeapon);
 									}
-									newWeapon = new Weapon(Weapon.WeaponType.Fireball);
-									getSpells().add(newWeapon);
+									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Fireball),true)) {
+										newWeapon = new Weapon(Weapon.WeaponType.Fireball);
+										getSpells().add(newWeapon);
+									}
 									break;
 							}
 							if(newWeapon != null) {

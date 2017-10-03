@@ -127,11 +127,10 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_idle")));
 		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_death")));
 		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_damaged")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>(1f, atlas.findRegions("johhny_gun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>(0.5f, atlas.findRegions("johhny_shotgun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>((float) 1/2, atlas.findRegions("johhny_gun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>((float)1/1.5f, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>((float)1/5, atlas.findRegions("johhny_heal")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_flamethrower")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>((float)1/4, atlas.findRegions("fireball")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Flamethrower, new Animation<TextureRegion>((float) 1/3, atlas.findRegions("johhny_flamethrower")));
 

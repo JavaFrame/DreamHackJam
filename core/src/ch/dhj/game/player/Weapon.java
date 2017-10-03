@@ -106,7 +106,7 @@ public class Weapon {
 		Shotgun("Shotgun", 2, 4, true, false, false, null),
 		Stab("Stab", 1, 2, false, true, false, null),
 		Heal("Heal", 1, -3, false, false, true, null),
-		Fireball("Fireball", 1, 2, false, false, true, null),
+		Fireball("Fireball", 1, 5, false, false, true, null),
 		Flamethrower("Flamethrower", 2, 5, false, true, false, null),
 
 		ZombieAttack("Zombie Attack", 1, 1, false, true, false, null),
