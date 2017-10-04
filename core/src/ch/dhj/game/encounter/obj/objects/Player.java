@@ -614,4 +614,11 @@ public class Player extends Figure{
 	public void setEnemyManager(EnemyManager enemyManager) {
 		this.enemyManager = enemyManager;
 	}
+
+
+	public void resetForNextEncounter() {
+		showEncounterWonDialog = false;
+		getPosition().set( 1200, 100);
+		//setLifes(getMaxLifes());
+	}
 }
