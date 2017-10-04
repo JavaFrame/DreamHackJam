@@ -450,11 +450,11 @@ public class Player extends Figure{
 				int level = highestLvlEnemy.getLevel();
 				float chances = 0f;
 				if(level > getLevel()) {
-					chances = 0.4f;
+					chances = 0.3f;
 				} else if(level == getLevel()) {
-					chances = 0.2f;
+					chances = 0.1f;
 				} else if(level < getLevel()) {
-					chances = 0.2f;
+					chances = 0.1f;
 				}
 				Dialog dialog = null;
 				if(random <= chances) {
@@ -483,7 +483,7 @@ public class Player extends Figure{
 							endTurn();
 						}
 					});
-					dialog.button("close", closeB);
+					dialog.button(closeB);
 				}
 				if(dialog != null) {
 					dialog.show(stage);
