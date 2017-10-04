@@ -198,7 +198,7 @@ public class Figure extends GObject {
 
 	@Override
 	public String toString() {
-		return getName();
+		return getName() + "(" + getLevel() + " lvl)";
 	}
 
 	public Weapon getRangeWeapon() {

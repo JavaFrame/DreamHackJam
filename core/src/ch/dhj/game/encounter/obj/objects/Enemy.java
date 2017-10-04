@@ -29,14 +29,15 @@ public class Enemy extends Figure{
 		setTotalExpToNextLevel(e.getTotalExpToNextLevel());
 		setAnimation(e.getAnimation());
 		setParent(getParent());
-		setSize(e.getSize());
+		setSize(new Vector2(Math.abs(e.getSize().x)*-1, e.getSize().y));
 		setStateTime(e.getStateTime());
 	}
 
-	public Enemy(Vector2 position, Vector2 scale, String name, AnimationSet animationSet, int minPlayerLevel, int expToDrop) {
+	public Enemy(Vector2 position, Vector2 size, String name, AnimationSet animationSet, int minPlayerLevel, int expToDrop) {
 		super(position, name, animationSet);
 		this.minPlayerLevel = minPlayerLevel;
-		setSize(scale);
+		setSize(size);
+		setSize(new Vector2(Math.abs(size.x)*-1, size.y));
 		setTextureRegion(animationSet.encounterIdleAnimation.getKeyFrame(0));
 		//getTextureRegion().setSize(-1, 1);
 		this.expToDrop = expToDrop;

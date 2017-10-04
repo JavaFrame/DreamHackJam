@@ -38,8 +38,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import java.awt.*;
-import java.awt.Dialog;
 import java.util.*;
 
 import static ch.dhj.game.TexturesConst.ENCOUNTER_1_BG;
@@ -413,7 +411,7 @@ public class OverworldScreen implements Screen {
                 }
                 if (player.getObjectPosIndex() == 11) {
                     Enemy e = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2);
-                    e.getPosition().set(100, 100);
+                    e.getPosition().set(200, 200);
                     overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
                             e}), assetManager, batch));
@@ -426,6 +424,7 @@ public class OverworldScreen implements Screen {
                             e}), assetManager, batch));
                 } else {
                     int enemyCount = RANDOM.nextInt(3)+1;
+                    enemyCount = 3;
                     Array<EnemyTypes> possibleEnemies = new Array<>();
                     possibleEnemies.add(EnemyTypes.Zombie);
                     if(player.getObjectPosIndex() >= 4) {
@@ -447,15 +446,15 @@ public class OverworldScreen implements Screen {
 								break;
 							}
 						}
-					}while(!ableToWin(enemies));
+					} while(/*!ableToWin(enemies)*/false);
 
-					int pos = 100;
+					int pos = 400;
 					boolean up = false;
-					for (int i = 0; i < enemyCount; i++) {
+					for (int i = 0; i < enemies.size; i++) {
 						enemies.get(i).getPosition().set(pos, (up ? 400 : 100));
 						pos += 200;
 						up = !up;
-						enemies.get(i).setSize(new Vector2(500, 500));
+						enemies.get(i).setSize(new Vector2(-500, 500));
 					}
 					overworldMusic.stop();
 					((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
@@ -510,7 +509,7 @@ public class OverworldScreen implements Screen {
                         overworldMusic.stop();
                         ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
                     }*/
-                }
+                	}
 
 
                     jonny = (TextureRegion) jonnyWaveAnimation.getKeyFrame(jonnyWaveAnimationTime);

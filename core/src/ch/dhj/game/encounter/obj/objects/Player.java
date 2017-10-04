@@ -135,10 +135,8 @@ public class Player extends Figure{
 
 		Dialog levlUpDialog = null;
 		levlUpDialog = new Dialog("Level up!", skin);
-		String[] lines = levelChangeReport.toString().split("\n");
-		for (String s : lines) {
-			levlUpDialog.text(s);
-		}
+		levlUpDialog.getContentTable().add(new Label(levelChangeReport, skin));
+
 		final TextButton closeLvlUpDialog = new TextButton("close", skin);
 		final Dialog finalLevelUpDialog = levlUpDialog;
 		closeLvlUpDialog.addListener(new ClickListener() {
@@ -398,10 +396,11 @@ public class Player extends Figure{
 			attackB.setTouchable(Touchable.disabled);
 			attackB.setText(attackB.getText() + " (unavailbe)");
 		}
-		final Array<Weapon> actionWeapons = new Array<Weapon>();
 		attackB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				Array<Weapon> actionWeapons = new Array<>();
+
 				if(getMeleeWeapon() != null)
 				    actionWeapons.add(getMeleeWeapon());
 				if(getRangeWeapon() != null)
@@ -419,8 +418,8 @@ public class Player extends Figure{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				chooseSpellTable.setVisible(true);
-				weapons.setItems(getSpells());
 				chooseEnemyTable.setVisible(false);
+				weapons.setItems(getSpells());
 			}
 		});
 		TextButton doNothingB = new TextButton("Do nothing", skin);
@@ -432,6 +431,8 @@ public class Player extends Figure{
 				if(actions >= getMaxActionCount()) {
 					endTurn();
 				}
+				chooseSpellTable.setVisible(false);
+				chooseEnemyTable.setVisible(false);
 			}
 		});
 		TextButton runB = new TextButton("Run", skin);

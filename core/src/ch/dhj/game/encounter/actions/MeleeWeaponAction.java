@@ -2,6 +2,7 @@ package ch.dhj.game.encounter.actions;
 
 import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.obj.objects.Figure;
+import ch.dhj.game.encounter.obj.objects.Player;
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
@@ -40,7 +41,13 @@ public class MeleeWeaponAction implements Action {
 	@Override
 	public boolean action() {
 		Figure e = enemies[index];
-		if(doAnimation(you, e) || e.isDead() || you.isDead()) {
+		if(init & (e.isDead() || you.isDead())) {
+			alpha = 0;
+			timeElepsed = 0;
+			index++;
+			init = true;
+		}
+		if(doAnimation(you, e)) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;
@@ -56,15 +63,15 @@ public class MeleeWeaponAction implements Action {
 			timeElepsed = 0;
 			alpha = 0;
 			you.setAnimation(weapon.getAnimation(you.getAnimationSet()));
-			init = false;
 		}
+		init = false;
 		switch (state) {
 			case GO_TO:
 				Vector2 targetPos;
-				if(enemy.getPosition().x < you.getPosition().x)
+				if(you instanceof Player)
 					targetPos = new Vector2(enemy.getPosition().x + (enemy.getSize().x/2), enemy.getPosition().y);
 				else
-					targetPos = new Vector2(enemy.getPosition().x - (enemy.getSize().x/2), enemy.getPosition().y);
+					targetPos = new Vector2(enemy.getPosition().x +1 + (enemy.getSize().x/2), enemy.getPosition().y);
 
 				you.getPosition().set(you.getPosition().interpolate(targetPos, alpha, Interpolation.fade));
 				alpha += 0.1 * Gdx.graphics.getDeltaTime();
