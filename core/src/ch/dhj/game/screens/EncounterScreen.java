@@ -154,11 +154,15 @@ public class EncounterScreen implements Screen {
 		public String map;
 		public Array<Enemy> enemies;
 
-		public EncounterConfig(int id, String background, String map, Enemy[] enemies) {
+		public EncounterConfig(int id, String background, String map, Array<Enemy> enemies) {
 			this.id = id;
 			this.background = background;
 			this.map = map;
 			this.enemies = new Array(enemies);
+		}
+
+		public EncounterConfig(int id, String background, String map, Enemy[] enemies) {
+			this(id, background, map, new Array<Enemy>(enemies));
 		}
 	}
 

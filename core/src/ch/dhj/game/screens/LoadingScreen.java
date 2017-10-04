@@ -9,12 +9,16 @@ import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import sun.awt.windows.WEmbeddedFrame;
 
 import java.util.Comparator;
@@ -27,6 +31,7 @@ public class LoadingScreen extends ScreenAdapter {
 	private static final float PROGRESS_BAR_HEIGHT = 50f;
 
 	private DreamHackJamGame game ;
+	private OrthographicCamera camera;
 	private AssetManager assetManager;
 	private ShapeRenderer shapeRenderer;
 	private EnemyManager enemyManager = new EnemyManager();
@@ -42,11 +47,15 @@ public class LoadingScreen extends ScreenAdapter {
 		game = (DreamHackJamGame) Gdx.app.getApplicationListener();
 		assetManager = game.getAssetManager();
 		shapeRenderer = new ShapeRenderer();
+
+		camera = new OrthographicCamera(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT);
+		camera.setToOrtho(false, WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT);
+		Viewport viewport = new StretchViewport(WorldConfig.VIEWPORT_WIDTH, WorldConfig.VIEWPORT_HEIGHT, camera);
 	}
 
 	@Override
 	public void render(float delta) {
-		super.render(delta);
+		camera.update();
 		renderProgressBar();
 		if(assetManager.update()){
 			TextureAtlas atlas = assetManager.get("textures/sprites.pack", TextureAtlas.class);
@@ -54,7 +63,7 @@ public class LoadingScreen extends ScreenAdapter {
 			buildingEnemies(atlas);
 			buildOverworldAnimations();
 
-			game.setScreen(new MainMenu(assetManager, game.getBatch(), player, enemyManager));
+			//game.setScreen(new MainMenu(assetManager, game.getBatch(), player, enemyManager));
 		}
 	}
 
@@ -168,6 +177,7 @@ public class LoadingScreen extends ScreenAdapter {
 	}
 
 	private void renderProgressBar() {
+		shapeRenderer.setProjectionMatrix(camera.combined);
 		float progress = assetManager.getProgress();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.WHITE);

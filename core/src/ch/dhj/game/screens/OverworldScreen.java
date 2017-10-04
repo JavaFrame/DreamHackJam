@@ -4,6 +4,7 @@ import ch.dhj.game.EnemyManager;
 import ch.dhj.game.encounter.Action;
 import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Player;
+import ch.dhj.game.player.Weapon;
 import ch.dhj.game.utils.WorldConfig;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -425,8 +426,43 @@ public class OverworldScreen implements Screen {
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
                             e}), assetManager, batch));
                 } else {
-                    int enemyCount = RANDOM.nextInt(4);
-                    if (player.getObjectPosIndex() >= 4) {
+                    int enemyCount = RANDOM.nextInt(3)+1;
+                    Array<EnemyTypes> possibleEnemies = new Array<>();
+                    possibleEnemies.add(EnemyTypes.Zombie);
+                    if(player.getObjectPosIndex() >= 4) {
+                    	possibleEnemies.add(EnemyTypes.Alien);
+					}
+
+					Array<Enemy> enemies = new Array<>();
+					do {
+                    	enemies.clear();
+						for (int i = 0; i < enemyCount; i++) {
+							//String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
+							String enemyName = possibleEnemies.get(RANDOM.nextInt(possibleEnemies.size)).name();
+							enemies.add(enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName), player.getLevel()));
+						}
+						if(!ableToWin(enemies)) {
+							if(enemyCount > 1) {
+								enemyCount--;
+							} else {
+								break;
+							}
+						}
+					}while(!ableToWin(enemies));
+
+					int pos = 100;
+					boolean up = false;
+					for (int i = 0; i < enemyCount; i++) {
+						enemies.get(i).getPosition().set(pos, (up ? 400 : 100));
+						pos += 200;
+						up = !up;
+						enemies.get(i).setSize(new Vector2(500, 500));
+					}
+					overworldMusic.stop();
+					((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
+
+
+                    /*if (player.getObjectPosIndex() >= 4) {
                         if (enemyCount == 0) {
                             enemyCount = 1;
                         }
@@ -474,7 +510,7 @@ public class OverworldScreen implements Screen {
                         }
                         overworldMusic.stop();
                         ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
-                    }
+                    }*/
                 }
 
 
@@ -499,6 +535,40 @@ public class OverworldScreen implements Screen {
 
         mapRenderer.setView(camera);
     }
+
+    private boolean ableToWin(Array<Enemy> enemies) {
+    	int playerDamage = 2; //stab makes 2 damage
+		boolean hasHealSpell = false;
+		for(Weapon w : player.getWeapons()) {
+			if(w.getDamge() > playerDamage)
+				playerDamage = w.getDamge();
+			if(w.getDamge() < 0)
+				hasHealSpell = true;
+		}
+
+		if(hasHealSpell) {
+			return true;
+		}
+		int damagePerRound = playerDamage * player.getMaxActionCount();
+
+		int totalEnemyDamage = 0;
+		int totalEnemyHealth = 0;
+		for(Enemy e : enemies) {
+			totalEnemyHealth += e.getLifes();
+
+			Weapon w = e.getMeleeWeapon();
+			if(w == null)
+				w = e.getRangeWeapon();
+			if(w == null)
+				continue;
+			totalEnemyDamage += (e.getMaxActionCount() * w.getDamge());
+		}
+
+		if(totalEnemyHealth/playerDamage > player.getLifes() /totalEnemyDamage) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public void resize(int width, int height) {

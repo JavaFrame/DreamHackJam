@@ -56,6 +56,8 @@ public class Player extends Figure{
 
 	private Weapon selectedWeapon;
 
+	private boolean showEncounterWonDialog = false;
+
 	private int oldExp;
 	private int oldLvl;
 	private int gottenExp;
@@ -113,178 +115,184 @@ public class Player extends Figure{
 				actions = 0;
 				turnActionTable.setVisible(true);
 				rootTable.setVisible(true);
-
-				final Dialog newWeaponDialg = new Dialog("You got a new Weapon!", skin);
-				TextButton newWeaponCloseB = new TextButton("Go to Overworld!", skin);
-				newWeaponCloseB.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						newWeaponDialg.hide();
-						EncounterScreen.encounterMusic.stop();
-						((Game) Gdx.app.getApplicationListener()).
-								setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
-					}
-				});
-				newWeaponDialg.button(newWeaponCloseB);
-
-				if(getEncounterConfig().enemies.size == 0) {
-					Dialog levlUpDialog = null;
-					levlUpDialog = new Dialog("Level up!", skin);
-					String[] lines = levelChangeReport.toString().split("\n");
-					for (String s : lines) {
-						levlUpDialog.text(s);
-					}
-					final TextButton closeLvlUpDialog = new TextButton("close", skin);
-					final Dialog finalLevelUpDialog = levlUpDialog;
-					closeLvlUpDialog.addListener(new ClickListener() {
-						@Override
-						public void clicked(InputEvent event, float x, float y) {
-							finalLevelUpDialog.hide();
-							int level = getLevel();
-							Weapon newWeapon = null;
-							switch (level) {
-								case 3:
-								case 4:
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Heal);
-										getSpells().add(newWeapon);
-									}
-									break;
-								case 5:
-								case 6:
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Heal);
-										getSpells().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Gun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
-										getWeapons().add(newWeapon);
-									}
-									break;
-								case 7:
-								case 8:
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Heal);
-										getSpells().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Gun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
-										getWeapons().add(newWeapon);
-									}
-									break;
-								case 9:
-								case 10:
-								case 11:
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Heal);
-										getSpells().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Gun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
-										getWeapons().add(newWeapon);
-									}
-									break;
-								case 12:
-								case 13:
-								case 14:
-								case 15:
-								case 16:
-								case 17:
-								case 18:
-								case 19:
-								case 20:
-								case 21:
-								case 22:
-								case 23:
-								case 24:
-								case 25:
-								case 26:
-								case 27:
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Heal);
-										getSpells().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
-										newWeapon = new Weapon(Weapon.WeaponType.Gun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
-										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
-										getWeapons().add(newWeapon);
-									}
-									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Fireball),true)) {
-										newWeapon = new Weapon(Weapon.WeaponType.Fireball);
-										getSpells().add(newWeapon);
-									}
-									break;
-							}
-							if(newWeapon != null) {
-								if(!newWeapon.isSpell()) {
-									newWeaponDialg.add(new Image(newWeapon.getIcon()));
-									newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
-								} else {
-									newWeaponDialg.text("You got a " + newWeapon.getName() + " Spell!");
-								}
-								newWeaponDialg.show(stage);
-							} else {
-								EncounterScreen.encounterMusic.stop();
-								((Game) Gdx.app.getApplicationListener()).
-										setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
-							}
-						}
-					});
-
-
-					Dialog wonDialog = null;
-					wonDialog = new Dialog("You won!", skin);
-					wonDialog.text(String.format("You got %d exp!", gottenExp));
-					gottenExp = 0;
-					TextButton closeB = new TextButton("close", skin);
-					final Dialog finalWonDialog = wonDialog;
-					closeB.addListener(new ClickListener() {
-						@Override
-						public void clicked(InputEvent event, float x, float y) {
-							finalWonDialog.hide();
-							if(oldLvl != getLevel()) {
-								finalLevelUpDialog.button(closeLvlUpDialog);
-								finalLevelUpDialog.show(stage);
-							} else {
-								EncounterScreen.encounterMusic.stop();
-								((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
-							}
-						}
-					});
-					wonDialog.button(closeB);
-					wonDialog.show(stage);
-					oldExp = getExp();
-				}
 			}
 		});
+	}
+
+	private void encounterWon() {
+		final Dialog newWeaponDialg = new Dialog("You got a new Weapon!", skin);
+		TextButton newWeaponCloseB = new TextButton("Go to Overworld!", skin);
+		newWeaponCloseB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				newWeaponDialg.hide();
+				EncounterScreen.encounterMusic.stop();
+				((Game) Gdx.app.getApplicationListener()).
+						setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+			}
+		});
+		newWeaponDialg.button(newWeaponCloseB);
+
+		Dialog levlUpDialog = null;
+		levlUpDialog = new Dialog("Level up!", skin);
+		String[] lines = levelChangeReport.toString().split("\n");
+		for (String s : lines) {
+			levlUpDialog.text(s);
+		}
+		final TextButton closeLvlUpDialog = new TextButton("close", skin);
+		final Dialog finalLevelUpDialog = levlUpDialog;
+		closeLvlUpDialog.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				finalLevelUpDialog.hide();
+				int level = getLevel();
+				Weapon newWeapon = addWeapon(level);
+
+				if (newWeapon != null) {
+					if (!newWeapon.isSpell()) {
+						newWeaponDialg.add(new Image(newWeapon.getIcon()));
+						newWeaponDialg.text("You got a " + newWeapon.getName() + "!");
+					} else {
+						newWeaponDialg.text("You got a " + newWeapon.getName() + " Spell!");
+					}
+					newWeaponDialg.show(stage);
+				} else {
+					EncounterScreen.encounterMusic.stop();
+					((Game) Gdx.app.getApplicationListener()).
+							setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+				}
+				}
+			});
+
+
+			Dialog wonDialog = null;
+			wonDialog = new Dialog("You won!", skin);
+			wonDialog.text(String.format("You got %d exp!", gottenExp));
+			gottenExp = 0;
+			TextButton closeB = new TextButton("close", skin);
+			final Dialog finalWonDialog = wonDialog;
+			closeB.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					finalWonDialog.hide();
+					if (oldLvl != getLevel()) {
+						finalLevelUpDialog.button(closeLvlUpDialog);
+						finalLevelUpDialog.show(stage);
+					} else {
+						EncounterScreen.encounterMusic.stop();
+						((Game) Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
+					}
+				}
+			});
+			wonDialog.button(closeB);
+			wonDialog.show(stage);
+			oldExp = getExp();
+	}
+
+	private Weapon addWeapon(int level) {
+		Weapon newWeapon = null;
+		switch (level) {
+			case 3:
+			case 4:
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Heal);
+					getSpells().add(newWeapon);
+				}
+				break;
+			case 5:
+			case 6:
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Heal);
+					getSpells().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Gun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
+					getWeapons().add(newWeapon);
+				}
+				break;
+			case 7:
+			case 8:
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Heal);
+					getSpells().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Gun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
+					getWeapons().add(newWeapon);
+				}
+				break;
+			case 9:
+			case 10:
+			case 11:
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Heal);
+					getSpells().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Gun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
+					getWeapons().add(newWeapon);
+				}
+				break;
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+			case 23:
+			case 24:
+			case 25:
+			case 26:
+			case 27:
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Heal);
+					getSpells().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Gun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
+					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
+					getWeapons().add(newWeapon);
+				}
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Fireball), true)) {
+					newWeapon = new Weapon(Weapon.WeaponType.Fireball);
+					getSpells().add(newWeapon);
+				}
+				break;
+		}
+		return newWeapon;
 	}
 
 	@Override
@@ -574,6 +582,10 @@ public class Player extends Figure{
 	@Override
 	public void render(float delta, SpriteBatch batch) {
 		super.render(delta, batch);
+		if(getEncounterConfig().enemies.size == 0 && !showEncounterWonDialog) {
+			showEncounterWonDialog = true;
+			encounterWon();
+		}
 	}
 
 	@Override
