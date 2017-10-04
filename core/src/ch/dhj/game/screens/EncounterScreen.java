@@ -88,11 +88,12 @@ public class EncounterScreen implements Screen {
 		for(Enemy e : config.enemies)
 			parentObject.add(e);
 		parentObject.init();
+		encounterMusic.play();
 	}
 
 
 	@Override
-	public void show() {if(!encounterMusic.isPlaying()){encounterMusic.play();}}
+	public void show() {}
 
 	@Override
 	public void render(float delta) {

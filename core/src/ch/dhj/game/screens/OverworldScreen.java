@@ -168,14 +168,13 @@ public class OverworldScreen implements Screen {
 		frontFieldButton = new TextButton("Go to next Field", skin);
 		lastFieldButton = new TextButton("Go to last Field", skin);
 		saveAndQuit = new TextButton("Exit", skin);
-	}
+
+        overworldMusic.play();
+    }
 
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-        if(!overworldMusic.isPlaying()) {
-            overworldMusic.play();
-        }
 
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);

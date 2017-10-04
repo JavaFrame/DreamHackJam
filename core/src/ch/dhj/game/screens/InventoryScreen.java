@@ -101,6 +101,8 @@ public class InventoryScreen  implements Screen {
         camera.update();
 
         stage = new Stage(viewport, this.batch);
+
+        invScreenMusic.play();
     }
 
     @Override
@@ -108,9 +110,6 @@ public class InventoryScreen  implements Screen {
         //Stage should controll input:
         Gdx.input.setInputProcessor(stage);
 
-        if(!invScreenMusic.isPlaying()) {
-            invScreenMusic.play();
-        }
 
         //Create Table
         Table resumeButtonTable = new Table();
@@ -127,9 +126,7 @@ public class InventoryScreen  implements Screen {
         resumeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                while(invScreenMusic.isPlaying()) {
-                    invScreenMusic.stop();
-                }
+                invScreenMusic.stop();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(assetManager, batch, player, enemyManager, true));
             }
         });
