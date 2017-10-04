@@ -358,11 +358,9 @@ public class Player extends Figure{
 		doButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(selectedWeapon.isSpell()) { //weapon is a spell
-					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
-				} else if(selectedWeapon.isMelee()) { //weapon is a mele attack
+				if(selectedWeapon.isMelee()) { //weapon is a mele attack
 					addActionToTurn(new MeleeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
-				} else { //weapon is a range weapon
+				} else { //weapon is a range weapon or Spell
 					addActionToTurn(new RangeWeaponAction(selectedWeapon, Player.this, new Figure[]{enemies.getSelected()}), selectedWeapon.getActionCost());
 				}
 				chooseSpellTable.setVisible(false);
@@ -379,10 +377,6 @@ public class Player extends Figure{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Weapon w = weapons.getSelected();
-				if(w.isMultipleTargets()) {
-					addActionToTurn(new MeleeWeaponAction(getMeleeWeapon(), Player.this, getEncounterConfig().enemies.toArray()), w.getActionCost());
-					return;
-				}
 				selectedWeapon = w;
 				chooseEnemyTable.setVisible(!chooseEnemyTable.isVisible());
 				//enemies.setItems(getEncounterConfig().enemies);

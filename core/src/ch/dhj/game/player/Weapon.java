@@ -103,7 +103,7 @@ public class Weapon {
 
 	public static enum WeaponType {
 		Gun("Gun", 1, 3, false, false, false, null),
-		Shotgun("Shotgun", 2, 4, true, false, false, null),
+		Shotgun("Shotgun", 2, 4, false, false, false, null),
 		Stab("Stab", 1, 2, false, true, false, null),
 		Heal("Heal", 1, -3, false, false, true, null),
 		Fireball("Fireball", 1, 5, false, false, true, null),
