@@ -60,7 +60,7 @@ public class Enemy extends Figure{
 				ap += getMeleeWeapon().getActionCost();
 			} else if(getRangeWeapon() != null) {
 				actions.add(new RangeWeaponAction(getRangeWeapon(), this, new Figure[]{getEncounterScreen().getPlayer()}));
-				ap += getMeleeWeapon().getActionCost();
+				ap += getRangeWeapon().getActionCost();
 			}
 		}
 		return actions;
