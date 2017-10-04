@@ -140,7 +140,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_death")));
 		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_damaged")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>((float) 1/3, atlas.findRegions("johhny_gun")));
-		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_shotgun")));
+		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>((float)1/3f, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_stab")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Heal, new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_heal")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Fireball, new Animation<TextureRegion>((float)1/5, atlas.findRegions("fireball")));
@@ -152,11 +152,11 @@ public class LoadingScreen extends ScreenAdapter {
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setAnimation(playerSet.encounterIdleAnimation);
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
+		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun).setIcon((Texture) assetManager.get("textures/shotguunGun.png")));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));*/
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
@@ -164,8 +164,6 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
-		player.getSpells().add(new Weapon(Weapon.WeaponType.Heal));
-		player.getSpells().add(new Weapon(Weapon.WeaponType.Fireball));
 	}
 	@Override
 	public void show() {
