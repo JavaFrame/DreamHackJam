@@ -1,14 +1,11 @@
 package ch.dhj.game.encounter.actions;
 
 import ch.dhj.game.encounter.Action;
-import ch.dhj.game.encounter.obj.objects.Enemy;
 import ch.dhj.game.encounter.obj.objects.Figure;
-import ch.dhj.game.player.ProjectileBluePrint;
 import ch.dhj.game.player.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -66,16 +63,13 @@ public class RangeWeaponAction implements Action {
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
-			//Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
-		/*if(animation == null) {
-			System.err.println("Animation of weapon " + weapon + " returned null!");
-			return true;
-		}*/
-		//timeElepsed += Gdx.graphics.getDeltaTime();
 		shootTimeElepsed += Gdx.graphics.getDeltaTime();
-		//you.setTextureRegion(animation.getKeyFrame(timeElepsed));
 		boolean isFinished = you.isAnnimationFinished();
 
+		if(isFinished) {
+			enemy.applyDamage(weapon.getDamge(), you);
+			you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
+		}
 		/*if(weapon.hashProjectile()) {
 			if(shootTimeElepsed >= weapon.getProjectileBluePrint().getFireTime() && shootedCount == 0) {
 				shootProjecitle(you.getPosition(), enemy.getPosition());
@@ -86,10 +80,10 @@ public class RangeWeaponAction implements Action {
 			}
 		} else {
 			if(isFinished) {
-				enemy.applayDamage(weapon.getDamge(), you);
+				enemy.applyDamage(weapon.getDamge(), you);
 				you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
 			}
-		}*/
+		}
 
 		for(Projectile p : projecitlPos) {
 			p.currentPos.set(p.currentPos.interpolate(p.targetPos, p.alpha, Interpolation.linear));
@@ -97,7 +91,7 @@ public class RangeWeaponAction implements Action {
 			if(p.currentPos.epsilonEquals(p.targetPos, 1)) {
 
 			}
-		}
+		}*/
 
 		return isFinished;
 	}

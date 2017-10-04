@@ -88,7 +88,7 @@ public class MeleeWeaponAction implements Action {
 					if(enemy == you)
 					{
 						you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
-						you.applayDamage(weapon.getDamge(), you);
+						you.applyDamage(weapon.getDamge(), you);
 						return true;
 					}
 					state = ActionState.GO_FROM;
@@ -99,7 +99,7 @@ public class MeleeWeaponAction implements Action {
 					oldPosition.set(oldPosition.x-(you.getSize().x/2 + you.getSize().x/4), oldPosition.y);
 					you.getPosition().set(you.getPosition().x-(you.getSize().x/2 + you.getSize().x/4), you.getPosition().y);
 					you.setAnimation(you.getAnimationSet().encounterWalkAnimation);
-					enemy.applayDamage(weapon.getDamge(), you);
+					enemy.applyDamage(weapon.getDamge(), you);
 				}
 
 				break;

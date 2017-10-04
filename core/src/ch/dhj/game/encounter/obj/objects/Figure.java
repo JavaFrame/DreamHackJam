@@ -182,7 +182,7 @@ public class Figure extends GObject {
 		this.meleeWeapon = meleeWeapon;
 	}
 
-	public void applayDamage(int damage, Figure you) {
+	public void applyDamage(int damage, Figure you) {
 		setLifes(getLifes()-damage);
 		lifesL.setText(getLifes() + "/" + getMaxLifes() + " health");
 		if(getLifes() <= 0) {
