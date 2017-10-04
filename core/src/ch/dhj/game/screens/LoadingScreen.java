@@ -100,7 +100,7 @@ public class LoadingScreen extends ScreenAdapter {
 		alienSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_idle")));
 		alienSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_idle")));
 		alienSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_death")));
-		alienSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_damaged")));
+		alienSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_damged")));
 		alienSet.getWeaponMap().put(Weapon.WeaponType.AlienAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_shoot")));
 		alienSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		alienSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -115,7 +115,7 @@ public class LoadingScreen extends ScreenAdapter {
 		trumpSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_idle")));
 		trumpSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_idle")));
 		trumpSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_death")));
-		trumpSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_damaged")));
+		trumpSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_damged")));
 		trumpSet.getWeaponMap().put(Weapon.WeaponType.TrumpAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_twitter")));
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
 		trumpEnemy.setMaxLifes(10);
@@ -152,11 +152,11 @@ public class LoadingScreen extends ScreenAdapter {
 		player = new Player(null , new Vector2(1200, 100), new Vector2(500, 500), "Johnny", playerSet);
 		player.setAnimation(playerSet.encounterIdleAnimation);
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
-		/*player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Gun).setIcon((Texture) assetManager.get("textures/Gun.png")));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Heal));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Fireball));
 		player.getWeapons().add(new Weapon(Weapon.WeaponType.Shotgun).setIcon((Texture) assetManager.get("textures/shotguunGun.png")));
-		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));*/
+		player.getWeapons().add(new Weapon(Weapon.WeaponType.Flamethrower).setIcon((Texture) assetManager.get("textures/Flamethrower_gun_mit_orange.png")));
 		player.setEnemyManager(enemyManager);
 		player.setMaxLifes(10);
 		player.setLifes(10);
@@ -164,6 +164,8 @@ public class LoadingScreen extends ScreenAdapter {
 		player.setLevel(1);
 		player.setTotalExpToNextLevel(10);
 		player.setMeleeWeapon(new Weapon(Weapon.WeaponType.Stab).setIcon((Texture) assetManager.get("textures/Stabbything.png")));
+		player.getSpells().add(new Weapon(Weapon.WeaponType.Heal));
+        player.getSpells().add(new Weapon(Weapon.WeaponType.Fireball));
 	}
 	@Override
 	public void show() {
