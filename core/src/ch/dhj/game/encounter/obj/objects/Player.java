@@ -145,18 +145,18 @@ public class Player extends Figure{
 							switch (level) {
 								case 3:
 								case 4:
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
 									break;
 								case 5:
 								case 6:
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Gun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 										getWeapons().add(newWeapon);
@@ -164,16 +164,16 @@ public class Player extends Figure{
 									break;
 								case 7:
 								case 8:
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Gun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 										getWeapons().add(newWeapon);
@@ -182,21 +182,21 @@ public class Player extends Figure{
 								case 9:
 								case 10:
 								case 11:
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Gun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 										getWeapons().add(newWeapon);
@@ -218,26 +218,26 @@ public class Player extends Figure{
 								case 25:
 								case 26:
 								case 27:
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Heal),true)){
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Heal);
 										getSpells().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun),true)){
 										newWeapon = new Weapon(Weapon.WeaponType.Gun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
+									if(!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
 										newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 										getWeapons().add(newWeapon);
 									}
-									if(Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Fireball),true)) {
+									if(!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Fireball),true)) {
 										newWeapon = new Weapon(Weapon.WeaponType.Fireball);
 										getSpells().add(newWeapon);
 									}
