@@ -411,6 +411,7 @@ public class OverworldScreen implements Screen {
                 }
                 if (player.getObjectPosIndex() == 11) {
                     Enemy e = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Zombie King"), player.getLevel() * 2);
+                    e.setSize(new Vector2(500,500));
                     e.getPosition().set(200, 200);
                     overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
