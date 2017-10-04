@@ -37,8 +37,6 @@ public class Player extends Figure{
 	public static final float ACTIONS_FACTOR = 2f;
 	public static final int MAX_ACTIONS = 10;
 
-	private StringBuffer levelChangeReport = new StringBuffer();
-
 	private Skin skin;
 	private TextureAtlas atlasButtons;
 	private Stage stage;
@@ -58,8 +56,10 @@ public class Player extends Figure{
 
 	private boolean showEncounterWonDialog = false;
 
-	private int oldExp;
-	private int oldLvl;
+	private int newLevel;
+	private int newMaxLife;
+	private int newMaxActions;
+	private Array<Weapon> spells;
 	private int gottenExp;
 
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
@@ -76,8 +76,6 @@ public class Player extends Figure{
 	public void init() {
 		super.init();
 		constructUi();
-		oldLvl = getLevel();
-		oldExp = getExp();
 
 		getTurnManager().addRoundDoneListener(new TurnManager.TurnManagerListener() {
 			@Override
@@ -135,7 +133,8 @@ public class Player extends Figure{
 
 		Dialog levlUpDialog = null;
 		levlUpDialog = new Dialog("Level up!", skin);
-		levlUpDialog.getContentTable().add(new Label(levelChangeReport, skin));
+		String report = applyNextLevel();
+		levlUpDialog.getContentTable().add(new Label(report, skin));
 
 		final TextButton closeLvlUpDialog = new TextButton("close", skin);
 		final Dialog finalLevelUpDialog = levlUpDialog;
@@ -173,7 +172,7 @@ public class Player extends Figure{
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					finalWonDialog.hide();
-					if (oldLvl != getLevel()) {
+					if (newLevel != getLevel()) {
 						finalLevelUpDialog.button(closeLvlUpDialog);
 						finalLevelUpDialog.show(stage);
 					} else {
@@ -184,7 +183,6 @@ public class Player extends Figure{
 			});
 			wonDialog.button(closeB);
 			wonDialog.show(stage);
-			oldExp = getExp();
 	}
 
 	private Weapon addWeapon(int level) {
@@ -192,18 +190,18 @@ public class Player extends Figure{
 		switch (level) {
 			case 3:
 			case 4:
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Heal);
 					getSpells().add(newWeapon);
 				}
 				break;
 			case 5:
 			case 6:
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Heal);
 					getSpells().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Gun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 					getWeapons().add(newWeapon);
@@ -211,16 +209,16 @@ public class Player extends Figure{
 				break;
 			case 7:
 			case 8:
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Heal);
 					getSpells().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Gun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 					getWeapons().add(newWeapon);
@@ -229,21 +227,21 @@ public class Player extends Figure{
 			case 9:
 			case 10:
 			case 11:
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Heal);
 					getSpells().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Gun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 					getWeapons().add(newWeapon);
@@ -265,26 +263,26 @@ public class Player extends Figure{
 			case 25:
 			case 26:
 			case 27:
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Heal), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Heal);
 					getSpells().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Gun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Gun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Gun.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Flamethrower), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Flamethrower);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/Flamethrower_gun_mit_orange.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), true)) {
+				if (!Player.this.getWeapons().contains(new Weapon(Weapon.WeaponType.Shotgun), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Shotgun);
 					newWeapon.setIcon(new Texture(Gdx.files.internal("textures/shotguunGun.png")));
 					getWeapons().add(newWeapon);
 				}
-				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Fireball), true)) {
+				if (!Player.this.getSpells().contains(new Weapon(Weapon.WeaponType.Fireball), false)) {
 					newWeapon = new Weapon(Weapon.WeaponType.Fireball);
 					getSpells().add(newWeapon);
 				}
@@ -554,22 +552,21 @@ public class Player extends Figure{
 		gottenExp += exp;
 		setExp(getExp() + getTotalExpToNextLevel());
 		if(getExp() >= getTotalExpToNextLevel()) {
-			levelChangeReport = new StringBuffer();
 			setExp(0);
 			setTotalExpToNextLevel((int) (getTotalExpToNextLevel() * EXP_FACTOR));
-			setLevel(getLevel() + 1);
-			levelChangeReport.append(String.format("%d lvl -> %d lvl\n", getLevel()-1, getLevel()));
+			//setLevel(getLevel() + 1);
+			newLevel = getLevel()+1;
+			//levelChangeReport.append(String.format("%d lvl -> %d lvl\n", getLevel()-1, getLevel()));
 
-			int oldMaxLife = getMaxLifes();
-			setMaxLifes((int) (getMaxLifes() * LIFE_FACTOR));
-			setLifes(getMaxLifes());
-			levelChangeReport.append(String.format("%d hp -> %d hp\n", oldMaxLife, getMaxLifes()));
+			newMaxLife = (int) (getMaxLifes() * LIFE_FACTOR);
+			//setLifes(getMaxLifes());
+			//levelChangeReport.append(String.format("%d hp -> %d hp\n", oldMaxLife, getMaxLifes()));
 
-			int oldActionCount = getMaxActionCount();
-			setMaxActionCount((int) (getMaxActionCount() * ACTIONS_FACTOR));
-			if(getMaxActionCount() > MAX_ACTIONS)
-				setMaxActionCount(MAX_ACTIONS);
-			levelChangeReport.append(String.format("%d ap -> %d ap\n", oldActionCount, getMaxActionCount()));
+			//int oldActionCount = getMaxActionCount();
+			newMaxActions = (int) (getMaxActionCount() * ACTIONS_FACTOR);
+			if(newMaxActions > MAX_ACTIONS)
+				newMaxActions = MAX_ACTIONS;
+			//levelChangeReport.append(String.format("%d ap -> %d ap\n", oldActionCount, getMaxActionCount()));
 		}
 	}
 
@@ -620,5 +617,19 @@ public class Player extends Figure{
 		showEncounterWonDialog = false;
 		getPosition().set( 1200, 100);
 		//setLifes(getMaxLifes());
+	}
+
+	public String applyNextLevel() {
+		StringBuffer buf = new StringBuffer();
+
+		buf.append(String.format("%d lvl -> %d lvl\n", getLevel(), newLevel));
+		setLevel(newLevel);
+
+		buf.append(String.format("%d hp -> %d hp\n", getMaxLifes(), newMaxLife));
+		setMaxLifes(newMaxLife);
+		setLifes(getMaxLifes());
+
+		buf.append(String.format("%d ap -> %d ap\n", getMaxActionCount(), newMaxActions));
+		return "";
 	}
 }
