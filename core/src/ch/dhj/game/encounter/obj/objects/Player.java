@@ -34,7 +34,6 @@ import java.util.Random;
 public class Player extends Figure{
 	public static final float EXP_FACTOR = 1.5f;
 	public static final float LIFE_FACTOR = 1.5f;
-	public static final float ACTIONS_FACTOR = 2f;
 	public static final int MAX_ACTIONS = 10;
 
 	private Skin skin;
@@ -563,7 +562,7 @@ public class Player extends Figure{
 			//levelChangeReport.append(String.format("%d hp -> %d hp\n", oldMaxLife, getMaxLifes()));
 
 			//int oldActionCount = getMaxActionCount();
-			newMaxActions = (int) (getMaxActionCount() * ACTIONS_FACTOR);
+			newMaxActions = getMaxActionCount() + 1;
 			if(newMaxActions > MAX_ACTIONS)
 				newMaxActions = MAX_ACTIONS;
 			//levelChangeReport.append(String.format("%d ap -> %d ap\n", oldActionCount, getMaxActionCount()));
