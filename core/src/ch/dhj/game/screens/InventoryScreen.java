@@ -373,11 +373,9 @@ public class InventoryScreen  implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(w != null) {
                     if (w.isMelee()) {
-                        player.setRangeWeapon(player.getRangeWeapon());
                         player.setMeleeWeapon(new Weapon(w.getType()).setIcon(w.getIcon()));
                         hide();
                     } else {
-                        player.setMeleeWeapon(player.getMeleeWeapon());
                         player.setRangeWeapon(new Weapon(w.getType()).setIcon(w.getIcon()));
                         hide();
                     }

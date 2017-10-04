@@ -404,15 +404,16 @@ public class Player extends Figure{
 			attackB.setTouchable(Touchable.disabled);
 			attackB.setText(attackB.getText() + " (unavailbe)");
 		}
+		final Array<Weapon> actionWeapons = new Array<Weapon>();
 		attackB.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(getMeleeWeapon() != null)
-					weapons.setItems(getMeleeWeapon());
+				    actionWeapons.add(getMeleeWeapon());
 				if(getRangeWeapon() != null)
-					weapons.setItems(getRangeWeapon());
+                    actionWeapons.add(getRangeWeapon());
+				weapons.setItems(actionWeapons);
 				chooseSpellTable.setVisible(true);
-
 			}
 		});
 		TextButton spellB = new TextButton("Spell", skin);
