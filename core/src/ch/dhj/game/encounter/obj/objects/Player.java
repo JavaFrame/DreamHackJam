@@ -452,7 +452,7 @@ public class Player extends Figure{
 				if(level > getLevel()) {
 					chances = 0.4f;
 				} else if(level == getLevel()) {
-					chances = 0.3f;
+					chances = 0.2f;
 				} else if(level < getLevel()) {
 					chances = 0.2f;
 				}
@@ -470,7 +470,7 @@ public class Player extends Figure{
 							((Game)Gdx.app.getApplicationListener()).setScreen(new OverworldScreen(getEncounterScreen().getAssetManager(), getEncounterScreen().getBatch(), Player.this, enemyManager, false));
 						}
 					});
-					dialog.button("close", closeB);
+					dialog.button(closeB);
 				} else {
 					dialog = new Dialog("Running failed!", skin);
 					dialog.text("You couldn't run away! \nYour turn ends!");

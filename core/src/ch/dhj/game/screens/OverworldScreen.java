@@ -424,7 +424,6 @@ public class OverworldScreen implements Screen {
                             e}), assetManager, batch));
                 } else {
                     int enemyCount = RANDOM.nextInt(3)+1;
-                    enemyCount = 3;
                     Array<EnemyTypes> possibleEnemies = new Array<>();
                     possibleEnemies.add(EnemyTypes.Zombie);
                     if(player.getObjectPosIndex() >= 4) {
@@ -435,7 +434,6 @@ public class OverworldScreen implements Screen {
 					do {
                     	enemies.clear();
 						for (int i = 0; i < enemyCount; i++) {
-							//String enemyName = EnemyTypes.values()[RANDOM.nextInt(SIZE)].name();
 							String enemyName = possibleEnemies.get(RANDOM.nextInt(possibleEnemies.size)).name();
 							enemies.add(enemyManager.modifyEnemy(enemyManager.getEnemyByName(enemyName), player.getLevel()));
 						}
@@ -446,7 +444,7 @@ public class OverworldScreen implements Screen {
 								break;
 							}
 						}
-					} while(/*!ableToWin(enemies)*/false);
+					} while(!ableToWin(enemies));
 
 					int pos = 400;
 					boolean up = false;
