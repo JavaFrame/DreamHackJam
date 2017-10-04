@@ -36,62 +36,40 @@ public class RangeWeaponAction implements Action {
 
 	@Override
 	public void init() {
-
 	}
 
 	@Override
 	public boolean action() {
-		if(you.getLifes() <= 0) return true;
-		if(init) {
-			Animation<TextureRegion> animation = weapon.getAnimation(you.getAnimationSet());
-			you.setAnimation(animation);
+		if(you.isDead()) return true;
+		Figure e = enemies[index];
+		if(init & (e.isDead() || you.isDead())) {
+			alpha = 0;
+			timeElepsed = 0;
+			index++;
+			init = true;
+		}
+		if(init && !(e.isDead() || you.isDead())) {
+			you.setAnimation(weapon.getAnimation(you.getAnimationSet()));
 			init = false;
 		}
 
-		Figure e = enemies[index];
-		if(doAnimation(you, e) || !e.isDead() || you.isDead()) {
+		if(doAnimation(you, e)) {
 			alpha = 0;
 			timeElepsed = 0;
 			index++;
-		} else if(e.isDead()) {
-			index++;
-			timeElepsed = 0;
-			alpha = 0;
+			init = true;
 		}
 
 		return index >= enemies.length;
 	}
 
 	private boolean doAnimation(Figure you, Figure enemy) {
-		shootTimeElepsed += Gdx.graphics.getDeltaTime();
 		boolean isFinished = you.isAnnimationFinished();
 
 		if(isFinished) {
 			enemy.applyDamage(weapon.getDamge(), you);
 			you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
 		}
-		/*if(weapon.hashProjectile()) {
-			if(shootTimeElepsed >= weapon.getProjectileBluePrint().getFireTime() && shootedCount == 0) {
-				shootProjecitle(you.getPosition(), enemy.getPosition());
-				shootTimeElepsed = 0;
-			} else if(shootTimeElepsed >= weapon.getProjectileBluePrint().getRepeatedFireTime() && weapon.getProjectileBluePrint().getFireCount() < shootedCount){
-				shootProjecitle(you.getPosition(), enemy.getPosition());
-				shootTimeElepsed = 0;
-			}
-		} else {
-			if(isFinished) {
-				enemy.applyDamage(weapon.getDamge(), you);
-				you.setAnimation(you.getAnimationSet().encounterIdleAnimation);
-			}
-		}
-
-		for(Projectile p : projecitlPos) {
-			p.currentPos.set(p.currentPos.interpolate(p.targetPos, p.alpha, Interpolation.linear));
-			alpha += weapon.getProjectileBluePrint().getVelocity() * Gdx.graphics.getDeltaTime();
-			if(p.currentPos.epsilonEquals(p.targetPos, 1)) {
-
-			}
-		}*/
 
 		return isFinished;
 	}

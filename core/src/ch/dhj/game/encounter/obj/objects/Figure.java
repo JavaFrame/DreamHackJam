@@ -194,6 +194,9 @@ public class Figure extends GObject {
 				}
 			}
 		}
+		if(getLifes() > getMaxLifes()) {
+			setLifes(getMaxLifes());
+		}
 	}
 
 	@Override
