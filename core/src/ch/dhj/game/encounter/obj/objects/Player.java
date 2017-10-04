@@ -629,6 +629,7 @@ public class Player extends Figure{
 		setLifes(getMaxLifes());
 
 		buf.append(String.format("%d ap -> %d ap\n", getMaxActionCount(), newMaxActions));
+		setMaxActionCount(newMaxActions);
 		return buf.toString();
 	}
 }
