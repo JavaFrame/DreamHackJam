@@ -185,6 +185,8 @@ public class Figure extends GObject {
 	public void applyDamage(int damage, Figure you) {
 		setLifes(getLifes()-damage);
 		lifesL.setText(getLifes() + "/" + getMaxLifes() + " health");
+		if(damage > 0)
+			setAnimation(getAnimationSet().encounterDamagedAnimation);
 		if(getLifes() <= 0) {
 			setAnimation(getAnimationSet().encounterDieAnimation);
 			if(you instanceof Player) {
