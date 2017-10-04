@@ -10,8 +10,4 @@ public class AlienEnemy extends Enemy {
         super(position, scale, name, animationSet,minPlayerLevel, 10);
     }
 
-    @Override
-    public Array<Action> getActions() {
-        return new Array<Action>();
-    }
 }

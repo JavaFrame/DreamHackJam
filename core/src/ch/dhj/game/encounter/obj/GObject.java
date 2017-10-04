@@ -53,6 +53,10 @@ public abstract class GObject {
 			stateTime += delta;
 			if(stateTime == 0)
 				stateTime = 0.1f;
+			if(getAnimation().getKeyFrames().length == 0) {
+				System.err.println("Animation of " + toString() + " has no keyframes!");
+				return;
+			}
 			batch.draw(getAnimation().getKeyFrame(stateTime), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		}
 	}

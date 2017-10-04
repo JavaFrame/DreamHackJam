@@ -133,8 +133,6 @@ public class Player extends Figure{
 
 		Dialog levlUpDialog = null;
 		levlUpDialog = new Dialog("Level up!", skin);
-		String report = applyNextLevel();
-		levlUpDialog.getContentTable().add(new Label(report, skin));
 
 		final TextButton closeLvlUpDialog = new TextButton("close", skin);
 		final Dialog finalLevelUpDialog = levlUpDialog;
@@ -173,6 +171,8 @@ public class Player extends Figure{
 				public void clicked(InputEvent event, float x, float y) {
 					finalWonDialog.hide();
 					if (newLevel != getLevel()) {
+						String report = applyNextLevel();
+						finalLevelUpDialog.getContentTable().add(new Label(report, skin));
 						finalLevelUpDialog.button(closeLvlUpDialog);
 						finalLevelUpDialog.show(stage);
 					} else {
@@ -630,6 +630,6 @@ public class Player extends Figure{
 		setLifes(getMaxLifes());
 
 		buf.append(String.format("%d ap -> %d ap\n", getMaxActionCount(), newMaxActions));
-		return "";
+		return buf.toString();
 	}
 }
