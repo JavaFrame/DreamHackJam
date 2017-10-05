@@ -74,8 +74,9 @@ public class MeleeWeaponAction implements Action {
 					targetPos = new Vector2(enemy.getPosition().x +1 + (enemy.getSize().x/2), enemy.getPosition().y);
 
 				you.getPosition().set(you.getPosition().interpolate(targetPos, alpha, Interpolation.fade));
-				alpha += 0.1 * Gdx.graphics.getDeltaTime();
-				timeElepsed += Gdx.graphics.getDeltaTime();
+				//alpha += 0.1 * Gdx.graphics.getDeltaTime();
+				alpha += 0.1 * you.getEncounterConfig().delta;
+				timeElepsed += you.getEncounterConfig().delta;
 				if(you.getPosition().equals(targetPos)) {
 					state = ActionState.ATTACK;
 					timeElepsed = 0;
@@ -105,8 +106,8 @@ public class MeleeWeaponAction implements Action {
 				break;
 			case GO_FROM:
 				you.getPosition().set(you.getPosition().interpolate(oldPosition, alpha, Interpolation.fade));
-				alpha += 0.1 * Gdx.graphics.getDeltaTime();
-				timeElepsed += Gdx.graphics.getDeltaTime();
+				alpha += 0.1 * you.getEncounterConfig().delta;
+				timeElepsed += you.getEncounterConfig().delta;
 				if(you.getPosition().equals(oldPosition)) {
 					you.setSize(new Vector2(-you.getSize().x, you.getSize().y));
 					you.getPosition().set(you.getPosition().x-(you.getSize().x/2 + you.getSize().x/4), you.getPosition().y);

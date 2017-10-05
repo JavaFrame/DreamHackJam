@@ -58,8 +58,6 @@ public abstract class GObject {
 			batch.draw(getTextureRegion(), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		} else if(getAnimation() != null) {
 			stateTime += delta;
-			if(stateTime == 0)
-				stateTime = 0.1f;
 			if(getAnimation().getFrameDuration() == 0 || getAnimation().getAnimationDuration()/getAnimation().getFrameDuration() == 0) {
 				System.err.println("Animation of " + toString() + " has no keyframes!");
 				return;
@@ -154,17 +152,18 @@ public abstract class GObject {
 	}
 
 	public void setAnimation(Animation<TextureRegion> animation) {
-		if(!isAnnimationFinished() && animationFinishedListener != null) {
-			animationFinishedListener.animationFinished(this);
-			animationFinishedListener = null;
-		}
-		this.animation = animation;
-		stateTime = 0;
+		setAnimation(animation, null);
 	}
 
 	public void setAnimation(Animation<TextureRegion> animation, AnimationFinishedListener l) {
-		setAnimation(animation);
+		if(!isAnnimationFinished() && animationFinishedListener != null) {
+			AnimationFinishedListener temp = animationFinishedListener;
+			animationFinishedListener = null;
+			temp.animationFinished(this);
+		}
 		animationFinishedListener = l;
+		this.animation = animation;
+		stateTime = 0;
 	}
 
 	public boolean isAnnimationFinished() {

@@ -90,6 +90,7 @@ public class EncounterScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		getConfig().delta = delta * getConfig().deltaFactor;
 		//render stuff
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -148,6 +149,9 @@ public class EncounterScreen implements Screen {
 		public String map;
 		public Array<Enemy> enemies;
 		public boolean disableRun;
+		public float delta = 0;
+		public float deltaFactor = 1;
+
 
 		public EncounterConfig(int id, String background, String map, Array<Enemy> enemies, boolean disableRun) {
 			this.id = id;

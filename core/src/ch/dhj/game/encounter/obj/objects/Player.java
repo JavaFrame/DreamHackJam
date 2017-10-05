@@ -330,6 +330,23 @@ public class Player extends Figure{
 		rootTable = new Table();
 		stage.addActor(rootTable);
 
+		final TextButton fastforwardB = new TextButton(">>>>", skin);
+		fastforwardB.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(getEncounterConfig().deltaFactor == 1) {
+					getEncounterConfig().deltaFactor = 7;
+					fastforwardB.setText(">>");
+				} else {
+					getEncounterConfig().deltaFactor = 1;
+					fastforwardB.setText(">>>>");
+				}
+			}
+		});
+		fastforwardB.setWidth(200);
+		fastforwardB.setHeight(70);
+		stage.addActor(fastforwardB);
+
 		turnActionTable = new Table();
 		turnActionTable.setFillParent(false);
 		rootTable.add(new Container<Table>(turnActionTable)).left();
