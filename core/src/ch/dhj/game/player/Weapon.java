@@ -102,17 +102,17 @@ public class Weapon {
 	}
 
 	public static enum WeaponType {
-		Gun("Gun", 1, 3, false, false, false, null),
-		Shotgun("Shotgun", 2, 4, false, false, false, null),
-		Stab("Stab", 1, 2, false, true, false, null),
-		Heal("Heal", 1, -3, false, false, true, null),
-		Fireball("Fireball", 1, 5, false, false, true, null),
-		Flamethrower("Flamethrower", 2, 5, false, true, false, null),
+		Gun("Gun", 1, 3, false, false, false, null), //range
+		Shotgun("Shotgun", 2, 4, false, false, false, null), //range
+		Stab("Stab", 1, 2, false, true, false, null), //melle
+		Heal("Heal", 1, -3, false, false, true, null), //spell
+		Fireball("Fireball", 1, 5, false, false, true, null), //spell
+		Flamethrower("Flamethrower", 2, 5, false, true, false, null), //melee
 
-		ZombieAttack("Zombie Attack", 1, 1, false, true, false, null),
-		ZombieKingAttack("Zombie King Attack", 3, 3, false, false, false, null),
-		AlienAttack("Alien Attack", 2, 3, false, false, false, null),
-		TrumpAttack("Trump Attack", 3, 5, false, false, false, null);
+		ZombieAttack("Zombie Attack", 1, 1, false, true, false, null), //melee
+		ZombieKingAttack("Zombie King Attack", 3, 3, false, false, false, null), //range
+		AlienAttack("Alien Attack", 2, 3, false, false, false, null), //range
+		TrumpAttack("Trump Attack", 3, 5, false, false, false, null); //range
 
 		private String name;
 		private int actionCost;

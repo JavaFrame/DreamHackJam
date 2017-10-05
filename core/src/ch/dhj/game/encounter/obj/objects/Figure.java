@@ -179,6 +179,8 @@ public class Figure extends GObject {
 	}
 
 	public void setMeleeWeapon(Weapon meleeWeapon) {
+		if(!meleeWeapon.isMelee() || meleeWeapon.isSpell())
+			throw new IllegalArgumentException("Weapon is either a reange weapon or a spell!");
 		this.meleeWeapon = meleeWeapon;
 	}
 
@@ -216,6 +218,8 @@ public class Figure extends GObject {
 	}
 
 	public void setRangeWeapon(Weapon rangeWeapon) {
+		if(rangeWeapon.isMelee())
+			throw new IllegalArgumentException("Weapon is a melee weapon.");
 		this.rangeWeapon = rangeWeapon;
 	}
 }

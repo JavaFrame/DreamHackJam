@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = WorldConfig.VIEWPORT_WIDTH;
 		config.height = WorldConfig.VIEWPORT_HEIGHT;
-		config.fullscreen = true;
+		config.fullscreen = false;
 		config.addIcon("textures/icon_game.png", Files.FileType.Internal);
 		new LwjglApplication(new DreamHackJamGame(), config);
 	}

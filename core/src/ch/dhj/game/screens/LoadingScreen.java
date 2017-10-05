@@ -77,9 +77,11 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_death")));
 		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_damaged")));
 		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_attack")));
+		zombieSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_attack")));
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
 		zombieEnemy.setMaxLifes(5);
-		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
+		//zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
+		zombieEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.Gun));
 		zombieEnemy.setMaxActionCount(1);
 		enemyManager.addEnemy(zombieEnemy);
 
@@ -92,7 +94,7 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet, 5);
 		zombieKingEnemy.setMaxLifes(10);
 		zombieKingEnemy.setLifes(10);
-		zombieKingEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieKingAttack));
+		zombieKingEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.ZombieKingAttack));
 		zombieKingEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(zombieKingEnemy);
 
@@ -107,7 +109,7 @@ public class LoadingScreen extends ScreenAdapter {
 		Enemy alienEnemy = new AlienEnemy(Vector2.Zero, Vector2.Zero, "Alien", alienSet,3);
 		alienEnemy.setMaxLifes(10);
 		alienEnemy.setLifes(10);
-		alienEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.AlienAttack));
+		alienEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.AlienAttack));
 		alienEnemy.setMaxActionCount(2);
 		enemyManager.addEnemy(alienEnemy);
 
