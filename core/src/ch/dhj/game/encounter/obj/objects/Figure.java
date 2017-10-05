@@ -191,6 +191,9 @@ public class Figure extends GObject {
 
 	public void applyDamage(int damage, Figure you) {
 		setLifes(getLifes()-damage);
+		if(getLifes() > getMaxLifes()) {
+			setLifes(getMaxLifes());
+		}
 		lifesL.setText(getLifes() + "/" + getMaxLifes() + " health");
 		if(damage > 0)
 			setAnimation(getAnimationSet().encounterDamagedAnimation, new AnimationFinishedListener() {
@@ -208,9 +211,7 @@ public class Figure extends GObject {
 				}
 			}
 		}
-		if(getLifes() > getMaxLifes()) {
-			setLifes(getMaxLifes());
-		}
+
 	}
 
 	@Override
