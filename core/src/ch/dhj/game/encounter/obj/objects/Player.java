@@ -34,7 +34,7 @@ import java.util.Random;
 public class Player extends Figure{
 	public static final float EXP_FACTOR = 1.5f;
 	public static final float LIFE_FACTOR = 1.5f;
-	public static final int MAX_ACTIONS = 10;
+	public static final int MAX_ACTIONS = 6;
 
 	private Skin skin;
 	private TextureAtlas atlasButtons;

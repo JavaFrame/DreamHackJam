@@ -77,11 +77,9 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_death")));
 		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_damaged")));
 		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_attack")));
-		zombieSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_attack")));
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
 		zombieEnemy.setMaxLifes(5);
-		//zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
-		zombieEnemy.setRangeWeapon(new Weapon(Weapon.WeaponType.Gun));
+		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
 		zombieEnemy.setMaxActionCount(1);
 		enemyManager.addEnemy(zombieEnemy);
 
