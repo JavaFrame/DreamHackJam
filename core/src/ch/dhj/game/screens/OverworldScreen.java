@@ -415,14 +415,14 @@ public class OverworldScreen implements Screen {
                     e.getPosition().set(200, 200);
                     overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
-                            e}), assetManager, batch));
+                            e}, true), assetManager, batch));
                 } else if (player.getObjectPosIndex() == 22) {
                     Enemy e = enemyManager.modifyEnemy(enemyManager.getEnemyByName("Trump"), player.getLevel() * 3);
                     e.setSize(new Vector2(500,500));
                     e.getPosition().set(200, 200);
                     overworldMusic.stop();
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", new Enemy[]{
-                            e}), assetManager, batch));
+                            e}, true), assetManager, batch));
                 } else {
                     int enemyCount = RANDOM.nextInt(3)+1;
                     Array<EnemyTypes> possibleEnemies = new Array<>();
@@ -456,7 +456,7 @@ public class OverworldScreen implements Screen {
 						enemies.get(i).setSize(new Vector2(-500, 500));
 					}
 					overworldMusic.stop();
-					((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies), assetManager, batch));
+					((Game) Gdx.app.getApplicationListener()).setScreen(new EncounterScreen(player, new EncounterScreen.EncounterConfig(0, encounterBackground, "", enemies, false), assetManager, batch));
 
 
                     /*if (player.getObjectPosIndex() >= 4) {

@@ -63,12 +63,10 @@ public class Player extends Figure{
 
 	public Player(Vector2 position, String name, AnimationSet animationSet) {
 		super(position, name, animationSet);
-		objectPosIndex = 1;
 	}
 
 	public Player(Sprite texture, Vector2 position, Vector2 scale, String name, AnimationSet animationSet) {
 		super(texture, position, scale, name, animationSet);
-		objectPosIndex = 1;
 	}
 
 	@Override
@@ -495,7 +493,8 @@ public class Player extends Figure{
 		turnActionTable.row();
 		turnActionTable.add(doNothingB).width(200).height(50);
 		turnActionTable.row();
-		turnActionTable.add(runB).width(200).height(50);
+		if(!getEncounterConfig().disableRun)
+			turnActionTable.add(runB).width(200).height(50);
 
 		rootTable.add(chooseSpellTable).pad(5);
 		rootTable.add(chooseEnemyTable).pad(5);

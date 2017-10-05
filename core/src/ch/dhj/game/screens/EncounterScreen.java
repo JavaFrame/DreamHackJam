@@ -147,17 +147,20 @@ public class EncounterScreen implements Screen {
 		public String background;
 		public String map;
 		public Array<Enemy> enemies;
+		public boolean disableRun;
 
-		public EncounterConfig(int id, String background, String map, Array<Enemy> enemies) {
+		public EncounterConfig(int id, String background, String map, Array<Enemy> enemies, boolean disableRun) {
 			this.id = id;
 			this.background = background;
 			this.map = map;
 			this.enemies = new Array(enemies);
+			this.disableRun = disableRun;
 		}
 
-		public EncounterConfig(int id, String background, String map, Enemy[] enemies) {
-			this(id, background, map, new Array<Enemy>(enemies));
+		public EncounterConfig(int id, String background, String map, Enemy[] enemies, boolean disableRun) {
+			this(id, background, map, new Array<Enemy>(enemies), disableRun);
 		}
+
 	}
 
 	public AssetManager getAssetManager() {
