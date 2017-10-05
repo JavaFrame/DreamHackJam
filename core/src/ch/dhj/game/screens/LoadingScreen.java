@@ -75,8 +75,8 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_attack")));
 		zombieSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_idle")));
 		zombieSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_death")));
-		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_damaged")));
-		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_attack")));
+		zombieSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_damaged")));
+		zombieSet.getWeaponMap().put(Weapon.WeaponType.ZombieAttack, new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_attack")));
 		Enemy zombieEnemy = new ZombieEnemy(new Vector2(100, 100), new Vector2(500, 500), "Zombie", zombieSet,1);
 		zombieEnemy.setMaxLifes(5);
 		zombieEnemy.setMeleeWeapon(new Weapon(Weapon.WeaponType.ZombieAttack));
@@ -87,7 +87,7 @@ public class LoadingScreen extends ScreenAdapter {
 		zombieKingSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_king_idol")));
 		zombieKingSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_king_idol")));
 		zombieKingSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_king_death")));
-		zombieKingSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("zombie_king_damaged")));
+		zombieKingSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("zombie_king_damaged")));
 		zombieKingSet.getWeaponMap().put(Weapon.WeaponType.ZombieKingAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("rock")));
 		Enemy zombieKingEnemy = new ZombieKingEnemy(Vector2.Zero, Vector2.Zero, "Zombie King", zombieKingSet, 5);
 		zombieKingEnemy.setMaxLifes(10);
@@ -100,7 +100,7 @@ public class LoadingScreen extends ScreenAdapter {
 		alienSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_idle")));
 		alienSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_idle")));
 		alienSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_death")));
-		alienSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_damged")));
+		alienSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("alien_damged")));
 		alienSet.getWeaponMap().put(Weapon.WeaponType.AlienAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("alien_shoot")));
 		alienSet.encounterIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		alienSet.encounterWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -115,7 +115,7 @@ public class LoadingScreen extends ScreenAdapter {
 		trumpSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_idle")));
 		trumpSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_idle")));
 		trumpSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_death")));
-		trumpSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_damged")));
+		trumpSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("trump_damged")));
 		trumpSet.getWeaponMap().put(Weapon.WeaponType.TrumpAttack, new Animation<TextureRegion>((float)1/6, atlas.findRegions("trump_twitter")));
 		Enemy trumpEnemy = new TrumpEnemy(Vector2.Zero, Vector2.Zero, "Trump", trumpSet,10);
 		trumpEnemy.setMaxLifes(10);
@@ -138,7 +138,7 @@ public class LoadingScreen extends ScreenAdapter {
 		playerSet.setEncounterWalkAnimation(new Animation<TextureRegion>((float)1/4, atlas.findRegions("johhny_hover")));
 		playerSet.setEncounterIdleAnimation(new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_idle")));
 		playerSet.setEncounterDieAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_death")));
-		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/6, atlas.findRegions("johhny_damaged")));
+		playerSet.setEncounterDamagedAnimation(new Animation<TextureRegion>((float)1/10, atlas.findRegions("johhny_damaged")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Gun, new Animation<TextureRegion>((float) 1/3, atlas.findRegions("johhny_gun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Shotgun, new Animation<TextureRegion>((float)1/3f, atlas.findRegions("johhny_shotgun")));
 		playerSet.getWeaponMap().put(Weapon.WeaponType.Stab, new Animation<TextureRegion>((float)1/2, atlas.findRegions("johhny_stab")));
