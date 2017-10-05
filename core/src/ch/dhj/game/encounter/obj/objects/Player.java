@@ -77,6 +77,7 @@ public class Player extends Figure{
 		getTurnManager().addRoundDoneListener(new TurnManager.TurnManagerListener() {
 			@Override
 			public void triggered(TurnManager manager) {
+				actionsL.setText(String.format("%d/%d Actions", actions, getMaxActionCount()));
 
 				if(isDead()) {
 					Dialog dialog = new Dialog("You died!",  skin);
