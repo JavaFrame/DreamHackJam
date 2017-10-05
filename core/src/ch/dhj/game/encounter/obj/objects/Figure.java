@@ -186,7 +186,12 @@ public class Figure extends GObject {
 		setLifes(getLifes()-damage);
 		lifesL.setText(getLifes() + "/" + getMaxLifes() + " health");
 		if(damage > 0)
-			setAnimation(getAnimationSet().encounterDamagedAnimation);
+			setAnimation(getAnimationSet().encounterDamagedAnimation, new AnimationFinishedListener() {
+				@Override
+				public void animationFinished(GObject obj) {
+					setAnimation(getAnimationSet().encounterIdleAnimation);
+				}
+			});
 		if(getLifes() <= 0) {
 			setAnimation(getAnimationSet().encounterDieAnimation);
 			if(you instanceof Player) {

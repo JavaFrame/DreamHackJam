@@ -25,6 +25,8 @@ public abstract class GObject {
 	private Vector2 position;
 	private Vector2 size;
 
+	private AnimationFinishedListener animationFinishedListener = null;
+
 	public GObject(Vector2 position) {
 		this.position = position;
 		this.size = new Vector2(1, 1);
@@ -47,6 +49,11 @@ public abstract class GObject {
 	 * @param delta
 	 */
 	public void render(float delta, SpriteBatch batch) {
+		if(isAnnimationFinished() && animationFinishedListener != null) {
+			animationFinishedListener.animationFinished(this);
+			animationFinishedListener = null;
+		}
+
 		if(getTextureRegion() != null && getAnimation() == null) {
 			batch.draw(getTextureRegion(), getPosition().x, getPosition().y, getSize().x, getSize().y);
 		} else if(getAnimation() != null) {
@@ -147,8 +154,17 @@ public abstract class GObject {
 	}
 
 	public void setAnimation(Animation<TextureRegion> animation) {
+		if(!isAnnimationFinished() && animationFinishedListener != null) {
+			animationFinishedListener.animationFinished(this);
+			animationFinishedListener = null;
+		}
 		this.animation = animation;
 		stateTime = 0;
+	}
+
+	public void setAnimation(Animation<TextureRegion> animation, AnimationFinishedListener l) {
+		setAnimation(animation);
+		animationFinishedListener = l;
 	}
 
 	public boolean isAnnimationFinished() {
@@ -162,5 +178,10 @@ public abstract class GObject {
 
 	public float getStateTime() {
 		return stateTime;
+	}
+
+	@FunctionalInterface
+	public static interface AnimationFinishedListener {
+		void animationFinished(GObject obj);
 	}
 }
